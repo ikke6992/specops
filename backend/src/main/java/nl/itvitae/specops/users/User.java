@@ -20,8 +20,5 @@ public class User {
 
   @NonNull private String password;
 
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  private Long employeeId;
-
   @NonNull private String employeeName;
 }
