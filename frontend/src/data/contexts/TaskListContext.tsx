@@ -3,17 +3,20 @@ import TaskResponse from "../models/task/TaskResponse";
 import getAllTasks from "../services/getAllTasks";
 
 type ContextType = {
-  tasks: TaskResponse[];
+  getTasks: () => TaskResponse[];
+  setSize: (size: number) => void;
 };
 
 type ProviderType = FC<{ children: ReactNode }>;
 
 export const TaskListContext = createContext<ContextType>({
-  tasks: [],
+  getTasks: () => [],
+  setSize: () => {},
 });
 
 export const TaskListProvider: ProviderType = ({ children }) => {
   const [tasks, setTasks] = useState<TaskResponse[]>([]);
+  const [size, setSize] = useState(0);
 
   useEffect(() => {
     const getTaskList = async () => {
@@ -23,8 +26,12 @@ export const TaskListProvider: ProviderType = ({ children }) => {
     getTaskList();
   }, []);
 
+  const getTasks = () => {
+    return tasks.slice(0, size);
+  };
+
   return (
-    <TaskListContext.Provider value={{ tasks }}>
+    <TaskListContext.Provider value={{ getTasks, setSize }}>
       {children}
     </TaskListContext.Provider>
   );
