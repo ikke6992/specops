@@ -8,7 +8,6 @@ import lombok.*;
 @Setter
 @Entity(name = "users")
 @RequiredArgsConstructor
-@NoArgsConstructor
 public class User {
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
@@ -19,4 +18,6 @@ public class User {
   @NonNull private String password;
 
   @NonNull private String employeeName;
+
+  public User() {};
 }
