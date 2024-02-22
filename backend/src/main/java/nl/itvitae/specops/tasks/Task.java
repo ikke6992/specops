@@ -9,6 +9,7 @@ import nl.itvitae.specops.users.User;
 @Setter
 @Entity(name = "tasks")
 @RequiredArgsConstructor
+@NoArgsConstructor
 public class Task {
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
@@ -17,6 +18,4 @@ public class Task {
   @NonNull private String name;
 
   @ManyToOne private User user;
-
-  public Task() {};
 }

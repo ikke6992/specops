@@ -1,5 +1,4 @@
-import axios from "axios";
-import getAllUsers from "./data/getAllUsers";
+import getAllUsers from "./data/services/getAllUsers";
 import { useEffect, useState } from "react";
 
 interface User {
@@ -9,7 +8,6 @@ interface User {
 }
 
 const App = () => {
-    
   const [users, setUsers] = useState<User[]>([]);
 
   useEffect(() => {
