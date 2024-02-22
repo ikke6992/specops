@@ -1,8 +1,11 @@
+import { useContext } from "react";
+import { TaskListContext } from "../../data/contexts/TaskListContext";
 import useWindowDimensions from "../../data/utils/windowdimensions";
 import Card1 from "../common/cards/card1/Card1";
 
 const SupervisorTaskManagement = () => {
   const { width } = useWindowDimensions();
+  const { tasks } = useContext(TaskListContext);
 
   return (
     <main className="h-screen">
@@ -21,25 +24,28 @@ const SupervisorTaskManagement = () => {
         style={{ height: "70%" }}
       >
         {/* Display 8/4 cards dependent on width */}
-        {width < 1024 ? (
-          <>
-            <Card1 />
-            <Card1 />
-            <Card1 />
-            <Card1 />
-          </>
-        ) : (
-          <>
-            <Card1 />
-            <Card1 />
-            <Card1 />
-            <Card1 />
-            <Card1 />
-            <Card1 />
-            <Card1 />
-            <Card1 />
-          </>
-        )}
+        {tasks.map((task) => {
+          return <Card1 name={task.name} />;
+        })}
+        {/* {width < 1024 ? (
+            <>
+              <Card1 />
+              <Card1 />
+              <Card1 />
+              <Card1 />
+            </>
+          ) : (
+            <>
+              <Card1 />
+              <Card1 />
+              <Card1 />
+              <Card1 />
+              <Card1 />
+              <Card1 />
+              <Card1 />
+              <Card1 />
+            </>
+          )} */}
       </section>
       {/* Navigation + Create Section */}
       <section

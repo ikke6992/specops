@@ -1,5 +1,6 @@
 package nl.itvitae.specops.tasks;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -10,5 +11,9 @@ public class TaskService {
 
   public Task save(String name) {
     return taskRepository.save(new Task(name));
+  }
+
+  public List<Task> all() {
+    return taskRepository.findAll();
   }
 }
