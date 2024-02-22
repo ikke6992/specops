@@ -1,6 +1,9 @@
+import useWindowDimensions from "../../data/utils/windowdimensions";
 import Card1 from "../common/cards/card1/Card1";
 
 const SupervisorTaskManagement = () => {
+  const { width } = useWindowDimensions();
+
   return (
     <main className="h-screen">
       {/* Search & Filter Section */}
@@ -14,17 +17,29 @@ const SupervisorTaskManagement = () => {
       </section>
       {/* Task List Section */}
       <section
-        className="p-8 bg-gray-400 grid grid-cols-4 grid-rows-2 gap-5"
+        className="p-8 bg-gray-400 grid md:grid-cols-2 md:grid-rows-2 lg:grid-cols-4 lg:grid-rows-2 gap-5"
         style={{ height: "70%" }}
       >
-        <Card1 />
-        <Card1 />
-        <Card1 />
-        <Card1 />
-        <Card1 />
-        <Card1 />
-        <Card1 />
-        <Card1 />
+        {/* Display 8/4 cards dependent on width */}
+        {width < 1024 ? (
+          <>
+            <Card1 />
+            <Card1 />
+            <Card1 />
+            <Card1 />
+          </>
+        ) : (
+          <>
+            <Card1 />
+            <Card1 />
+            <Card1 />
+            <Card1 />
+            <Card1 />
+            <Card1 />
+            <Card1 />
+            <Card1 />
+          </>
+        )}
       </section>
       {/* Navigation + Create Section */}
       <section
