@@ -4,7 +4,6 @@ import SupervisorTaskManagement from "./components/supervisor-task-management/Su
 const App = () => {
   return (
     <>
-      <Modal name="Add Task" />
       <SupervisorTaskManagement />
     </>
   );

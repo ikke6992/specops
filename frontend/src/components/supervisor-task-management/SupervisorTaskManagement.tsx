@@ -1,8 +1,11 @@
+import { useState } from "react";
 import useWindowDimensions from "../../data/utils/windowdimensions";
+import Modal from "../common/Modal";
 import Card1 from "../common/cards/card1/Card1";
 
 const SupervisorTaskManagement = () => {
   const { width } = useWindowDimensions();
+  const [showModal, setShowModal] = useState(false);
 
   return (
     <main className="h-screen">
@@ -55,10 +58,19 @@ const SupervisorTaskManagement = () => {
             →
           </button>
         </div>
-        <button className="bg-green-600 hover:bg-green-300 pt-2 pb-2 pl-4 pr-4 border-gray-300  border-2 text-white">
+        <button
+          className="bg-green-600 hover:bg-green-300 pt-2 pb-2 pl-4 pr-4 border-gray-300  border-2 text-white"
+          onClick={(e) => {
+            e.preventDefault();
+            setShowModal(true);
+          }}
+        >
           Create Task
         </button>
       </section>
+      {showModal && (
+        <Modal name="Add Task" onClick={() => setShowModal(false)} />
+      )}
     </main>
   );
 };
