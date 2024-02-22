@@ -2,15 +2,13 @@ package nl.itvitae.specops.users;
 
 import jakarta.persistence.*;
 import java.util.UUID;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @Entity(name = "users")
 @RequiredArgsConstructor
+@NoArgsConstructor
 public class User {
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)

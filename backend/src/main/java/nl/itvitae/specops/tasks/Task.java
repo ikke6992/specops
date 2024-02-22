@@ -2,16 +2,14 @@ package nl.itvitae.specops.tasks;
 
 import jakarta.persistence.*;
 import java.util.UUID;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import nl.itvitae.specops.users.User;
 
 @Getter
 @Setter
 @Entity(name = "tasks")
 @RequiredArgsConstructor
+@NoArgsConstructor
 public class Task {
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
