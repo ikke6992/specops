@@ -21,9 +21,9 @@ public class Seeder implements CommandLineRunner {
       userService.save("peter", "password", "Peter Diepstraten");
       userService.save("thomas", "abc123", "Thomas Vrielink");
 
-      taskService.save("Clean toilets");
-      taskService.save("Prepare lunch");
-      taskService.save("Build machine");
+      taskService.save("Clean toilets", "Tuyan Tatliparmak");
+      taskService.save("Prepare lunch", "Peter Diepstraten");
+      taskService.save("Build machine", "Thomas Vrielink");
     }
   }
 }
