@@ -4,10 +4,38 @@ const SupervisorTaskManagement = () => {
   return (
     <main className="h-screen">
       {/* Search & Filter Section */}
-      <section className="bg-slate-500 h-1/5"></section>
+      <section className="bg-slate-500" style={{ height: "20%" }}></section>
       {/* Task List Section */}
-      <section className="bg-gray-400 h-4/5">
+      <section
+        className="p-8 bg-gray-400 grid grid-cols-4 grid-rows-2 gap-5"
+        style={{ height: "70%" }}
+      >
         <Card1 />
+        <Card1 />
+        <Card1 />
+        <Card1 />
+        <Card1 />
+        <Card1 />
+        <Card1 />
+        <Card1 />
+      </section>
+      {/* Navigation + Create Section */}
+      <section
+        className="bg-zinc-700 grid grid-cols-3 grid-rows-1 p-2"
+        style={{ height: "10%" }}
+      >
+        <div></div>
+        <div className="p-2 flex flex-row justify-center content-center">
+          <button className="pr-4 pl-4 bg-cyan-600 hover:bg-cyan-300 border-gray-300 border-2 text-white">
+            ←
+          </button>
+          <button className="ml-4 pr-4 pl-4 bg-cyan-600 hover:bg-cyan-300 border-gray-300 border-2 text-white">
+            →
+          </button>
+        </div>
+        <button className="bg-green-600 hover:bg-green-300 pt-2 pb-2 pl-4 pr-4 border-gray-300  border-2 text-white">
+          Create Task
+        </button>
       </section>
     </main>
   );
