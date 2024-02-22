@@ -1,5 +1,11 @@
+import SupervisorTaskManagement from "./components/supervisor-task-management/SupervisorTaskManagement";
+
 const App = () => {
-  return <></>;
+  return (
+    <>
+      <SupervisorTaskManagement />
+    </>
+  );
 };
 
 export default App;
