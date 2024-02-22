@@ -1,3 +1,4 @@
+import AddTask from "./components/addtask/AddTask";
 import getAllUsers from "./data/services/getAllUsers";
 import { useEffect, useState } from "react";
 
@@ -31,6 +32,7 @@ const App = () => {
           ))}
         </ul>
       </div>
+      <AddTask />
     </>
   );
 };
