@@ -1,8 +1,10 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { TaskListContext } from "../../data/contexts/TaskListContext";
+import Modal from "../common/Modal";
 
 const Navigation = () => {
   const { moveLeft, moveRight } = useContext(TaskListContext);
+  const [showModal, setShowModal] = useState(false);
 
   return (
     <section
@@ -24,9 +26,15 @@ const Navigation = () => {
           →
         </button>
       </div>
-      <button className="bg-green-600 hover:bg-green-300 pt-2 pb-2 pl-4 pr-4 border-gray-300  border-2 text-white">
+      <button
+        className="bg-green-600 hover:bg-green-300 pt-2 pb-2 pl-4 pr-4 border-gray-300  border-2 text-white"
+        onClick={() => setShowModal(true)}
+      >
         Create Task
       </button>
+      {showModal && (
+        <Modal name="Add Task" onClick={() => setShowModal(false)} />
+      )}
     </section>
   );
 };
