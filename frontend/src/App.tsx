@@ -8,21 +8,22 @@ interface User {
   employeeName: string;
 }
 
-const [users, setUsers] = useState<User[]>([]);
-
-useEffect(() => {
-  const fetchData = async () => {
-    try {
-      const fetchedUsers = await getAllUsers();
-      setUsers(fetchedUsers);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  fetchData();
-}, []);
-
 const App = () => {
+    
+  const [users, setUsers] = useState<User[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const fetchedUsers = await getAllUsers();
+        setUsers(fetchedUsers);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchData();
+  }, []);
+
   return (
     <>
       <div>
