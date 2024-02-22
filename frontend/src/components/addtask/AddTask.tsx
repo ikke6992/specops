@@ -1,21 +1,12 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import postItem from "../../data/services/postItem";
+import { TaskContext } from "../common/TaskContext";
 
 const AddTask = () => {
-  const [taskName, setTaskName] = useState<string>("");
-
-  const handleFormSubmit = () => {
-    postItem("tasks", {name: taskName});
-  }
+  const { taskName, setTaskName } = useContext(TaskContext);
 
   return (
-    <form onSubmit={(e) => {
-      e.preventDefault();
-      handleFormSubmit();
-    }}>
-      <label>Task Name: <input type='text' placeholder='task name' value={taskName} onChange={(e) => {setTaskName(e.target.value)}} /></label>
-      <button type='submit'>Submit</button>
-    </form>
+    <label>Name: <input type='text' placeholder='task name' value={ taskName } onChange={(e) => {setTaskName(e.target.value)}} /></label>
   )
 }
 

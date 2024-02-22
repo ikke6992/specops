@@ -1,4 +1,5 @@
 import AddTask from "./components/addtask/AddTask";
+import Modal from "./components/common/Modal";
 import getAllUsers from "./data/services/getAllUsers";
 import { useEffect, useState } from "react";
 
@@ -32,7 +33,7 @@ const App = () => {
           ))}
         </ul>
       </div>
-      <AddTask />
+      <Modal name="Add Task"/>
     </>
   );
 };
