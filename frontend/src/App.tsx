@@ -1,9 +1,9 @@
-import UserTest from "./components/user-test/UserTest";
+import SupervisorTaskManagement from "./components/supervisor-task-management/SupervisorTaskManagement";
 
 const App = () => {
   return (
     <>
-      <UserTest />
+      <SupervisorTaskManagement />
     </>
   );
 };
