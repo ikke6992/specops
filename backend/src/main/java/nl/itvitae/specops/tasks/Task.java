@@ -1,9 +1,10 @@
 package nl.itvitae.specops.tasks;
 
 import jakarta.persistence.*;
+
+import java.time.LocalDate;
 import java.util.UUID;
 import lombok.*;
-import nl.itvitae.specops.users.User;
 
 @Getter
 @Setter
@@ -17,5 +18,16 @@ public class Task {
 
   @NonNull private String name;
 
-  @ManyToOne private User user;
+  private int timeframe;
+
+  private int interval;
+
+  private LocalDate deadline;
+
+  public Task(@NonNull String name, int timeframe, int interval, LocalDate deadline) {
+    this.name = name;
+    this.timeframe = timeframe;
+    this.interval = interval;
+    this.deadline = deadline;
+  }
 }

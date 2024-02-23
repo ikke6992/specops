@@ -4,6 +4,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -15,8 +16,8 @@ public class TaskService {
     return taskRepository.findAll();
   }
 
-  public Task save(String name) {
-    return taskRepository.save(new Task(name));
+  public Task save(String name, int timeframe, int interval, LocalDate date) {
+    return taskRepository.save(new Task(name, timeframe, interval, date));
   }
 
   public List<Task> all() {

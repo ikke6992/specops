@@ -8,6 +8,8 @@ import nl.itvitae.specops.users.UserService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+
 @Component
 @RequiredArgsConstructor
 public class Seeder implements CommandLineRunner {
@@ -41,9 +43,10 @@ public class Seeder implements CommandLineRunner {
     }
 
     if (taskRepository.count() == 0) {
-      for (String task : tasks) {
-        taskService.save(task);
-      }
+      /** for (String task : tasks) { taskService.save(task); } */
+      taskService.save("Clean toilets", 2, 7, LocalDate.now().plusWeeks(1));
+      taskService.save("Prepare lunch", 1, 1, LocalDate.now());
+      taskService.save("Build machine", 30, 365, LocalDate.now().plusMonths(6));
     }
   }
 }
