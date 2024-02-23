@@ -1,7 +1,7 @@
 import { useContext } from "react";
-import { CreateTaskContext } from "../../data/contexts/CreateTaskContext";
+import { CreateTaskContext } from "../../../contexts/CreateTaskContext";
 
-const AddTask = () => {
+const NameField = () => {
   const { taskName, setTaskName } = useContext(CreateTaskContext);
 
   return (
@@ -19,4 +19,4 @@ const AddTask = () => {
   );
 };
 
-export default AddTask;
+export default NameField;

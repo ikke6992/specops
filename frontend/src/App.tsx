@@ -1,15 +1,6 @@
-import Modal from "./components/common/modal/Modal";
-import SupervisorTaskManagement from "./components/supervisor-task-management/SupervisorTaskManagement";
-import { TaskProvider } from "./data/contexts/TaskContext";
-
+// For testing purposes
 const App = () => {
-  return (
-    <>
-      <TaskProvider>
-        <SupervisorTaskManagement />
-      </TaskProvider>
-    </>
-  );
+  return <h1>Greetings Traveler</h1>;
 };
 
 export default App;
