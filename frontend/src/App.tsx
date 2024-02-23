@@ -1,13 +1,15 @@
-import Modal from "./components/common/modal/Modal";
-import SupervisorTaskManagement from "./components/manage-tasks/TaskManager";
-import { TaskProvider } from "./contexts/TaskContext";
-
 const App = () => {
   return (
     <>
-      <TaskProvider>
-        <SupervisorTaskManagement />
-      </TaskProvider>
+      <Layout nav={<h1>Test</h1>} />
+    </>
+  );
+};
+
+const Layout = (props: { nav: React.ReactNode }) => {
+  return (
+    <>
+      <nav>{props.nav}</nav>
     </>
   );
 };
