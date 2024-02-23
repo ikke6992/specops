@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
-import java.time.LocalDate;
 
 @RestController
 @RequestMapping("/tasks")
@@ -15,15 +14,6 @@ import java.time.LocalDate;
 @CrossOrigin
 public class TaskController {
   private final TaskService taskService;
-
-  private record TaskResponse(int id, String name) {
-    static TaskResponse of(Task task) {
-      return new TaskResponse(task.getId().hashCode(), task.getName());
-    }
-  }
-  ;
-
-  private record TaskData(String name, int timeframe, int interval, LocalDate date) {}
 
   @GetMapping
   public ResponseEntity<List<TaskResponse>> getAll() {
@@ -33,10 +23,11 @@ public class TaskController {
   }
 
   @PostMapping
-  public ResponseEntity<Task> addTask(@RequestBody TaskData taskData, UriComponentsBuilder ucb) {
-    if (taskData.name != null) {
+  public ResponseEntity<Task> addTask(@RequestBody TaskRequest taskData, UriComponentsBuilder ucb) {
+    if (taskData.name() != null) {
       Task task =
-          taskService.save(taskData.name, taskData.timeframe, taskData.interval, taskData.date);
+          taskService.save(
+              taskData.name(), taskData.timeframe(), taskData.interval(), taskData.date());
       URI locationOfNewTask =
           ucb.path("/tasks").buildAndExpand(taskService.getAll().size()).toUri();
       return ResponseEntity.created(locationOfNewTask).body(task);

@@ -18,9 +18,8 @@ public class Task {
 
   @NonNull private String name;
 
-  private int timeframe;
-
-  private int interval;
+  private int timeframe; // In days
+  private int interval; // In days
 
   private LocalDate deadline;
 

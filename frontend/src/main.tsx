@@ -3,12 +3,16 @@ import "./index.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import SupervisorTaskManagement from "./components/supervisor-task-management/SupervisorTaskManagement.tsx";
 import { TaskProvider } from "./data/contexts/TaskContext.tsx";
+import TaskTest from "./components/task-test/TaskTest.tsx";
+import UserTest from "./components/user-test/UserTest.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <TaskProvider>
     <BrowserRouter>
       <Routes>
         <Route path="/taskmanager" element={<SupervisorTaskManagement />} />
+        <Route path="/task-test" element={<TaskTest />} />
+        <Route path="/user-test" element={<UserTest />} />
       </Routes>
     </BrowserRouter>
   </TaskProvider>
