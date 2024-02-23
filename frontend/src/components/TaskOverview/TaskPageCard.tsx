@@ -1,19 +1,18 @@
 import React from "react";
-import { Task } from "../common/TaskInterface";
+import { Task } from "./TaskInterface";
 
 interface Props {
-  name: string;
-  employee: string;
+  task: Task;
 }
 
-const TaskPageCard = ({ name, employee }: Props) => {
+const TaskPageCard = ({ task }: Props) => {
   return (
     <>
-      <div className="max-w-xs rounded overflow-hidden shadow-lg bg-white">
+      <div className="max-w-sm rounded overflow-hidden shadow-lg bg-white">
         <div className="px-6 py-4">
-          <label className="font-bold text-xl mb-2">{name}</label>
+          <label className="font-bold text-xl mb-2">{task.name}</label>
           <br />
-          <label className="text-slate-400">{employee}</label>
+          <label className="text-slate-400">{task.tempEmployee}</label>
           <div className="pt-2">
             <div className="bg-gray-200 rounded-full">
               <div
