@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import getAllUsers from "../../data/services/getAllUsers";
+import getAllUsers from "../../services/getAllUsers";
 
 interface User {
   id: string;

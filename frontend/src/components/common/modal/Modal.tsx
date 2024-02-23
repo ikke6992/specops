@@ -1,7 +1,7 @@
 import { useContext } from "react";
-import AddTask from "../../addtask/AddTask";
-import { CreateTaskContext } from "../../../data/contexts/CreateTaskContext";
-import TaskBody from "../../../data/models/task/TaskBody";
+import AddTask from "../../create-tasks/TaskCreator";
+import { CreateTaskContext } from "../../../contexts/CreateTaskContext";
+import TaskBody from "../../../models/task/TaskBody";
 
 export default function Modal(props: {
   name: string;

@@ -1,9 +1,7 @@
 import { createContext, FC, ReactNode, useEffect, useState } from "react";
 import TaskResponse from "../models/task/TaskResponse";
 import getAllTasks from "../services/getAllTasks";
-import api from "../services/api-client";
 import TaskBody from "../models/task/TaskBody";
-import axios from "axios";
 import postItem from "../services/postItem";
 
 type ContextType = {
