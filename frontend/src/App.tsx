@@ -1,7 +1,8 @@
 import React from "react";
+import TaskPage from "./components/TaskOverview/TaskPage";
 
 const App = () => {
-  return <div>app</div>;
+  return <TaskPage />;
 };
 
 export default App;
