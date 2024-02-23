@@ -1,14 +1,18 @@
-import { useContext, useState } from "react";
-import AddTask from "../addtask/AddTask";
-import postItem from "../../data/services/postItem";
-import { TaskContext } from "./TaskContext";
+import { useContext } from "react";
+import AddTask from "../../addtask/AddTask";
+import { CreateTaskContext } from "../../../data/contexts/CreateTaskContext";
+import TaskBody from "../../../data/models/task/TaskBody";
 
-export default function Modal(props: { name: string; onClick: () => void }) {
-  const { taskName } = useContext(TaskContext);
+export default function Modal(props: {
+  name: string;
+  onClick: () => void;
+  submit: (task: TaskBody) => void;
+}) {
+  const { taskName } = useContext(CreateTaskContext);
 
   const handleFormSubmit = (e: React.MouseEvent) => {
     e.preventDefault();
-    postItem("tasks", { name: taskName });
+    props.submit({ name: taskName });
     props.onClick();
   };
 

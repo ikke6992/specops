@@ -1,13 +1,13 @@
-import Modal from "./components/common/Modal";
+import Modal from "./components/common/modal/Modal";
 import SupervisorTaskManagement from "./components/supervisor-task-management/SupervisorTaskManagement";
-import { TaskListProvider } from "./data/contexts/TaskListContext";
+import { TaskProvider } from "./data/contexts/TaskContext";
 
 const App = () => {
   return (
     <>
-      <TaskListProvider>
+      <TaskProvider>
         <SupervisorTaskManagement />
-      </TaskListProvider>
+      </TaskProvider>
     </>
   );
 };

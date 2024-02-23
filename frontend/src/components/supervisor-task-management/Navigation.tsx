@@ -1,9 +1,11 @@
 import { useContext, useState } from "react";
-import { TaskListContext } from "../../data/contexts/TaskListContext";
-import Modal from "../common/Modal";
+import { TaskContext } from "../../data/contexts/TaskContext";
+import Modal from "../common/modal/Modal";
+import { CreateTaskProvider } from "../../data/contexts/CreateTaskContext";
+import TaskBody from "../../data/models/task/TaskBody";
 
 const Navigation = () => {
-  const { moveLeft, moveRight } = useContext(TaskListContext);
+  const { moveLeft, moveRight, addTask } = useContext(TaskContext);
   const [showModal, setShowModal] = useState(false);
 
   return (
@@ -33,7 +35,13 @@ const Navigation = () => {
         Create Task
       </button>
       {showModal && (
-        <Modal name="Add Task" onClick={() => setShowModal(false)} />
+        <CreateTaskProvider>
+          <Modal
+            name="Add Task"
+            onClick={() => setShowModal(false)}
+            submit={(task: TaskBody) => addTask(task)}
+          />
+        </CreateTaskProvider>
       )}
     </section>
   );

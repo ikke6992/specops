@@ -1,12 +1,12 @@
 import { useContext, useEffect } from "react";
-import { TaskListContext } from "../../data/contexts/TaskListContext";
+import { TaskContext } from "../../data/contexts/TaskContext";
 import useWindowDimensions from "../../data/utils/windowdimensions";
 import Card1 from "../common/cards/card1/Card1";
 import { cols, rows, size } from "../../data/utils/tasklistsize";
 
 const TaskList = () => {
   const { width, height } = useWindowDimensions();
-  const { getTasks, setSize } = useContext(TaskListContext);
+  const { getTasks, setSize } = useContext(TaskContext);
 
   useEffect(() => {
     setSize(size(height, width));
