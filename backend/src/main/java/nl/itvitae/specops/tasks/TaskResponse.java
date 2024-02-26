@@ -3,7 +3,12 @@ package nl.itvitae.specops.tasks;
 import java.time.LocalDate;
 
 public record TaskResponse(
-    int id, String name, String department, LocalDate startDate, LocalDate deadline, String status) {
+    int id,
+    String name,
+    String department,
+    LocalDate startDate,
+    LocalDate deadline,
+    String status) {
   static String getStatus(LocalDate deadline, LocalDate startDate) {
     final LocalDate now = LocalDate.now();
 
