@@ -8,13 +8,13 @@ import Card1Status from "./Card1Status";
 type PropsType = { name: string; completeTask: () => void };
 const Card1 = ({ name, completeTask }: PropsType) => {
   return (
-    <article className="container mx-auto max-w-sm bg-white rounded-xl shadow-md overflow-hidden p-8 h-fit hover:bg-slate-200 hover:cursor-pointer">
+    <article className="container mx-auto max-w-sm relative bg-white rounded-xl shadow-md overflow-hidden p-5 h-fit hover:bg-slate-200 hover:cursor-pointer">
       <a>
-        <div className="flex justify-between">
+        <div className="flex justify-between items-end">
           <div>
             <Card1Label />
           </div>
-          <div>
+          <div className="absolute right-4 top-4">
             <Card1CompleteButton completeTask={completeTask} />
           </div>
         </div>

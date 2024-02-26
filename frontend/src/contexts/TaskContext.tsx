@@ -3,6 +3,7 @@ import TaskResponse from "../models/task/TaskResponse";
 import getAllTasks from "../services/getAllTasks";
 import TaskBody from "../models/task/TaskBody";
 import postItem from "../services/postItem";
+import updateTask from "../services/updateTask";
 
 type ContextType = {
   getTasks: () => TaskResponse[];
@@ -59,8 +60,8 @@ export const TaskProvider: ProviderType = ({ children }) => {
   };
 
   const completeTask = async (id: string) => {
-    //"Calls update endpoint to set isDone true"
-    //"Updates tasklist"
+    const data: TaskResponse = await updateTask("tasks", id);
+    setTasks([...tasks, data]);
   };
 
   return (
