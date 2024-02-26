@@ -43,8 +43,8 @@ const Content = () => {
         />
         {/* Browse through tasks */}
         <div className="p-2 flex flex-row justify-center items-center">
-          <MoveLeftButton moveLeft={() => moveLeft} />
-          <MoveRightButton moveRight={() => moveRight} />
+          <MoveLeftButton moveLeft={() => moveLeft()} />
+          <MoveRightButton moveRight={() => moveRight()} />
         </div>
         <div></div>
       </>

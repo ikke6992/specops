@@ -48,6 +48,7 @@ export const HistoryProvider: ProviderType = ({ children }) => {
   };
 
   const getRecords = () => {
+    console.log(pointer);
     return records.slice(pointer, pointer + size);
   };
 
