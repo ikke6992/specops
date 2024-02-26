@@ -1,8 +1,8 @@
-const Card1Dates = () => {
+const Card1Dates = (props: { start: string, end: string }) => {
   return (
     <p className="mt-2 text-gray-500 flex justify-between">
-      <span>START: 01-01-2023</span>
-      <span>END: 01-01-2023</span>
+      <span>START: {props.start}</span>
+      <span>END: {props.end}</span>
     </p>
   );
 };

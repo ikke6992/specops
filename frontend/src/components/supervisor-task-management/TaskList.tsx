@@ -26,7 +26,7 @@ const TaskList = () => {
     >
       {/* Display 8/4 cards dependent on width */}
       {getTasks().map((task) => {
-        return <Card1 key={task.id} name={task.name} />;
+        return <Card1 key={task.id} name={task.name} dept={task.department} start={task.startDate} end={task.deadline} />;
       })}
       {/* {width < 1024 ? (
             <>

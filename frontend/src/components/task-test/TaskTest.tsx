@@ -4,6 +4,7 @@ import getAll from "../../data/services/getAll";
 interface Task {
   id: string;
   name: string;
+  department: string;
   startDate: string;
   deadline: string;
   status: string;
@@ -33,6 +34,8 @@ const TaskTest = () => {
           {tasks.map((task) => (
             <li key={task.id}>
               Name: {task.name}
+              <br />
+              Department: {task.department}
               <br />
               Deadline: {task.deadline}
               <br />
