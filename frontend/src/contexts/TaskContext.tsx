@@ -10,6 +10,7 @@ type ContextType = {
   moveRight: () => void;
   moveLeft: () => void;
   addTask: (task: TaskBody) => void;
+  completeTask: (id: string) => void;
 };
 
 type ProviderType = FC<{ children: ReactNode }>;
@@ -20,6 +21,7 @@ export const TaskContext = createContext<ContextType>({
   moveRight: () => {},
   moveLeft: () => {},
   addTask: () => {},
+  completeTask: () => {},
 });
 
 export const TaskProvider: ProviderType = ({ children }) => {
@@ -56,9 +58,14 @@ export const TaskProvider: ProviderType = ({ children }) => {
     setTasks([...tasks, data]);
   };
 
+  const completeTask = async (id: string) => {
+    //"Calls update endpoint to set isDone true"
+    //"Updates tasklist"
+  };
+
   return (
     <TaskContext.Provider
-      value={{ getTasks, setSize, moveRight, moveLeft, addTask }}
+      value={{ getTasks, setSize, moveRight, moveLeft, addTask, completeTask }}
     >
       {children}
     </TaskContext.Provider>
