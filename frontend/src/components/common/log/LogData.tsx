@@ -2,7 +2,7 @@ import LogLabel from "./LogLabel";
 
 const LogData = () => {
   return (
-    <tr className="border-b border-gray-600">
+    <tr className="border-b border-gray-600 h-20 max-h-20">
       <td className="px-4 py-2">
         <LogLabel />
       </td>
