@@ -1,7 +1,9 @@
+import Log from "../common/log/Log";
+
 const SupervisorHistoryView = () => {
   return (
     <>
-      <p>Test</p>
+      <Log />
     </>
   );
 };
