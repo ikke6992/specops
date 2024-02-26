@@ -5,11 +5,13 @@ import SupervisorTaskManagement from "./components/supervisor-task-management/Su
 import { TaskProvider } from "./data/contexts/TaskContext.tsx";
 import TaskTest from "./components/task-test/TaskTest.tsx";
 import UserTest from "./components/user-test/UserTest.tsx";
+import App from "./App.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <TaskProvider>
     <BrowserRouter>
       <Routes>
+        <Route path="/testing" element= {<App />}/>
         <Route path="/taskmanager" element={<SupervisorTaskManagement />} />
         <Route path="/task-test" element={<TaskTest />} />
         <Route path="/user-test" element={<UserTest />} />

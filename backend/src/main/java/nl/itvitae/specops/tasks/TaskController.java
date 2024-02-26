@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
+import java.time.LocalDate;
 
 @RestController
 @RequestMapping("/tasks")
@@ -15,22 +16,31 @@ import java.net.URI;
 public class TaskController {
   private final TaskService taskService;
 
+  private record TaskResponse(int id, String name) {
+    static TaskResponse of(TaskPlanning taskPlanning) {
+      return new TaskResponse(taskPlanning.getId().hashCode(), taskPlanning.getName());
+    }
+  }
+  ;
+
+  private record TaskData(String name, int timeframe, int interval, LocalDate date) {}
+
   @GetMapping
   public ResponseEntity<List<TaskResponse>> getAll() {
-    final List<Task> tasks = taskService.all();
-    final List<TaskResponse> data = tasks.stream().map(TaskResponse::of).toList();
+    final List<TaskPlanning> taskPlannings = taskService.getAllTaskPlannings();
+    final List<TaskResponse> data = taskPlannings.stream().map(TaskResponse::of).toList();
     return ResponseEntity.ok(data);
   }
 
   @PostMapping
-  public ResponseEntity<Task> addTask(@RequestBody TaskRequest taskData, UriComponentsBuilder ucb) {
-    if (taskData.name() != null) {
-      Task task =
-          taskService.save(
-              taskData.name(), taskData.timeframe(), taskData.interval(), taskData.date());
+  public ResponseEntity<TaskPlanning> addTask(
+      @RequestBody TaskData taskData, UriComponentsBuilder ucb) {
+    if (taskData.name != null) {
+      TaskPlanning taskPlanning =
+          taskService.save(taskData.name, taskData.timeframe, taskData.interval, taskData.date);
       URI locationOfNewTask =
-          ucb.path("/tasks").buildAndExpand(taskService.getAll().size()).toUri();
-      return ResponseEntity.created(locationOfNewTask).body(task);
+          ucb.path("/tasks").buildAndExpand(taskService.getAllTaskPlannings().size()).toUri();
+      return ResponseEntity.created(locationOfNewTask).body(taskPlanning);
     } else {
       return ResponseEntity.badRequest().build();
     }

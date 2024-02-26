@@ -18,9 +18,9 @@ public record TaskResponse(
 
   static TaskResponse of(Task task) {
     final int id = task.getId().hashCode();
-    final String name = task.getName();
+    final String name = task.getTaskPlanning().getName();
     final LocalDate deadline = task.getDeadline();
-    final LocalDate startDate = deadline.minusDays(task.getTimeframe());
+    final LocalDate startDate = deadline.minusDays(task.getTaskPlanning().getTimeframe());
     final String status = getStatus(deadline, startDate);
 
     return new TaskResponse(id, name, startDate, deadline, status);

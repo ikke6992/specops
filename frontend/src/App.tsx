@@ -1,13 +1,12 @@
-import Modal from "./components/common/modal/Modal";
-import SupervisorTaskManagement from "./components/supervisor-task-management/SupervisorTaskManagement";
-import { TaskProvider } from "./data/contexts/TaskContext";
+import getAll from "./data/services/getAll";
 
 const App = () => {
+
+  const data = getAll("tasks");
+  console.log(data);
   return (
     <>
-      <TaskProvider>
-        <SupervisorTaskManagement />
-      </TaskProvider>
+      <p>print</p>
     </>
   );
 };
