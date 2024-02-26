@@ -2,6 +2,7 @@ package nl.itvitae.specops.tasks;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import nl.itvitae.specops.departments.Department;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -16,9 +17,10 @@ public class TaskService {
     return taskRepository.findAll();
   }
 
-  public TaskPlanning save(String name, int timeframe, int interval, LocalDate date) {
+  public TaskPlanning save(
+      String name, int timeframe, int interval, Department department, LocalDate date) {
     TaskPlanning taskPlanning =
-        taskPlanningRepository.save(new TaskPlanning(name, timeframe, interval));
+        taskPlanningRepository.save(new TaskPlanning(name, timeframe, interval, department));
     taskRepository.save(new Task(taskPlanning, date));
     return taskPlanning;
   }

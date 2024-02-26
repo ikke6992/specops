@@ -13,4 +13,8 @@ public class UserService {
   public User save(String username, String password, String employeeName) {
     return userRepository.save(new User(username, passwordEncoder.encode(password), employeeName));
   }
+
+  public User getByName(String name) {
+    return userRepository.findByUsername(name).get();
+  }
 }

@@ -3,6 +3,7 @@ package nl.itvitae.specops.users;
 import jakarta.persistence.*;
 import java.util.UUID;
 import lombok.*;
+import nl.itvitae.specops.departments.Department;
 
 @Getter
 @Setter
@@ -19,4 +20,6 @@ public class User {
   @NonNull private String password;
 
   @NonNull private String employeeName;
+
+  @ManyToOne private Department department;
 }
