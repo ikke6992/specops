@@ -8,14 +8,22 @@ import nl.itvitae.specops.users.User;
 @Getter
 @Setter
 @Entity(name = "tasks")
-@RequiredArgsConstructor
-@NoArgsConstructor
 public class Task {
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
   private UUID id;
 
-  @NonNull private String name;
+  private String name;
 
   @ManyToOne private User user;
+
+  private boolean isDone;
+
+  public Task() {}
+  ;
+
+  public Task(String name) {
+    this.name = name;
+    this.isDone = false;
+  }
 }

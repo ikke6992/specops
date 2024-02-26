@@ -6,7 +6,7 @@ import useWindowDimensions from "../../../utils/windowdimensions";
 
 const TaskList = () => {
   const { width, height } = useWindowDimensions();
-  const { getTasks, setSize } = useContext(TaskContext);
+  const { getTasks, setSize, completeTask } = useContext(TaskContext);
 
   useEffect(() => {
     setSize(size(height, width));
@@ -24,7 +24,7 @@ const TaskList = () => {
       }}
     >
       {getTasks().map((task) => {
-        return <Card1 key={task.id} name={task.name} />;
+        return <Card1 key={task.id} name={task.name} completeTask={() => completeTask(task.id)} />;
       })}
     </div>
   );
