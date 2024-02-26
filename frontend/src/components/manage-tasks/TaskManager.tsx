@@ -8,37 +8,24 @@ import MoveLeftButton from "../common/buttons/MoveLeftButton";
 import MoveRightButton from "../common/buttons/MoveRightButton";
 import NavigateButton from "../common/buttons/NavigateButton";
 import OpenButton from "../common/buttons/OpenButton";
+import Layout from "../common/layout/Layout";
 
 const Content = () => {
   const { addTask, moveLeft, moveRight } = useContext(TaskContext);
   const [showCreator, setShowCreator] = useState(false);
   const navigate = useNavigate();
 
-  return (
-    <main className="h-screen">
-      {/* Search & Filter */}
-      <section
-        className="bg-slate-500 flex flex-row justify-center items-center"
-        style={{ height: "20%" }}
-      >
-        <h1 className="text-3xl text-slate-950 font-black uppercase">
-          Task Manager
-        </h1>
-      </section>
-      {/* Task List */}
-      <section
-        className="p-8 bg-gray-400"
-        style={{
-          height: "70%",
-        }}
-      >
-        <TaskList />
-      </section>
-      {/* Navigation */}
-      <section
-        className="bg-zinc-700 grid grid-cols-3 grid-rows-1 p-2"
-        style={{ height: "10%" }}
-      >
+  const SearchBar = () => {
+    return (
+      <h1 className="text-3xl text-slate-950 font-black uppercase">
+        Task Manager
+      </h1>
+    );
+  };
+
+  const Navigation = () => {
+    return (
+      <>
         {/* Go to history */}
         <NavigateButton
           name="Open History"
@@ -53,7 +40,17 @@ const Content = () => {
         </div>
         {/* Create task */}
         <OpenButton name="Open Create Task" open={() => setShowCreator(true)} />
-      </section>
+      </>
+    );
+  };
+
+  return (
+    <>
+      <Layout
+        searchBar={<SearchBar />}
+        content={<TaskList />}
+        navigation={<Navigation />}
+      />
       {/* Show create task menu if needed */}
       {showCreator && (
         <TaskCreator
@@ -61,7 +58,7 @@ const Content = () => {
           close={() => setShowCreator(false)}
         />
       )}
-    </main>
+    </>
   );
 };
 
