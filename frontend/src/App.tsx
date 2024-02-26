@@ -1,12 +1,35 @@
+import { useEffect, useState } from "react";
 import getAll from "./data/services/getAll";
 
-const App = () => {
+interface Item {
+  id: string;
+  name: string;
+}
 
-  const data = getAll("tasks");
-  console.log(data);
+const App = () => {
+  const [items, setItems] = useState<Item[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getAll("departments");
+        setItems(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchData();
+  }, []);
+
   return (
     <>
-      <p>print</p>
+      <div>
+        <ul>
+          {items.map((item) => (
+            <li key={item.id}>{item.name}</li>
+          ))}
+        </ul>
+      </div>
     </>
   );
 };

@@ -16,12 +16,6 @@ import java.time.LocalDate;
 @CrossOrigin
 public class TaskController {
   private final TaskService taskService;
-
-  private record TaskResponse(int id, String name) {
-    static TaskResponse of(TaskPlanning taskPlanning) {
-      return new TaskResponse(taskPlanning.getId().hashCode(), taskPlanning.getName());
-    }
-  }
   ;
 
   private record TaskData(
@@ -29,8 +23,8 @@ public class TaskController {
 
   @GetMapping
   public ResponseEntity<List<TaskResponse>> getAll() {
-    final List<TaskPlanning> taskPlannings = taskService.getAllTaskPlannings();
-    final List<TaskResponse> data = taskPlannings.stream().map(TaskResponse::of).toList();
+    final List<Task> tasks = taskService.getAllTasks();
+    final List<TaskResponse> data = tasks.stream().map(TaskResponse::of).toList();
     return ResponseEntity.ok(data);
   }
 
