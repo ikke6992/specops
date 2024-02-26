@@ -19,6 +19,7 @@ public class DepartmentService {
     return departmentRepository.save(new Department(name, head));
   }
 
+  // One warning, fine for now.
   public Department getByName(String name) {
     return departmentRepository.findByName(name).get();
   }

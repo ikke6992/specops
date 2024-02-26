@@ -16,10 +16,6 @@ import java.time.LocalDate;
 @CrossOrigin
 public class TaskController {
   private final TaskService taskService;
-  ;
-
-  private record TaskData(
-      String name, int timeframe, int interval, Department department, LocalDate date) {}
 
   @GetMapping
   public ResponseEntity<List<TaskResponse>> getAll() {
@@ -30,15 +26,15 @@ public class TaskController {
 
   @PostMapping
   public ResponseEntity<TaskPlanning> addTask(
-      @RequestBody TaskData taskData, UriComponentsBuilder ucb) {
-    if (taskData.name != null) {
+      @RequestBody TaskRequest taskData, UriComponentsBuilder ucb) {
+    if (taskData.name() != null) {
       TaskPlanning taskPlanning =
           taskService.save(
-              taskData.name,
-              taskData.timeframe,
-              taskData.interval,
-              taskData.department,
-              taskData.date);
+              taskData.name(),
+              taskData.timeframe(),
+              taskData.interval(),
+              taskData.department(),
+              taskData.date());
       URI locationOfNewTask =
           ucb.path("/tasks").buildAndExpand(taskService.getAllTaskPlannings().size()).toUri();
       return ResponseEntity.created(locationOfNewTask).body(taskPlanning);
