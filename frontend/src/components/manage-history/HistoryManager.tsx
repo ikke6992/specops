@@ -5,11 +5,18 @@ import NavigateButton from "../common/buttons/NavigateButton";
 import Layout from "../common/layout/Layout";
 import Log from "../common/log/Log";
 import { HistoryContext, HistoryProvider } from "../../contexts/HistoryContext";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import useWindowDimensions from "../../utils/windowdimensions";
 import size from "../../utils/loglistsize";
+import { TaskProvider } from "../../contexts/TaskContext";
+import FunctionButton from "../common/buttons/FunctionButton";
 
-const Content = () => {
+// Task View, Task Manager, History Manager
+type PropsType = {
+  toggleMode: () => void;
+  mode: string;
+};
+const Content = ({ toggleMode, mode }: PropsType) => {
   const { getRecords, setSize, moveRight, moveLeft } =
     useContext(HistoryContext);
   const { height } = useWindowDimensions();
@@ -46,7 +53,10 @@ const Content = () => {
           <MoveLeftButton moveLeft={() => moveLeft()} />
           <MoveRightButton moveRight={() => moveRight()} />
         </div>
-        <div></div>
+        <FunctionButton
+          method={() => toggleMode()}
+          name={`Toggle ${mode} mode`}
+        />
       </>
     );
   };
@@ -63,10 +73,24 @@ const Content = () => {
 };
 
 const HistoryManager = () => {
+  const [historyMode, setHistoryMode] = useState(true);
+
+  const toggleMode = () => {
+    setHistoryMode(!historyMode);
+  };
+
   return (
-    <HistoryProvider>
-      <Content />
-    </HistoryProvider>
+    <>
+      {historyMode ? (
+        <HistoryProvider>
+          <Content toggleMode={toggleMode} mode="task" />
+        </HistoryProvider>
+      ) : (
+        <TaskProvider>
+          <Content toggleMode={toggleMode} mode="history" />
+        </TaskProvider>
+      )}
+    </>
   );
 };
 

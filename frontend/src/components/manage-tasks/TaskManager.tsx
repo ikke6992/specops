@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import MoveLeftButton from "../common/buttons/MoveLeftButton";
 import MoveRightButton from "../common/buttons/MoveRightButton";
 import NavigateButton from "../common/buttons/NavigateButton";
-import OpenButton from "../common/buttons/OpenButton";
+import FunctionButton from "../common/buttons/FunctionButton";
 import Layout from "../common/layout/Layout";
 
 const Content = () => {
@@ -39,7 +39,10 @@ const Content = () => {
           <MoveRightButton moveRight={() => moveRight()} />
         </div>
         {/* Create task */}
-        <OpenButton name="Open Create Task" open={() => setShowCreator(true)} />
+        <FunctionButton
+          name="Open Create Task"
+          method={() => setShowCreator(true)}
+        />
       </>
     );
   };
