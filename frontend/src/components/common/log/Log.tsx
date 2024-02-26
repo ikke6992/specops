@@ -1,30 +1,20 @@
 // Created using ChatGPT
-
-import { useEffect, useState } from "react";
-import useWindowDimensions from "../../../utils/windowdimensions";
 import LogData from "./LogData";
 import LogHead from "./LogHead";
+import RecordResponse from "../../../models/record/RecordResponse";
 
-const Log = () => {
-  const { height } = useWindowDimensions();
-  const [size, setSize] = useState(0);
-
-  useEffect(() => {
-    const updateSize = () => {
-      const newSize = Math.floor((height * 0.7) / 100);
-      setSize(newSize);
-    };
-    updateSize();
-  });
-
+type PropsType = {
+  records: RecordResponse[];
+};
+const Log = ({ records }: PropsType) => {
   return (
     <table className="table-auto w-full">
       <thead>
         <LogHead />
       </thead>
       <tbody>
-        {[...Array(size)].map((_, i) => (
-          <LogData key={i} />
+        {records.map((record) => (
+          <LogData key={record.id} record={record} />
         ))}
       </tbody>
     </table>
