@@ -7,10 +7,13 @@ import CreateTaskButton from "./create/CreateTaskButton";
 import MoveLeft from "./navigate/MoveLeft";
 import MoveRight from "./navigate/MoveRight";
 import TaskCreator from "../create-tasks/TaskCreator";
+import OpenHistoryButton from "./history/OpenHistoryButton";
+import { useNavigate } from "react-router-dom";
 
 const Content = () => {
   const { addTask } = useContext(TaskContext);
   const [showCreator, setShowCreator] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <main className="h-screen">
@@ -36,7 +39,11 @@ const Content = () => {
         style={{ height: "10%" }}
       >
         {/* Go to history */}
-        <div></div>
+        <OpenHistoryButton
+          onClick={() => {
+            navigate("/history");
+          }}
+        />
         {/* Browse through tasks */}
         <div className="p-2 flex flex-row justify-center items-center">
           <MoveLeft />
