@@ -27,7 +27,7 @@ const getAllRecords: () => RecordResponse[] = () => {
     },
     {
       id: 1,
-      status: "Planned",
+      status: "Pending",
       name: "Test 1",
       executionDate: new Date(),
       deadline: new Date(),
@@ -35,7 +35,7 @@ const getAllRecords: () => RecordResponse[] = () => {
     },
     {
       id: 2,
-      status: "Planned",
+      status: "Overdue",
       name: "Test 2",
       executionDate: new Date(),
       deadline: new Date(),
@@ -43,7 +43,7 @@ const getAllRecords: () => RecordResponse[] = () => {
     },
     {
       id: 3,
-      status: "Planned",
+      status: "Too late",
       name: "Test 3",
       executionDate: new Date(),
       deadline: new Date(),
@@ -51,7 +51,7 @@ const getAllRecords: () => RecordResponse[] = () => {
     },
     {
       id: 4,
-      status: "Planned",
+      status: "On time",
       name: "Test 4",
       executionDate: new Date(),
       deadline: new Date(),

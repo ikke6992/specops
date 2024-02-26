@@ -12,7 +12,7 @@ const LogData = ({ record }: PropsType) => {
   return (
     <tr className="border-b border-gray-600 h-20 max-h-20">
       <td className="px-4 py-2">
-        <LogLabel />
+        <LogLabel status={record.status} />
       </td>
       <td className="px-4 py-2">{record.name}</td>
       <td className="px-4 py-2">{getDateString(record.deadline)}</td>

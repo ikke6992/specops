@@ -1,6 +1,8 @@
+import StatusType from "./StatusType";
+
 export default interface RecordResponse {
   id: number;
-  status: "Planned" | "Pending" | "Overdue" | "On time" | "Too late";
+  status: StatusType;
   name: string;
   executionDate: Date;
   deadline: Date;
