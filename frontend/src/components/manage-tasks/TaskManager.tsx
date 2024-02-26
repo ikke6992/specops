@@ -1,17 +1,16 @@
-import SearchFilter from "./filter/Filter";
-import TaskList from "./list/TaskList";
+import TaskList from "./TaskList";
 import { useContext, useState } from "react";
 import { TaskContext, TaskProvider } from "../../contexts/TaskContext";
 import TaskBody from "../../models/task/TaskBody";
-import CreateTaskButton from "./create/CreateTaskButton";
-import MoveLeft from "./navigate/MoveLeft";
-import MoveRight from "./navigate/MoveRight";
 import TaskCreator from "../create-tasks/TaskCreator";
-import OpenHistoryButton from "./history/OpenHistoryButton";
 import { useNavigate } from "react-router-dom";
+import MoveLeftButton from "../common/buttons/MoveLeftButton";
+import MoveRightButton from "../common/buttons/MoveRightButton";
+import NavigateButton from "../common/buttons/NavigateButton";
+import OpenButton from "../common/buttons/OpenButton";
 
 const Content = () => {
-  const { addTask } = useContext(TaskContext);
+  const { addTask, moveLeft, moveRight } = useContext(TaskContext);
   const [showCreator, setShowCreator] = useState(false);
   const navigate = useNavigate();
 
@@ -22,7 +21,9 @@ const Content = () => {
         className="bg-slate-500 flex flex-row justify-center items-center"
         style={{ height: "20%" }}
       >
-        <SearchFilter />
+        <h1 className="text-3xl text-slate-950 font-black uppercase">
+          Task Manager
+        </h1>
       </section>
       {/* Task List */}
       <section
@@ -39,18 +40,19 @@ const Content = () => {
         style={{ height: "10%" }}
       >
         {/* Go to history */}
-        <OpenHistoryButton
-          onClick={() => {
+        <NavigateButton
+          name="Open History"
+          navigate={() => {
             navigate("/history");
           }}
         />
         {/* Browse through tasks */}
         <div className="p-2 flex flex-row justify-center items-center">
-          <MoveLeft />
-          <MoveRight />
+          <MoveLeftButton moveLeft={() => moveLeft()} />
+          <MoveRightButton moveRight={() => moveRight()} />
         </div>
         {/* Create task */}
-        <CreateTaskButton onClick={() => setShowCreator(true)} />
+        <OpenButton name="Open Create Task" open={() => setShowCreator(true)} />
       </section>
       {/* Show create task menu if needed */}
       {showCreator && (

@@ -1,8 +1,8 @@
 import { useContext, useEffect } from "react";
-import { TaskContext } from "../../../contexts/TaskContext";
-import Card1 from "../../common/cards/card1/Card1";
-import { rows, cols, size } from "../../../utils/tasklistsize";
-import useWindowDimensions from "../../../utils/windowdimensions";
+import { TaskContext } from "../../contexts/TaskContext";
+import Card1 from "../common/cards/card1/Card1";
+import { rows, cols, size } from "../../utils/tasklistsize";
+import useWindowDimensions from "../../utils/windowdimensions";
 
 const TaskList = () => {
   const { width, height } = useWindowDimensions();
