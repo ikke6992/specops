@@ -84,6 +84,7 @@ public class Seeder implements CommandLineRunner {
     }
   }
 
+  // interval < timeframe, otherwise you can infinitely repeat tasks.
   private void seedTasks() {
     taskService.save(
         "Clean toilets",
@@ -92,7 +93,7 @@ public class Seeder implements CommandLineRunner {
         departmentService.getByName("maintenance"),
         LocalDate.now().plusWeeks(1));
     taskService.save(
-        "Prepare lunch", 1, 1, departmentService.getByName("general"), LocalDate.now());
+        "Prepare lunch", 1, 2, departmentService.getByName("general"), LocalDate.now());
     taskService.save(
         "Build machine",
         30,

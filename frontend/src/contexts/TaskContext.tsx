@@ -61,10 +61,12 @@ export const TaskProvider: ProviderType = ({ children }) => {
 
   const completeTask = async (id: string) => {
     // THIS NEEDS TO BE UPDATED
+    // Task status should change
     // const data: TaskResponse = await updateTask("tasks", id);
     // setTasks([...tasks, data]);
     await updateTask("tasks", id);
-    // Task status should change
+    const newList = await getAllTasks();
+    setTasks(newList);
   };
 
   return (

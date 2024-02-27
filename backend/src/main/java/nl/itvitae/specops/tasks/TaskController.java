@@ -22,10 +22,16 @@ public class TaskController {
   private final TaskService taskService;
   private final UserRepository userRepository;
   private final DepartmentRepository departmentRepository;
+  private final TaskExecutionRepository taskExecutionRepository;
 
   @GetMapping
   public ResponseEntity<List<TaskResponse>> getAll() {
-    final List<Task> tasks = taskService.getAllTasks();
+    // Get already executed tasks
+    final List<TaskExecution> taskExecutions = taskExecutionRepository.findAll();
+    final List<Task> executedTasks = taskExecutions.stream().map(TaskExecution::getTask).toList();
+
+    final List<Task> tasks =
+        taskService.getAllTasks().stream().filter(task -> !executedTasks.contains(task)).toList();
     final List<TaskResponse> data = tasks.stream().map(TaskResponse::of).toList();
     return ResponseEntity.ok(data);
   }

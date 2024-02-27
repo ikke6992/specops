@@ -9,9 +9,17 @@ type PropsType = {
   dept: string;
   start: string;
   end: string;
+  canComplete: boolean;
   completeTask: () => void;
 };
-const Card1 = ({ name, dept, start, end, completeTask }: PropsType) => {
+const Card1 = ({
+  name,
+  dept,
+  start,
+  end,
+  canComplete: shouldComplete,
+  completeTask,
+}: PropsType) => {
   return (
     <article className="container mx-auto max-w-sm relative bg-white rounded-xl shadow-md overflow-hidden p-5 h-fit hover:bg-slate-200 hover:cursor-pointer">
       <a>
@@ -19,9 +27,11 @@ const Card1 = ({ name, dept, start, end, completeTask }: PropsType) => {
           <div>
             <Card1Label dept={dept} />
           </div>
-          <div className="absolute right-4 top-4">
-            <Card1CompleteButton completeTask={completeTask} />
-          </div>
+          {shouldComplete && (
+            <div className="absolute right-4 top-4">
+              <Card1CompleteButton completeTask={completeTask} />
+            </div>
+          )}
         </div>
         <div className="mb-4">
           <Card1Name name={name} />
