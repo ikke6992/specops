@@ -1,5 +1,5 @@
 export default interface TaskResponse {
-  id: number;
+  id: string;
   name: string;
   department: string;
   startDate: string;

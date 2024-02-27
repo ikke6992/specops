@@ -1,6 +1,8 @@
 package nl.itvitae.specops.tasks;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import nl.itvitae.specops.departments.Department;
 import nl.itvitae.specops.users.User;
@@ -40,5 +42,9 @@ public class TaskService {
 
   public List<TaskPlanning> getAllTaskPlannings() {
     return taskPlanningRepository.findAll();
+  }
+
+  public Optional<Task> findById(UUID id) {
+    return taskRepository.findById(id);
   }
 }

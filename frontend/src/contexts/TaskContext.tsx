@@ -1,10 +1,9 @@
 import { createContext, FC, ReactNode, useEffect, useState } from "react";
 import TaskResponse from "../models/task/TaskResponse";
 import getAllTasks from "../services/getAllTasks";
-import api from "../services/api-client";
 import TaskBody from "../models/task/TaskBody";
-import axios from "axios";
 import postItem from "../services/postItem";
+import updateTask from "../services/updateTask";
 
 type ContextType = {
   getTasks: () => TaskResponse[];
@@ -12,6 +11,7 @@ type ContextType = {
   moveRight: () => void;
   moveLeft: () => void;
   addTask: (task: TaskBody) => void;
+  completeTask: (id: string) => void;
 };
 
 type ProviderType = FC<{ children: ReactNode }>;
@@ -22,6 +22,7 @@ export const TaskContext = createContext<ContextType>({
   moveRight: () => {},
   moveLeft: () => {},
   addTask: () => {},
+  completeTask: () => {},
 });
 
 export const TaskProvider: ProviderType = ({ children }) => {
@@ -58,9 +59,14 @@ export const TaskProvider: ProviderType = ({ children }) => {
     setTasks([...tasks, data]);
   };
 
+  const completeTask = async (id: string) => {
+    const data: TaskResponse = await updateTask("tasks", id);
+    setTasks([...tasks, data]);
+  };
+
   return (
     <TaskContext.Provider
-      value={{ getTasks, setSize, moveRight, moveLeft, addTask }}
+      value={{ getTasks, setSize, moveRight, moveLeft, addTask, completeTask }}
     >
       {children}
     </TaskContext.Provider>

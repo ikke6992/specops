@@ -4,7 +4,6 @@ type ContextType = {
   taskName: string;
   setTaskName: (taskName: string) => void;
 };
-
 type ProviderType = FC<{ children: ReactNode }>;
 
 export const CreateTaskContext = createContext<ContextType>({

@@ -1,6 +1,8 @@
 package nl.itvitae.specops.tasks;
 
+import java.net.URI;
 import java.util.List;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import nl.itvitae.specops.departments.Department;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,8 @@ import java.time.LocalDate;
 @CrossOrigin
 public class TaskController {
   private final TaskService taskService;
+
+  private final TaskRepository taskRepository;
 
   @GetMapping
   public ResponseEntity<List<TaskResponse>> getAll() {
@@ -41,5 +45,17 @@ public class TaskController {
     } else {
       return ResponseEntity.badRequest().build();
     }
+  }
+
+
+  @PatchMapping("/setComplete/{id}")
+  public ResponseEntity<Task> setComplete(@PathVariable UUID id) {
+    var possibleTask = taskService.findById(id);
+    if (possibleTask.isEmpty()) return ResponseEntity.notFound().build();
+
+    var task = possibleTask.get();
+    task.setDone(true);
+    taskRepository.save(task);
+    return ResponseEntity.ok(task);
   }
 }
