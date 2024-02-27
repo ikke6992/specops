@@ -3,9 +3,9 @@ import "./index.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import TaskManager from "./components/manage-tasks/TaskManager.tsx";
 import App from "./App.tsx";
-import TaskTest from "./components/task-test/TaskTest.tsx";
-import UserTest from "./components/user-test/UserTest.tsx";
-import DepartmentTest from "./components/department-test/DepartmentTest.tsx";
+import TaskTest from "./components/test/TaskTest.tsx";
+import UserTest from "./components/test/UserTest.tsx";
+import DepartmentTest from "./components/test/DepartmentTest.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <BrowserRouter>

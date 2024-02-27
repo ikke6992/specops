@@ -1,9 +1,10 @@
 package nl.itvitae.specops.tasks;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 public record TaskResponse(
-    int id,
+    UUID id,
     String name,
     String department,
     LocalDate startDate,
@@ -22,7 +23,7 @@ public record TaskResponse(
   }
 
   static TaskResponse of(Task task) {
-    final int id = task.getId().hashCode();
+    final UUID id = task.getId();
     final String name = task.getTaskPlanning().getName();
     final String department = task.getTaskPlanning().getDepartment().getName();
     final LocalDate deadline = task.getDeadline();

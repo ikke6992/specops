@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import getAll from "../../data/services/getAll";
+import getAll from "../../services/getAll";
 
 interface Department {
   id: string;
