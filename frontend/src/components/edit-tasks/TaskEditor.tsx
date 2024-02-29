@@ -8,7 +8,6 @@ import {
 import NameField from "../create-tasks/fields/NameField";
 
 const Content = (props: {
-  name: string;
   close: () => void;
   submit: (task: TaskBody) => void;
 }) => {
@@ -28,13 +27,12 @@ const Content = (props: {
 };
 
 const TaskEditor = (props: {
-  name: string;
   close: () => void;
   submit: (task: TaskBody) => void;
 }) => {
   return (
     <TaskModalProvider>
-      <Content name={props.name} close={props.close} submit={props.submit} />
+      <Content close={props.close} submit={props.submit} />
     </TaskModalProvider>
   );
 };

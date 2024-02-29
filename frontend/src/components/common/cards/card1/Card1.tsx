@@ -9,7 +9,7 @@ import TaskBody from "../../../../models/task/TaskBody";
 import { TaskContext } from "../../../../contexts/TaskContext";
 
 type PropsType = {
-  editId: string,
+  id: string
   name: string;
   dept: string;
   start: string;
@@ -18,7 +18,7 @@ type PropsType = {
   completeTask: () => void;
 };
 const Card1 = ({
-  editId,
+  id,
   name,
   dept,
   start,
@@ -58,7 +58,7 @@ const Card1 = ({
       </article>
       {showEditor && (
         <TaskEditor
-          submit={(task: TaskBody) => editTask(editId, task)}
+          submit={(task: TaskBody) => editTask(id, task)}
           close={() => setShowEditor(false)}
         />
       )}

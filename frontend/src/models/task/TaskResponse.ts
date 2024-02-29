@@ -1,14 +1,15 @@
-type Department = {
-  id: string;
-  name: string;
-};
+import TaskStatus from "./TaskStatus";
+
+// type Department = {
+//   id: string;
+//   name: string;
+// };
 
 export default interface TaskResponse {
-  taskId: string;
-  taskPlanningId: string;
+  id: string;
   name: string;
-  department: Department;
+  department: string;
   startDate: string;
   deadline: string;
-  status: string;
+  status: TaskStatus;
 }

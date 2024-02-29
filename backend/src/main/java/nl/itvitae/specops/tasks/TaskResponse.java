@@ -4,8 +4,7 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 public record TaskResponse(
-    UUID taskId,
-    UUID taskPlanningId,
+    UUID id,
     String name,
     String department,
     LocalDate startDate,
@@ -14,25 +13,24 @@ public record TaskResponse(
   static String getStatus(LocalDate deadline, LocalDate startDate) {
     final LocalDate now = LocalDate.now();
 
-    if (now.isBefore(startDate)) {
-      return "planned";
-    } else if (now.isBefore(deadline)) {
-      return "pending";
-    } else {
+    if (now.isAfter(deadline)) {
       return "overdue";
+    } else if (now.isBefore(startDate)) {
+      return "planned";
+    } else {
+      return "pending";
     }
   }
 
   static TaskResponse of(Task task) {
     final TaskPlanning taskPlanning = task.getTaskPlanning();
-    final UUID taskId = task.getId();
-    final UUID taskPlanningId = taskPlanning.getId();
+    final UUID id = task.getId();
     final String name = taskPlanning.getName();
     final String department = taskPlanning.getDepartment().getName();
     final LocalDate deadline = task.getDeadline();
     final LocalDate startDate = deadline.minusDays(taskPlanning.getTimeframe());
     final String status = getStatus(deadline, startDate);
 
-    return new TaskResponse(taskId, taskPlanningId, name, department, startDate, deadline, status);
+    return new TaskResponse(id, name, department, startDate, deadline, status);
   }
 }
