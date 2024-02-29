@@ -4,13 +4,13 @@ type PropsType = { status: StatusType };
 const LogLabel = ({ status }: PropsType) => {
   const getColor = (status: StatusType) => {
     switch (status) {
-      case "Planned":
-      case "On time":
+      case "planned":
+      case "on time":
         return "green";
-      case "Pending":
+      case "pending":
         return "yellow";
-      case "Overdue":
-      case "Too late":
+      case "overdue":
+      case "too late":
         return "red";
     }
   };

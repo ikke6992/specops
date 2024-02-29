@@ -1,9 +1,9 @@
 import { createContext, FC, ReactNode, useEffect, useState } from "react";
-import RecordResponse from "../models/record/RecordResponse";
 import getAllRecords from "../services/getAllRecords";
+import HistoryLog from "../models/log/HistoryLog";
 
 type ContextType = {
-  getRecords: () => RecordResponse[];
+  getLogs: () => HistoryLog[];
   setSize: (size: number) => void;
   moveRight: () => void;
   moveLeft: () => void;
@@ -12,14 +12,14 @@ type ContextType = {
 type ProviderType = FC<{ children: ReactNode }>;
 
 export const HistoryContext = createContext<ContextType>({
-  getRecords: () => [],
+  getLogs: () => [],
   setSize: () => {},
   moveRight: () => {},
   moveLeft: () => {},
 });
 
 export const HistoryProvider: ProviderType = ({ children }) => {
-  const [records, setRecords] = useState<RecordResponse[]>([]);
+  const [records, setRecords] = useState<HistoryLog[]>([]);
   const [size, setSize] = useState(0);
   const [pointer, setPointer] = useState(0);
 
@@ -47,14 +47,12 @@ export const HistoryProvider: ProviderType = ({ children }) => {
     }
   };
 
-  const getRecords = () => {
+  const getLogs = () => {
     return records.slice(pointer, pointer + size);
   };
 
   return (
-    <HistoryContext.Provider
-      value={{ getRecords, setSize, moveRight, moveLeft }}
-    >
+    <HistoryContext.Provider value={{ getLogs, setSize, moveRight, moveLeft }}>
       {children}
     </HistoryContext.Provider>
   );

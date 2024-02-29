@@ -1,20 +1,25 @@
 // Created using ChatGPT
 import LogData from "./LogData";
 import LogHead from "./LogHead";
-import RecordResponse from "../../../models/record/RecordResponse";
+import HistoryLog from "../../../models/log/HistoryLog";
+import TaskLog from "../../../models/log/TaskLog";
 
 type PropsType = {
-  records: RecordResponse[];
+  logs: HistoryLog[] | TaskLog[];
 };
-const Log = ({ records }: PropsType) => {
+const Log = ({ logs }: PropsType) => {
   return (
     <table className="table-auto w-full">
       <thead>
-        <LogHead />
+        {logs
+          .filter((_, i) => i === 0)
+          .map((log, i) => (
+            <LogHead key={i} firstLog={log} />
+          ))}
       </thead>
       <tbody>
-        {records.map((record) => (
-          <LogData key={record.id} record={record} />
+        {logs.map((log) => (
+          <LogData key={log.id} log={log} />
         ))}
       </tbody>
     </table>

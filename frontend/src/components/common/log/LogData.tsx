@@ -1,25 +1,45 @@
-import RecordResponse from "../../../models/record/RecordResponse";
+import HistoryLog from "../../../models/log/HistoryLog";
+import TaskLog from "../../../models/log/TaskLog";
 import LogLabel from "./LogLabel";
 
-const getDateString = (date: Date) => {
-  return date.toISOString().split("T")[0];
+type PropsType = {
+  log: HistoryLog | TaskLog;
 };
 
-type PropsType = {
-  record: RecordResponse;
-};
-const LogData = ({ record }: PropsType) => {
+const HistoryData = (props: { log: HistoryLog }) => {
   return (
     <tr className="border-b border-gray-600 h-20 max-h-20">
       <td className="px-4 py-2">
-        <LogLabel status={record.status} />
+        <LogLabel status={props.log.status} />
       </td>
-      <td className="px-4 py-2">{record.name}</td>
-      <td className="px-4 py-2">{getDateString(record.deadline)}</td>
-      <td className="px-4 py-2">{getDateString(record.executionDate)}</td>
-      <td className="px-4 py-2">{record.assignee}</td>
+      <td className="px-4 py-2">{props.log.name}</td>
+      <td className="px-4 py-2">{props.log.deadline}</td>
+      <td className="px-4 py-2">{props.log.executionDate}</td>
+      <td className="px-4 py-2">{props.log.assignee}</td>
     </tr>
   );
+};
+
+const TaskData = (props: { log: TaskLog }) => {
+  return (
+    <tr className="border-b border-gray-600 h-20 max-h-20">
+      <td className="px-4 py-2">
+        <LogLabel status={props.log.status} />
+      </td>
+      <td className="px-4 py-2">{props.log.name}</td>
+      <td className="px-4 py-2">{props.log.startdate}</td>
+      <td className="px-4 py-2">{props.log.deadline}</td>
+      <td className="px-4 py-2">{props.log.department}</td>
+    </tr>
+  );
+};
+
+const LogData = ({ log }: PropsType) => {
+  if (Object.keys(log).includes("assignee")) {
+    return <HistoryData log={log as HistoryLog} />;
+  } else {
+    return <TaskData log={log as TaskLog} />;
+  }
 };
 
 export default LogData;

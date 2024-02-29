@@ -1,3 +1,3 @@
-type StatusType = "Planned" | "Pending" | "Overdue" | "On time" | "Too late";
+type StatusType = "planned" | "pending" | "overdue" | "on time" | "too late";
 
 export default StatusType;
