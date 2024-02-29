@@ -13,12 +13,12 @@ public record TaskResponse(
   static String getStatus(LocalDate deadline, LocalDate startDate) {
     final LocalDate now = LocalDate.now();
 
-    if (now.isBefore(startDate)) {
-      return "planned";
-    } else if (now.isBefore(deadline)) {
-      return "pending";
-    } else {
+    if (now.isAfter(deadline)) {
       return "overdue";
+    } else if (now.isBefore(startDate)) {
+      return "planned";
+    } else {
+      return "pending";
     }
   }
 
