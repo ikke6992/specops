@@ -27,6 +27,7 @@ const TaskList = () => {
         return (
           <Card1
             key={task.id}
+            id={task.id}
             name={task.name}
             canComplete={task.status !== "planned"}
             completeTask={() => completeTask(task.id)}

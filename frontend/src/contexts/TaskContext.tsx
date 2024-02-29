@@ -4,6 +4,7 @@ import getAllTasks from "../services/getAllTasks";
 import TaskBody from "../models/task/TaskBody";
 import postItem from "../services/postItem";
 import updateTask from "../services/updateTask";
+import editItem from "../services/editItem";
 import TaskLog from "../models/log/TaskLog";
 
 type ContextType = {
@@ -13,6 +14,7 @@ type ContextType = {
   moveRight: () => void;
   moveLeft: () => void;
   addTask: (task: TaskBody) => void;
+  editTask: (id: string, task: TaskBody) => void;
   completeTask: (id: string) => void;
 };
 
@@ -25,6 +27,7 @@ export const TaskContext = createContext<ContextType>({
   moveRight: () => {},
   moveLeft: () => {},
   addTask: () => {},
+  editTask: () => {},
   completeTask: () => {},
 });
 
@@ -78,6 +81,12 @@ export const TaskProvider: ProviderType = ({ children }) => {
     setTasks([...tasks, data]);
   };
 
+  const editTask = async (id: string, task: TaskBody) => {
+    const data: TaskResponse = await editItem("tasks", id, { name: task.name });
+    const updatedTasks = tasks.map((task) => (task.id === id ? data : task));
+    setTasks(updatedTasks);
+  };
+
   const completeTask = async (id: string) => {
     // THIS NEEDS TO BE UPDATED
     // Task status should change
@@ -97,6 +106,7 @@ export const TaskProvider: ProviderType = ({ children }) => {
         moveRight,
         moveLeft,
         addTask,
+        editTask,
         completeTask,
       }}
     >
