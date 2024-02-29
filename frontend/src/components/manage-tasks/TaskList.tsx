@@ -30,7 +30,7 @@ const TaskList = () => {
             name={task.name}
             canComplete={task.status !== "planned"}
             completeTask={() => completeTask(task.id)}
-            dept={task.department.name}
+            dept={task.department}
             start={task.startDate}
             end={task.deadline}
           />

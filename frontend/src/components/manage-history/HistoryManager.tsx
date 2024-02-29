@@ -16,7 +16,7 @@ import TaskLog from "../../models/log/TaskLog";
 // Task View, Task Manager, History Manager
 type PropsType = {
   toggleMode: () => void;
-  mode: "task" | "history";
+  mode: "tasks" | "history";
   getLogs: () => HistoryLog[] | TaskLog[];
   setSize: (size: number) => void;
   moveRight: () => void;
@@ -42,7 +42,7 @@ const HistoryContent = (props: { toggleMode: () => void }) => {
   return (
     <Content
       toggleMode={props.toggleMode}
-      mode="task"
+      mode="tasks"
       getLogs={getLogs}
       setSize={setSize}
       moveRight={moveRight}
@@ -73,7 +73,7 @@ const Content = ({
   const SearchBar = () => {
     return (
       <h1 className="text-3xl text-slate-950 font-black uppercase">
-        {mode === "task" ? "Task List" : "History List"}
+        {mode === "tasks" ? "History List" : "Task List"}
       </h1>
     );
   };
@@ -81,9 +81,9 @@ const Content = ({
   const Navigation = () => {
     return (
       <>
-        {/* Go to history */}
+        {/* Go to task dashboard */}
         <NavigateButton
-          name="Open Task Manager"
+          name="Open dashboard"
           navigate={() => {
             navigate("/tasks");
           }}
@@ -93,10 +93,7 @@ const Content = ({
           <MoveLeftButton moveLeft={() => moveLeft()} />
           <MoveRightButton moveRight={() => moveRight()} />
         </div>
-        <FunctionButton
-          method={() => toggleMode()}
-          name={`Toggle ${mode} mode`}
-        />
+        <FunctionButton method={() => toggleMode()} name={`View ${mode}`} />
       </>
     );
   };

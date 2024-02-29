@@ -18,7 +18,7 @@ const Content = () => {
   const SearchBar = () => {
     return (
       <h1 className="text-3xl text-slate-950 font-black uppercase">
-        Task Manager
+        Task Dashboard
       </h1>
     );
   };
@@ -26,9 +26,9 @@ const Content = () => {
   const Navigation = () => {
     return (
       <>
-        {/* Go to history */}
+        {/* Go to list mode */}
         <NavigateButton
-          name="Open History"
+          name="Open list"
           navigate={() => {
             navigate("/history");
           }}
