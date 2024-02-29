@@ -7,7 +7,6 @@ import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import nl.itvitae.specops.departments.Department;
 import nl.itvitae.specops.departments.DepartmentRepository;
-import nl.itvitae.specops.departments.DepartmentService;
 import nl.itvitae.specops.users.User;
 import nl.itvitae.specops.users.UserRepository;
 import org.springframework.http.ResponseEntity;
@@ -34,6 +33,15 @@ public class TaskController {
         taskService.getAllTasks().stream().filter(task -> !executedTasks.contains(task)).toList();
     final List<TaskResponse> data = tasks.stream().map(TaskResponse::of).toList();
     return ResponseEntity.ok(data);
+  }
+
+  @GetMapping("/history")
+  public ResponseEntity<List<TaskRecordResponse>> getAllHistory() {
+    final List<TaskExecution> taskExecutions = taskExecutionRepository.findAll();
+    final List<TaskRecordResponse> records =
+        taskExecutions.stream().map(TaskRecordResponse::of).toList();
+
+    return ResponseEntity.ok(records);
   }
 
   private record OldData(String name) {}

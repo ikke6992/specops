@@ -24,12 +24,8 @@ export const HistoryProvider: ProviderType = ({ children }) => {
   const [pointer, setPointer] = useState(0);
 
   useEffect(() => {
-    // const getRecordList = async () => {
-    //   const data = await getAllRecords();
-    //   setRecords(data);
-    // };
-    const getRecordList = () => {
-      const data = getAllRecords();
+    const getRecordList = async () => {
+      const data = await getAllRecords();
       setRecords(data);
     };
     getRecordList();
