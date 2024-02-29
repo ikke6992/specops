@@ -1,7 +1,13 @@
 import React from "react";
 import RegisterForm from "./RegisterForm";
+import {
+  SecurityContext,
+  SecurityProvider,
+} from "../../contexts/SecurityContext";
 
-const LoginScreen = () => {
+interface Props {}
+
+const Content = () => {
   return (
     <main className="h-screen">
       <section
@@ -26,6 +32,14 @@ const LoginScreen = () => {
       ></section>
       {/* Show create task menu if needed */}
     </main>
+  );
+};
+
+const LoginScreen = () => {
+  return (
+    <SecurityProvider>
+      <Content />
+    </SecurityProvider>
   );
 };
 
