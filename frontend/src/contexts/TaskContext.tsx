@@ -11,6 +11,7 @@ type ContextType = {
   moveRight: () => void;
   moveLeft: () => void;
   addTask: (task: TaskBody) => void;
+  editTask: (task: TaskBody) => void;
   completeTask: (id: string) => void;
 };
 
@@ -22,6 +23,7 @@ export const TaskContext = createContext<ContextType>({
   moveRight: () => {},
   moveLeft: () => {},
   addTask: () => {},
+  editTask: () => {},
   completeTask: () => {},
 });
 
@@ -59,6 +61,11 @@ export const TaskProvider: ProviderType = ({ children }) => {
     setTasks([...tasks, data]);
   };
 
+  const editTask = async (task: TaskBody) => {
+    const data: TaskResponse = await postItem("tasks", { name: task.name });
+    setTasks([...tasks, data]);
+  };
+
   const completeTask = async (id: string) => {
     const data: TaskResponse = await updateTask("tasks", id);
     setTasks([...tasks, data]);
@@ -66,7 +73,7 @@ export const TaskProvider: ProviderType = ({ children }) => {
 
   return (
     <TaskContext.Provider
-      value={{ getTasks, setSize, moveRight, moveLeft, addTask, completeTask }}
+      value={{ getTasks, setSize, moveRight, moveLeft, addTask, editTask, completeTask }}
     >
       {children}
     </TaskContext.Provider>
