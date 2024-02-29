@@ -1,4 +1,3 @@
-import React from "react";
 import { Task } from "./TaskInterface";
 import TaskPageCard from "./TaskPageCard";
 

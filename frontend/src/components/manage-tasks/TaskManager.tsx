@@ -56,7 +56,7 @@ const Content = () => {
   );
 };
 
-const SupervisorTaskManagement = () => {
+const TaskManager = () => {
   return (
     <TaskProvider>
       <Content />
@@ -64,4 +64,4 @@ const SupervisorTaskManagement = () => {
   );
 };
 
-export default SupervisorTaskManagement;
+export default TaskManager;

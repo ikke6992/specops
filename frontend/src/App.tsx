@@ -1,6 +1,5 @@
-// For testing purposes
 const App = () => {
-  return <h1>Greetings Traveler</h1>;
+  return <p>Testing 123</p>;
 };
 
 export default App;
