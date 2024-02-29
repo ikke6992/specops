@@ -1,61 +1,56 @@
-import { FC, ReactNode, createContext, useEffect, useState } from "react";
+import { FC, ReactNode, createContext, useState } from "react";
 
 type ContextType = {
-  userRef: () => void;
-  errRef: () => void;
   user: string;
   setUser: (name: string) => void;
-  validName: boolean;
-  setValidName: (arg: boolean) => void;
-  userFocus: boolean;
-  setUserFocus: (arg: boolean) => void;
-  USER_REGEX: RegExp;
-  PWD_REGEX: RegExp;
+
+  pwd: string;
+  setPwd: (name: string) => void;
+
+  matchPwd: string;
+  setMatchPwd: (name: string) => void;
+
+  errMsg: string;
+  setErrMsg: (error: string) => void;
 };
 
 type ProviderType = FC<{ children: ReactNode }>;
 
 export const SecurityContext = createContext<ContextType>({
-  userRef: () => {},
-  errRef: () => {},
   user: "",
   setUser: () => {},
-  validName: false,
-  setValidName: () => {},
-  userFocus: false,
-  setUserFocus: () => {},
-  USER_REGEX: /.*/,
-  PWD_REGEX: /.*/,
+
+  pwd: "",
+  setPwd: () => {},
+
+  matchPwd: "",
+  setMatchPwd: () => {},
+
+  errMsg: "",
+  setErrMsg: () => {},
 });
 
 export const SecurityProvider: ProviderType = ({ children }) => {
   const [user, setUser] = useState("");
-  const [validName, setValidName] = useState(false);
-  const [userFocus, setUserFocus] = useState(false);
-  const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{5,23}&/;
-  const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{6,24}/;
 
-  useEffect(() => {
-    return () => {};
-  }, []);
+  const [pwd, setPwd] = useState("");
 
-  const userRef = () => {};
+  const [matchPwd, setMatchPwd] = useState("");
 
-  const errRef = () => {};
+  const [errMsg, setErrMsg] = useState("");
+  const [success, setSuccess] = useState(false);
 
   return (
     <SecurityContext.Provider
       value={{
-        userRef,
-        errRef,
         user,
         setUser,
-        validName,
-        setValidName,
-        userFocus,
-        setUserFocus,
-        USER_REGEX,
-        PWD_REGEX,
+        pwd,
+        setPwd,
+        matchPwd,
+        setMatchPwd,
+        errMsg,
+        setErrMsg,
       }}
     >
       {children}
