@@ -11,10 +11,10 @@ public record TaskRecordResponse(
     LocalDate deadline,
     String status) {
   static String getStatus(LocalDate deadline, LocalDate executionDate) {
-    if (executionDate.isBefore(deadline)) {
-      return "on time";
-    } else {
+    if (executionDate.isAfter(deadline)) {
       return "too late";
+    } else {
+      return "on time";
     }
   }
 
