@@ -117,12 +117,16 @@ export const TaskProvider: ProviderType = ({ children }) => {
   const addTask = async (task: TaskBody) => {
     const data: TaskResponse = await postItem("tasks", { name: task.name });
     console.log(data);
+    setList([...list, data]);
     setTasks([...tasks, data]);
   };
 
   const editTask = async (id: string, task: TaskBody) => {
     const data: TaskResponse = await editItem("tasks", id, { name: task.name });
+    console.log(data);
     const updatedTasks = tasks.map((task) => (task.id === id ? data : task));
+    console.log(updatedTasks);
+    setList(updatedTasks);
     setTasks(updatedTasks);
   };
 
@@ -130,6 +134,7 @@ export const TaskProvider: ProviderType = ({ children }) => {
     const newTask = await updateTask("tasks", id);
     const newList = [...tasks.filter((task) => task.id !== id), newTask];
     setTasks(newList);
+    setList(newList);
   };
 
   const search = (newType: "dept" | "name", newQuerry: string) => {
