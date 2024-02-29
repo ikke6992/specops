@@ -5,7 +5,7 @@ import {
   TaskModalContext,
   TaskModalProvider,
 } from "../../contexts/TaskModalContext";
-import NameField from "../create-tasks/fields/NameField";
+import FieldCombination from "../create-tasks/fields/FieldCombination";
 
 const Content = (props: {
   close: () => void;
@@ -21,7 +21,7 @@ const Content = (props: {
         console.log(taskName);
         props.submit({ name: taskName });
       }}
-      form={<NameField />}
+      form={<FieldCombination />}
     />
   );
 };
