@@ -7,7 +7,6 @@ import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import nl.itvitae.specops.departments.Department;
 import nl.itvitae.specops.departments.DepartmentRepository;
-import nl.itvitae.specops.departments.DepartmentService;
 import nl.itvitae.specops.users.User;
 import nl.itvitae.specops.users.UserRepository;
 import org.springframework.http.ResponseEntity;
@@ -36,16 +35,27 @@ public class TaskController {
     return ResponseEntity.ok(data);
   }
 
+  @GetMapping("/history")
+  public ResponseEntity<List<TaskRecordResponse>> getAllHistory() {
+    final List<TaskExecution> taskExecutions = taskExecutionRepository.findAll();
+    final List<TaskRecordResponse> records =
+        taskExecutions.stream().map(TaskRecordResponse::of).toList();
+
+    return ResponseEntity.ok(records);
+  }
+
   private record OldData(String name) {}
 
   @PostMapping
-  public ResponseEntity<TaskPlanning> addTask(@RequestBody OldData data, UriComponentsBuilder ucb) {
+  public ResponseEntity<TaskResponse> addTask(@RequestBody OldData data, UriComponentsBuilder ucb) {
     final Department department = departmentRepository.findAll().get(0);
     if (data.name() != null) {
-      TaskPlanning taskPlanning = taskService.save(data.name(), 7, 7, department, LocalDate.now());
+      final Task task =
+          taskService.save(data.name(), 6, 7, department, LocalDate.now().minusDays(1));
+      final TaskResponse response = TaskResponse.of(task);
       URI locationOfNewTask =
           ucb.path("/tasks").buildAndExpand(taskService.getAllTaskPlannings().size()).toUri();
-      return ResponseEntity.created(locationOfNewTask).body(taskPlanning);
+      return ResponseEntity.created(locationOfNewTask).body(response);
     } else {
       return ResponseEntity.badRequest().build();
     }
@@ -53,30 +63,33 @@ public class TaskController {
 
   // This should be used instead of the old endpoint.
   @PostMapping("/new")
-  public ResponseEntity<TaskPlanning> addTaskNew(
+  public ResponseEntity<TaskResponse> addTaskNew(
       @RequestBody TaskRequest taskData, UriComponentsBuilder ucb) {
     if (taskData.name() != null) {
-      TaskPlanning taskPlanning =
+      final Task task =
           taskService.save(
               taskData.name(),
               taskData.timeframe(),
               taskData.interval(),
               taskData.department(),
               taskData.date());
+      final TaskResponse taskResponse = TaskResponse.of(task);
       URI locationOfNewTask =
           ucb.path("/tasks").buildAndExpand(taskService.getAllTaskPlannings().size()).toUri();
-      return ResponseEntity.created(locationOfNewTask).body(taskPlanning);
+      return ResponseEntity.created(locationOfNewTask).body(taskResponse);
     } else {
       return ResponseEntity.badRequest().build();
     }
   }
 
   @PatchMapping("/setComplete/{id}")
-  public ResponseEntity<TaskExecution> setComplete(@PathVariable UUID id) {
+  public ResponseEntity<TaskResponse> setComplete(@PathVariable UUID id) {
     final User user = userRepository.findAll().get(0);
     var possibleTask = taskService.findById(id);
     if (possibleTask.isEmpty()) return ResponseEntity.notFound().build();
     final Task task = possibleTask.get();
-    return ResponseEntity.ok(taskService.execute(task, user));
+    final Task newTask = taskService.execute(task, user);
+    final TaskResponse response = TaskResponse.of(newTask);
+    return ResponseEntity.ok(response);
   }
 }

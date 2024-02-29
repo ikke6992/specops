@@ -21,15 +21,16 @@ public class TaskService {
     return taskRepository.findAll();
   }
 
-  public TaskPlanning save(
+  public Task save(
       String name, int timeframe, int interval, Department department, LocalDate date) {
     TaskPlanning taskPlanning =
         taskPlanningRepository.save(new TaskPlanning(name, timeframe, interval, department));
-    taskRepository.save(new Task(taskPlanning, date));
-    return taskPlanning;
+    final Task task = new Task(taskPlanning, date);
+    taskRepository.save(task);
+    return task;
   }
 
-  public TaskExecution execute(Task task, User user) {
+  public Task execute(Task task, User user) {
     LocalDate executionDate = LocalDate.now();
     TaskExecution executedTask = new TaskExecution(task, user, executionDate);
     taskExecutionRepository.save(executedTask);
@@ -37,7 +38,7 @@ public class TaskService {
         new Task(
             task.getTaskPlanning(), executionDate.plusDays(task.getTaskPlanning().getInterval()));
     taskRepository.save(newTask);
-    return executedTask;
+    return newTask;
   }
 
   public List<TaskPlanning> getAllTaskPlannings() {

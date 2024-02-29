@@ -1,8 +1,8 @@
 import { useContext, useEffect } from "react";
-import { TaskContext } from "../../../contexts/TaskContext";
-import Card1 from "../../common/cards/card1/Card1";
-import { rows, cols, size } from "../../../utils/tasklistsize";
-import useWindowDimensions from "../../../utils/windowdimensions";
+import { TaskContext } from "../../contexts/TaskContext";
+import Card1 from "../common/cards/card1/Card1";
+import { rows, cols, size } from "../../utils/tasklistsize";
+import useWindowDimensions from "../../utils/windowdimensions";
 
 const TaskList = () => {
   const { width, height } = useWindowDimensions();
@@ -30,7 +30,7 @@ const TaskList = () => {
             name={task.name}
             canComplete={task.status !== "planned"}
             completeTask={() => completeTask(task.id)}
-            dept={task.department.name}
+            dept={task.department}
             start={task.startDate}
             end={task.deadline}
           />

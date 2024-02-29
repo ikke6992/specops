@@ -4,9 +4,11 @@ import getAllTasks from "../services/getAllTasks";
 import TaskBody from "../models/task/TaskBody";
 import postItem from "../services/postItem";
 import updateTask from "../services/updateTask";
+import TaskLog from "../models/log/TaskLog";
 
 type ContextType = {
   getTasks: () => TaskResponse[];
+  getLogs: () => TaskLog[];
   setSize: (size: number) => void;
   moveRight: () => void;
   moveLeft: () => void;
@@ -18,6 +20,7 @@ type ProviderType = FC<{ children: ReactNode }>;
 
 export const TaskContext = createContext<ContextType>({
   getTasks: () => [],
+  getLogs: () => [],
   setSize: () => {},
   moveRight: () => {},
   moveLeft: () => {},
@@ -54,8 +57,24 @@ export const TaskProvider: ProviderType = ({ children }) => {
     return tasks.slice(pointer, pointer + size);
   };
 
+  const getLogs = () => {
+    const logs: TaskLog[] = getTasks().map((task) => {
+      return {
+        id: task.id,
+        status: task.status,
+        name: task.name,
+        startdate: task.startDate,
+        deadline: task.deadline,
+        department: task.department,
+      };
+    });
+
+    return logs;
+  };
+
   const addTask = async (task: TaskBody) => {
     const data: TaskResponse = await postItem("tasks", { name: task.name });
+    console.log(data);
     setTasks([...tasks, data]);
   };
 
@@ -64,14 +83,22 @@ export const TaskProvider: ProviderType = ({ children }) => {
     // Task status should change
     // const data: TaskResponse = await updateTask("tasks", id);
     // setTasks([...tasks, data]);
-    await updateTask("tasks", id);
-    const newList = await getAllTasks();
+    const newTask = await updateTask("tasks", id);
+    const newList = [...tasks.filter((task) => task.id !== id), newTask];
     setTasks(newList);
   };
 
   return (
     <TaskContext.Provider
-      value={{ getTasks, setSize, moveRight, moveLeft, addTask, completeTask }}
+      value={{
+        getTasks,
+        getLogs,
+        setSize,
+        moveRight,
+        moveLeft,
+        addTask,
+        completeTask,
+      }}
     >
       {children}
     </TaskContext.Provider>
