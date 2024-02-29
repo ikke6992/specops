@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Task } from "./TaskInterface";
 import getAllTasks from "../../data/services/getAllTasks";
 import TaskGrid from "./TaskGrid";

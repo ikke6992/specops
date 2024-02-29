@@ -3,11 +3,13 @@ package nl.itvitae.specops.users;
 import jakarta.persistence.*;
 import java.util.UUID;
 import lombok.*;
+import nl.itvitae.specops.departments.Department;
 
 @Getter
 @Setter
 @Entity(name = "users")
 @RequiredArgsConstructor
+@NoArgsConstructor
 public class User {
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
@@ -19,5 +21,5 @@ public class User {
 
   @NonNull private String employeeName;
 
-  public User() {};
+  @ManyToOne private Department department;
 }

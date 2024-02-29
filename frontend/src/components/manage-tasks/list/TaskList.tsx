@@ -24,7 +24,17 @@ const TaskList = () => {
       }}
     >
       {getTasks().map((task) => {
-        return <Card1 key={task.id} name={task.name} completeTask={() => completeTask(task.id)} />;
+        return (
+          <Card1
+            key={task.id}
+            name={task.name}
+            canComplete={task.status !== "planned"}
+            completeTask={() => completeTask(task.id)}
+            dept={task.department.name}
+            start={task.startDate}
+            end={task.deadline}
+          />
+        );
       })}
     </div>
   );

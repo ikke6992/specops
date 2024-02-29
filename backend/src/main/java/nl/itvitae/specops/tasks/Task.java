@@ -1,29 +1,28 @@
 package nl.itvitae.specops.tasks;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.time.LocalDate;
 import java.util.UUID;
-import lombok.*;
-import nl.itvitae.specops.users.User;
 
 @Getter
 @Setter
 @Entity(name = "tasks")
+@NoArgsConstructor
 public class Task {
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
   private UUID id;
 
-  private String name;
+  @ManyToOne private TaskPlanning taskPlanning;
 
-  @ManyToOne private User user;
+  private LocalDate deadline;
 
-  private boolean isDone;
-
-  public Task() {}
-  ;
-
-  public Task(String name) {
-    this.name = name;
-    this.isDone = false;
+  public Task(TaskPlanning taskPlanning, LocalDate deadline) {
+    this.taskPlanning = taskPlanning;
+    this.deadline = deadline;
   }
 }
