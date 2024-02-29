@@ -74,6 +74,7 @@ export const TaskProvider: ProviderType = ({ children }) => {
 
   const addTask = async (task: TaskBody) => {
     const data: TaskResponse = await postItem("tasks", { name: task.name });
+    console.log(data);
     setTasks([...tasks, data]);
   };
 
@@ -82,8 +83,8 @@ export const TaskProvider: ProviderType = ({ children }) => {
     // Task status should change
     // const data: TaskResponse = await updateTask("tasks", id);
     // setTasks([...tasks, data]);
-    await updateTask("tasks", id);
-    const newList = await getAllTasks();
+    const newTask = await updateTask("tasks", id);
+    const newList = [...tasks.filter((task) => task.id !== id), newTask];
     setTasks(newList);
   };
 
