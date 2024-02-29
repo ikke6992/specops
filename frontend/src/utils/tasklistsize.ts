@@ -6,9 +6,9 @@ export const cols = (width: number) => {
   } else if (width > 1540) {
     return 4;
   } else if (width > 1160) {
-    return 3;
+    return 4;
   } else if (width > 630) {
-    return 2;
+    return 3;
   } else {
     return 1;
   }
