@@ -3,33 +3,32 @@ import StatusType from "../../../models/record/StatusType";
 
 type PropsType = { status: StatusType };
 const LogLabel = ({ status }: PropsType) => {
-  const [color, setColor] = useState("");
+  const [background, setBackground] = useState("");
 
   useEffect(() => {
     const determineColor = () => {
-      let name: string;
+      let color: string;
       switch (status) {
         case "planned":
         case "on time":
-          name = "green";
+          color = "bg-green-500";
           break;
         case "pending":
-          name = "yellow";
+          color = "bg-yellow-500";
           break;
         case "overdue":
         case "too late":
-          name = "red";
+          color = "bg-red-500";
           break;
       }
-      console.log(name);
-      setColor(name);
+      setBackground(color);
     };
     determineColor();
   }, [status]);
 
   return (
     <span
-      className={`inline-block px-2 py-1 text-sm font-medium text-white bg-${color}-500 rounded`}
+      className={`inline-block px-2 py-1 text-sm font-medium text-white ${background} rounded`}
     >
       {status}
     </span>
