@@ -1,3 +1,4 @@
+import useWindowDimensions from "../../../utils/windowdimensions";
 import FilterTabs from "../filter/FilterTabs";
 import SearchBar from "../search/SearchBar";
 
@@ -8,6 +9,8 @@ type PropsType = {
   navigation: React.ReactNode;
 };
 const Layout = ({ searchBar, content, navigation }: PropsType) => {
+  const { width } = useWindowDimensions();
+
   return (
     <main className="h-screen">
       {/* Header */}
@@ -19,8 +22,8 @@ const Layout = ({ searchBar, content, navigation }: PropsType) => {
       </section>
       {/* Search & Filter */}
       <section
-        className="bg-slate-600 flex flex-row justify-center items-center"
-        style={{ height: "10%" }}
+        className="bg-slate-600 flex flex-row justify-center items-center flex-wrap"
+        style={{ height: width > 650 ? "15%" : "20%" }}
       >
         <article className="flex flex-row justify-center items-center mr-4">
           <SearchBar />
@@ -33,7 +36,7 @@ const Layout = ({ searchBar, content, navigation }: PropsType) => {
       <section
         className="p-8 bg-gray-400"
         style={{
-          height: "70%",
+          height: width > 650 ? "65%" : "60%",
         }}
       >
         {content}
