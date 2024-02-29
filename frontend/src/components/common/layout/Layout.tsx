@@ -7,8 +7,9 @@ type PropsType = {
   searchBar: React.ReactNode;
   content: React.ReactNode;
   navigation: React.ReactNode;
+  search: (type: "dept" | "name", querry: string) => void;
 };
-const Layout = ({ searchBar, content, navigation }: PropsType) => {
+const Layout = ({ searchBar, content, navigation, search }: PropsType) => {
   const { width } = useWindowDimensions();
 
   return (
@@ -26,7 +27,7 @@ const Layout = ({ searchBar, content, navigation }: PropsType) => {
         style={{ height: width > 650 ? "15%" : "20%" }}
       >
         <article className="flex flex-row justify-center items-center mr-4">
-          <SearchBar />
+          <SearchBar search={search} />
         </article>
         <article className="flex flex-row justify-center items-center">
           <FilterTabs />

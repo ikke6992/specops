@@ -14,6 +14,8 @@ type ContextType = {
   moveLeft: () => void;
   addTask: (task: TaskBody) => void;
   completeTask: (id: string) => void;
+  search: (type: "dept" | "name", querry: string) => void;
+  filter: (status: "all" | "pending" | "planned" | "overdue") => void;
 };
 
 type ProviderType = FC<{ children: ReactNode }>;
@@ -26,10 +28,13 @@ export const TaskContext = createContext<ContextType>({
   moveLeft: () => {},
   addTask: () => {},
   completeTask: () => {},
+  search: () => {},
+  filter: () => {},
 });
 
 export const TaskProvider: ProviderType = ({ children }) => {
   const [tasks, setTasks] = useState<TaskResponse[]>([]);
+  const [list, setList] = useState<TaskResponse[]>([]);
   const [size, setSize] = useState(0);
   const [pointer, setPointer] = useState(0);
 
@@ -37,6 +42,7 @@ export const TaskProvider: ProviderType = ({ children }) => {
     const getTaskList = async () => {
       const data = await getAllTasks();
       setTasks(data);
+      setList(data);
     };
     getTaskList();
   }, []);
@@ -54,7 +60,7 @@ export const TaskProvider: ProviderType = ({ children }) => {
   };
 
   const getTasks = () => {
-    return tasks.slice(pointer, pointer + size);
+    return list.slice(pointer, pointer + size);
   };
 
   const getLogs = () => {
@@ -79,13 +85,33 @@ export const TaskProvider: ProviderType = ({ children }) => {
   };
 
   const completeTask = async (id: string) => {
-    // THIS NEEDS TO BE UPDATED
-    // Task status should change
-    // const data: TaskResponse = await updateTask("tasks", id);
-    // setTasks([...tasks, data]);
     const newTask = await updateTask("tasks", id);
     const newList = [...tasks.filter((task) => task.id !== id), newTask];
     setTasks(newList);
+  };
+
+  const search = (type: "dept" | "name", querry: string) => {
+    let newList;
+
+    if (querry === "") {
+      setList(tasks);
+      return;
+    }
+
+    if (type === "dept") {
+      newList = tasks.filter((task) =>
+        task.department.toLowerCase().includes(querry.toLowerCase())
+      );
+    } else {
+      newList = tasks.filter((task) =>
+        task.name.toLowerCase().includes(querry.toLowerCase())
+      );
+    }
+    setList(newList);
+  };
+
+  const filter = (status: "all" | "pending" | "planned" | "overdue") => {
+    console.log(status);
   };
 
   return (
@@ -98,6 +124,8 @@ export const TaskProvider: ProviderType = ({ children }) => {
         moveLeft,
         addTask,
         completeTask,
+        search,
+        filter,
       }}
     >
       {children}

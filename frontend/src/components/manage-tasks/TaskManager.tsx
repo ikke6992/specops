@@ -11,7 +11,7 @@ import FunctionButton from "../common/buttons/FunctionButton";
 import Layout from "../common/layout/Layout";
 
 const Content = () => {
-  const { addTask, moveLeft, moveRight } = useContext(TaskContext);
+  const { addTask, moveLeft, moveRight, search } = useContext(TaskContext);
   const [showCreator, setShowCreator] = useState(false);
   const navigate = useNavigate();
 
@@ -50,6 +50,7 @@ const Content = () => {
   return (
     <>
       <Layout
+        search={search}
         searchBar={<SearchBar />}
         content={<TaskList />}
         navigation={<Navigation />}
