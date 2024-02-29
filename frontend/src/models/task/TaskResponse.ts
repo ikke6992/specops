@@ -4,7 +4,8 @@ type Department = {
 };
 
 export default interface TaskResponse {
-  id: string;
+  taskId: string;
+  taskPlanningId: string;
   name: string;
   department: Department;
   startDate: string;

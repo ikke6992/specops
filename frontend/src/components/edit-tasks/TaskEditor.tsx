@@ -1,7 +1,10 @@
 import { useContext } from "react";
 import TaskBody from "../../models/task/TaskBody";
 import Modal from "../common/modal/Modal";
-import { EditTaskContext, EditTaskProvider } from "../../contexts/EditTaskContext";
+import {
+  TaskModalContext,
+  TaskModalProvider,
+} from "../../contexts/TaskModalContext";
 import NameField from "../create-tasks/fields/NameField";
 
 const Content = (props: {
@@ -9,7 +12,7 @@ const Content = (props: {
   close: () => void;
   submit: (task: TaskBody) => void;
 }) => {
-  const { taskName } = useContext(EditTaskContext);
+  const { taskName } = useContext(TaskModalContext);
 
   return (
     <Modal
@@ -30,9 +33,9 @@ const TaskEditor = (props: {
   submit: (task: TaskBody) => void;
 }) => {
   return (
-    <EditTaskProvider>
+    <TaskModalProvider>
       <Content name={props.name} close={props.close} submit={props.submit} />
-    </EditTaskProvider>
+    </TaskModalProvider>
   );
 };
 

@@ -29,6 +29,12 @@ public class TaskService {
     return taskPlanning;
   }
 
+  public TaskPlanning editTask(TaskPlanning taskPlanning, String name) {
+    taskPlanning.setName(name);
+    taskPlanningRepository.save(taskPlanning);
+    return taskPlanning;
+  }
+
   public TaskExecution execute(Task task, User user) {
     LocalDate executionDate = LocalDate.now();
     TaskExecution executedTask = new TaskExecution(task, user, executionDate);
@@ -44,7 +50,11 @@ public class TaskService {
     return taskPlanningRepository.findAll();
   }
 
-  public Optional<Task> findById(UUID id) {
+  public Optional<Task> findTaskById(UUID id) {
     return taskRepository.findById(id);
+  }
+
+  public Optional<TaskPlanning> findTaskPlanningById(UUID id) {
+    return taskPlanningRepository.findById(id);
   }
 }

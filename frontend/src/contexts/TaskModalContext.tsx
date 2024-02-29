@@ -6,19 +6,19 @@ type ContextType = {
 };
 type ProviderType = FC<{ children: ReactNode }>;
 
-export const EditTaskContext = createContext<ContextType>({
+export const TaskModalContext = createContext<ContextType>({
   taskName: "",
   setTaskName: (taskName) => {
     return taskName;
   },
 });
 
-export const EditTaskProvider: ProviderType = ({ children }) => {
+export const TaskModalProvider: ProviderType = ({ children }) => {
   const [taskName, setTaskName] = useState<string>("");
 
   return (
-    <EditTaskContext.Provider value={{ taskName, setTaskName }}>
+    <TaskModalContext.Provider value={{ taskName, setTaskName }}>
       {children}
-    </EditTaskContext.Provider>
+    </TaskModalContext.Provider>
   );
 };

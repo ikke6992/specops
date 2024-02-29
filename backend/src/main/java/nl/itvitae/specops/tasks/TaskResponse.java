@@ -4,7 +4,8 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 public record TaskResponse(
-    UUID id,
+    UUID taskId,
+    UUID taskPlanningId,
     String name,
     String department,
     LocalDate startDate,
@@ -23,13 +24,15 @@ public record TaskResponse(
   }
 
   static TaskResponse of(Task task) {
-    final UUID id = task.getId();
-    final String name = task.getTaskPlanning().getName();
-    final String department = task.getTaskPlanning().getDepartment().getName();
+    final TaskPlanning taskPlanning = task.getTaskPlanning();
+    final UUID taskId = task.getId();
+    final UUID taskPlanningId = taskPlanning.getId();
+    final String name = taskPlanning.getName();
+    final String department = taskPlanning.getDepartment().getName();
     final LocalDate deadline = task.getDeadline();
-    final LocalDate startDate = deadline.minusDays(task.getTaskPlanning().getTimeframe());
+    final LocalDate startDate = deadline.minusDays(taskPlanning.getTimeframe());
     final String status = getStatus(deadline, startDate);
 
-    return new TaskResponse(id, name, department, startDate, deadline, status);
+    return new TaskResponse(taskId, taskPlanningId, name, department, startDate, deadline, status);
   }
 }

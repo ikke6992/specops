@@ -7,7 +7,6 @@ import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import nl.itvitae.specops.departments.Department;
 import nl.itvitae.specops.departments.DepartmentRepository;
-import nl.itvitae.specops.departments.DepartmentService;
 import nl.itvitae.specops.users.User;
 import nl.itvitae.specops.users.UserRepository;
 import org.springframework.http.ResponseEntity;
@@ -71,10 +70,19 @@ public class TaskController {
     }
   }
 
-  @PatchMapping("/setComplete/{id}")
-  public ResponseEntity<TaskExecution> setComplete(@PathVariable UUID id) {
+  @PatchMapping("/edit/{taskPlanningId}")
+  public ResponseEntity<TaskPlanning> editTask(
+      @PathVariable(value = "taskPlanningId") UUID id, @RequestBody OldData data) {
+    var possibleTaskPlanning = taskService.findTaskPlanningById(id);
+    if (possibleTaskPlanning.isEmpty()) return ResponseEntity.notFound().build();
+    final TaskPlanning taskPlanning = possibleTaskPlanning.get();
+    return ResponseEntity.ok(taskService.editTask(taskPlanning, data.name));
+  }
+
+  @PatchMapping("/setComplete/{taskId}")
+  public ResponseEntity<TaskExecution> setComplete(@PathVariable(value = "taskId") UUID id) {
     final User user = userRepository.findAll().get(0);
-    var possibleTask = taskService.findById(id);
+    var possibleTask = taskService.findTaskById(id);
     if (possibleTask.isEmpty()) return ResponseEntity.notFound().build();
     final Task task = possibleTask.get();
     return ResponseEntity.ok(taskService.execute(task, user));

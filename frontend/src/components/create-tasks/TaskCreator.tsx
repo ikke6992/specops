@@ -1,8 +1,8 @@
 import { useContext } from "react";
 import {
-  CreateTaskContext,
-  CreateTaskProvider,
-} from "../../contexts/CreateTaskContext";
+  TaskModalContext,
+  TaskModalProvider,
+} from "../../contexts/TaskModalContext";
 import TaskBody from "../../models/task/TaskBody";
 import Modal from "../common/modal/Modal";
 import NameField from "./fields/NameField";
@@ -11,7 +11,7 @@ const Content = (props: {
   close: () => void;
   submit: (task: TaskBody) => void;
 }) => {
-  const { taskName } = useContext(CreateTaskContext);
+  const { taskName } = useContext(TaskModalContext);
 
   return (
     <Modal
@@ -31,9 +31,9 @@ const TaskCreator = (props: {
   submit: (task: TaskBody) => void;
 }) => {
   return (
-    <CreateTaskProvider>
+    <TaskModalProvider>
       <Content close={props.close} submit={props.submit} />
-    </CreateTaskProvider>
+    </TaskModalProvider>
   );
 };
 

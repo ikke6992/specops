@@ -9,6 +9,7 @@ import TaskBody from "../../../../models/task/TaskBody";
 import { TaskContext } from "../../../../contexts/TaskContext";
 
 type PropsType = {
+  editId: string,
   name: string;
   dept: string;
   start: string;
@@ -17,6 +18,7 @@ type PropsType = {
   completeTask: () => void;
 };
 const Card1 = ({
+  editId,
   name,
   dept,
   start,
@@ -26,7 +28,6 @@ const Card1 = ({
 }: PropsType) => {
   const [showEditor, setShowEditor] = useState(false);
   const { editTask } = useContext(TaskContext);
-
   return (
     <>
       <article
@@ -57,8 +58,7 @@ const Card1 = ({
       </article>
       {showEditor && (
         <TaskEditor
-          name={name}
-          submit={(task: TaskBody) => editTask(task)}
+          submit={(task: TaskBody) => editTask(editId, task)}
           close={() => setShowEditor(false)}
         />
       )}
