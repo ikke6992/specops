@@ -8,8 +8,15 @@ type PropsType = {
   content: React.ReactNode;
   navigation: React.ReactNode;
   search: (type: "dept" | "name", querry: string) => void;
+  filter: (status: "all" | "pending" | "planned" | "overdue") => void;
 };
-const Layout = ({ searchBar, content, navigation, search }: PropsType) => {
+const Layout = ({
+  searchBar,
+  content,
+  navigation,
+  search,
+  filter,
+}: PropsType) => {
   const { width } = useWindowDimensions();
 
   return (
@@ -30,7 +37,7 @@ const Layout = ({ searchBar, content, navigation, search }: PropsType) => {
           <SearchBar search={search} />
         </article>
         <article className="flex flex-row justify-center items-center">
-          <FilterTabs />
+          <FilterTabs filter={filter} />
         </article>
       </section>
       {/* Content */}

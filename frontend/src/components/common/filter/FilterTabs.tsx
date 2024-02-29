@@ -19,7 +19,10 @@ const Tab = ({ name, color, selected, onClick }: TabProps) => {
   );
 };
 
-const FilterTabs = () => {
+type FilterTabsProps = {
+  filter: (status: "all" | "pending" | "planned" | "overdue") => void;
+};
+const FilterTabs = ({ filter }: FilterTabsProps) => {
   const [selected, setSelected] = useState(0);
 
   return (
@@ -29,25 +32,37 @@ const FilterTabs = () => {
           name="All"
           color="blue"
           selected={selected === 0}
-          onClick={() => setSelected(0)}
+          onClick={() => {
+            filter("all");
+            setSelected(0);
+          }}
         />
         <Tab
           name="Planned"
           color="green"
           selected={selected === 1}
-          onClick={() => setSelected(1)}
+          onClick={() => {
+            filter("planned");
+            setSelected(1);
+          }}
         />
         <Tab
           name="Pending"
           color="yellow"
           selected={selected === 2}
-          onClick={() => setSelected(2)}
+          onClick={() => {
+            filter("pending");
+            setSelected(2);
+          }}
         />
         <Tab
           name="Overdue"
           color="red"
           selected={selected === 3}
-          onClick={() => setSelected(3)}
+          onClick={() => {
+            filter("overdue");
+            setSelected(3);
+          }}
         />
       </div>
     </div>

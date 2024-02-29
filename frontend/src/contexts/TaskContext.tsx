@@ -37,6 +37,11 @@ export const TaskProvider: ProviderType = ({ children }) => {
   const [list, setList] = useState<TaskResponse[]>([]);
   const [size, setSize] = useState(0);
   const [pointer, setPointer] = useState(0);
+  const [querry, setQuerry] = useState("");
+  const [type, setType] = useState<"dept" | "name">("name");
+  const [status, setStatus] = useState<
+    "all" | "pending" | "planned" | "overdue"
+  >("all");
 
   useEffect(() => {
     const getTaskList = async () => {
@@ -59,8 +64,36 @@ export const TaskProvider: ProviderType = ({ children }) => {
     }
   };
 
+  const apply = (list: TaskResponse[]) => {
+    return applyFilter(applySearch(list));
+  };
+
+  const applySearch = (list: TaskResponse[]) => {
+    if (querry === "") {
+      return list;
+    }
+
+    if (type === "dept") {
+      return list.filter((task) =>
+        task.department.toLowerCase().includes(querry.toLowerCase())
+      );
+    } else {
+      return list.filter((task) =>
+        task.name.toLowerCase().includes(querry.toLowerCase())
+      );
+    }
+  };
+
+  const applyFilter = (list: TaskResponse[]) => {
+    if (status === "all") {
+      return list;
+    } else {
+      return list.filter((task) => task.status === status);
+    }
+  };
+
   const getTasks = () => {
-    return list.slice(pointer, pointer + size);
+    return apply(list).slice(pointer, pointer + size);
   };
 
   const getLogs = () => {
@@ -90,28 +123,13 @@ export const TaskProvider: ProviderType = ({ children }) => {
     setTasks(newList);
   };
 
-  const search = (type: "dept" | "name", querry: string) => {
-    let newList;
-
-    if (querry === "") {
-      setList(tasks);
-      return;
-    }
-
-    if (type === "dept") {
-      newList = tasks.filter((task) =>
-        task.department.toLowerCase().includes(querry.toLowerCase())
-      );
-    } else {
-      newList = tasks.filter((task) =>
-        task.name.toLowerCase().includes(querry.toLowerCase())
-      );
-    }
-    setList(newList);
+  const search = (newType: "dept" | "name", newQuerry: string) => {
+    setType(newType);
+    setQuerry(newQuerry);
   };
 
-  const filter = (status: "all" | "pending" | "planned" | "overdue") => {
-    console.log(status);
+  const filter = (newStatus: "all" | "pending" | "planned" | "overdue") => {
+    setStatus(newStatus);
   };
 
   return (

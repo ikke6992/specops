@@ -11,7 +11,8 @@ import FunctionButton from "../common/buttons/FunctionButton";
 import Layout from "../common/layout/Layout";
 
 const Content = () => {
-  const { addTask, moveLeft, moveRight, search } = useContext(TaskContext);
+  const { addTask, moveLeft, moveRight, search, filter } =
+    useContext(TaskContext);
   const [showCreator, setShowCreator] = useState(false);
   const navigate = useNavigate();
 
@@ -54,6 +55,7 @@ const Content = () => {
         searchBar={<SearchBar />}
         content={<TaskList />}
         navigation={<Navigation />}
+        filter={filter}
       />
       {/* Show create task menu if needed */}
       {showCreator && (
