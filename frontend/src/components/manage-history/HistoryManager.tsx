@@ -5,7 +5,8 @@ import Content from "./Content";
 
 // Task View, Task Manager, History Manager
 const TaskContent = (props: { toggleMode: () => void }) => {
-  const { getLogs, setSize, moveRight, moveLeft } = useContext(TaskContext);
+  const { getLogs, setSize, moveRight, moveLeft, filter, search } =
+    useContext(TaskContext);
   return (
     <Content
       toggleMode={props.toggleMode}
@@ -14,6 +15,8 @@ const TaskContent = (props: { toggleMode: () => void }) => {
       setSize={setSize}
       moveRight={moveRight}
       moveLeft={moveLeft}
+      filter={filter}
+      search={search}
     />
   );
 };

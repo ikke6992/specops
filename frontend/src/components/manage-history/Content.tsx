@@ -10,6 +10,8 @@ import MoveRightButton from "../common/buttons/MoveRightButton";
 import FunctionButton from "../common/buttons/FunctionButton";
 import Log from "../common/log/Log";
 import Layout from "../common/layout/Layout";
+import TaskStatus from "../../models/task/TaskStatus";
+import RecordStatus from "../../models/record/RecordStatus";
 
 type PropsType = {
   toggleMode: () => void;
@@ -18,6 +20,8 @@ type PropsType = {
   setSize: (size: number) => void;
   moveRight: () => void;
   moveLeft: () => void;
+  filter: (status: "all" | TaskStatus | RecordStatus) => void;
+  search: (type: "dept" | "name", querry: string) => void;
 };
 const Content = ({
   toggleMode,
@@ -26,6 +30,8 @@ const Content = ({
   setSize,
   moveRight,
   moveLeft,
+  filter,
+  search,
 }: PropsType) => {
   const { height } = useWindowDimensions();
   const navigate = useNavigate();
@@ -73,6 +79,8 @@ const Content = ({
         content={<Log logs={getLogs()} />}
         navigation={<Navigation />}
         isHistory={mode === "tasks"}
+        filter={filter}
+        search={search}
       />
     </>
   );
