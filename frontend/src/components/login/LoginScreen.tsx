@@ -19,7 +19,7 @@ const Content = () => {
         </h1>
       </section>
       <section
-        className="p-8 bg-gray-400"
+        className="p-8 bg-gray-400 flex justify-center"
         style={{
           height: "70%",
         }}
