@@ -58,6 +58,7 @@ const Card1 = ({
       </article>
       {showEditor && (
         <TaskEditor
+          name={name}
           submit={(task: TaskBody) => editTask(id, task)}
           close={() => setShowEditor(false)}
         />
