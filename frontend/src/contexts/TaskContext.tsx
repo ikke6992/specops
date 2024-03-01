@@ -6,6 +6,7 @@ import postItem from "../services/postItem";
 import updateTask from "../services/updateTask";
 import editItem from "../services/editItem";
 import TaskLog from "../models/log/TaskLog";
+import TaskStatus from "../models/task/TaskStatus";
 
 type ContextType = {
   getTasks: () => TaskResponse[];
@@ -17,7 +18,7 @@ type ContextType = {
   editTask: (id: string, task: TaskBody) => void;
   completeTask: (id: string) => void;
   search: (type: "dept" | "name", querry: string) => void;
-  filter: (status: "all" | "pending" | "planned" | "overdue") => void;
+  filter: (status: "all" | TaskStatus) => void;
 };
 
 type ProviderType = FC<{ children: ReactNode }>;

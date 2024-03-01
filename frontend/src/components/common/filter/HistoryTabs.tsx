@@ -19,7 +19,7 @@ const HistoryTabs = ({ filter, selected, setSelected }: PropsType) => {
         }}
       />
       <Tab
-        name="Planned"
+        name="On time"
         color="green"
         selected={selected === 1}
         onClick={() => {
@@ -28,7 +28,7 @@ const HistoryTabs = ({ filter, selected, setSelected }: PropsType) => {
         }}
       />
       <Tab
-        name="Pending"
+        name="Too late"
         color="red"
         selected={selected === 2}
         onClick={() => {

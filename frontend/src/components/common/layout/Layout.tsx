@@ -1,3 +1,5 @@
+import RecordStatus from "../../../models/record/RecordStatus";
+import TaskStatus from "../../../models/task/TaskStatus";
 import useWindowDimensions from "../../../utils/windowdimensions";
 import FilterTabs from "../filter/FilterTabs";
 import SearchBar from "../search/SearchBar";
@@ -8,7 +10,8 @@ type PropsType = {
   content: React.ReactNode;
   navigation: React.ReactNode;
   search: (type: "dept" | "name", querry: string) => void;
-  filter: (status: "all" | "pending" | "planned" | "overdue") => void;
+  filter: (status: "all" | TaskStatus | RecordStatus) => void;
+  isHistory: boolean;
 };
 const Layout = ({
   searchBar,
@@ -16,6 +19,7 @@ const Layout = ({
   navigation,
   search,
   filter,
+  isHistory,
 }: PropsType) => {
   const { width } = useWindowDimensions();
 
@@ -37,7 +41,7 @@ const Layout = ({
           <SearchBar search={search} />
         </article>
         <article className="flex flex-row justify-center items-center">
-          <FilterTabs filter={filter} />
+          <FilterTabs filter={filter} isHistory={isHistory} />
         </article>
       </section>
       {/* Content */}
