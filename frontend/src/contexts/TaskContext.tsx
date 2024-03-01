@@ -8,6 +8,7 @@ import editItem from "../services/editItem";
 import TaskLog from "../models/log/TaskLog";
 import StatusFilter from "../models/filter/StatusFilter";
 import TaskStatus from "../models/task/TaskStatus";
+import SearchFilter from "../models/filter/SearchFilter";
 
 type ContextType = {
   getTasks: () => TaskResponse[];
@@ -18,7 +19,7 @@ type ContextType = {
   addTask: (task: TaskBody) => void;
   editTask: (id: string, task: TaskBody) => void;
   completeTask: (id: string) => void;
-  search: (type: "dept" | "name", querry: string) => void;
+  search: (type: SearchFilter, querry: string) => void;
   filter: (status: StatusFilter) => void;
 };
 
@@ -143,8 +144,8 @@ export const TaskProvider: ProviderType = ({ children }) => {
     }
   };
 
-  const search = (newType: "dept" | "name", newQuerry: string) => {
-    setType(newType);
+  const search = (newType: SearchFilter, newQuerry: string) => {
+    setType(newType as "dept" | "name");
     setQuerry(newQuerry);
   };
 

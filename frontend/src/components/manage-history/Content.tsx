@@ -12,6 +12,7 @@ import Log from "../common/log/Log";
 import Layout from "../common/layout/Layout";
 import TaskStatus from "../../models/task/TaskStatus";
 import RecordStatus from "../../models/record/RecordStatus";
+import SearchFilter from "../../models/filter/SearchFilter";
 
 type PropsType = {
   toggleMode: () => void;
@@ -21,7 +22,7 @@ type PropsType = {
   moveRight: () => void;
   moveLeft: () => void;
   filter: (status: "all" | TaskStatus | RecordStatus) => void;
-  search: (type: "dept" | "name", querry: string) => void;
+  search: (type: SearchFilter, querry: string) => void;
 };
 const Content = ({
   toggleMode,

@@ -4,6 +4,7 @@ import HistoryLog from "../models/log/HistoryLog";
 import RecordResponse from "../models/record/RecordResponse";
 import getAllRecords from "../services/getAllRecords";
 import RecordStatus from "../models/record/RecordStatus";
+import SearchFilter from "../models/filter/SearchFilter";
 
 type ContextType = {
   getRecords: () => RecordResponse[];
@@ -11,7 +12,7 @@ type ContextType = {
   setSize: (size: number) => void;
   moveRight: () => void;
   moveLeft: () => void;
-  search: (type: "dept" | "name", querry: string) => void;
+  search: (type: SearchFilter, querry: string) => void;
   filter: (status: StatusFilter) => void;
 };
 
@@ -33,7 +34,7 @@ export const HistoryProvider: ProviderType = ({ children }) => {
   const [size, setSize] = useState(0);
   const [pointer, setPointer] = useState(0);
   const [querry, setQuerry] = useState("");
-  const [type, setType] = useState<"dept" | "name">("name");
+  const [type, setType] = useState<"name" | "user">("name");
   const [status, setStatus] = useState<"all" | RecordStatus>("all");
 
   useEffect(() => {
@@ -84,22 +85,19 @@ export const HistoryProvider: ProviderType = ({ children }) => {
   };
 
   const applySearch = (list: RecordResponse[]) => {
-    console.log(type);
     if (querry === "") {
-      return list;
-    } else {
       return list;
     }
 
-    // if (type === "dept") {
-    //   return list.filter((task) =>
-    //     task.department.toLowerCase().includes(querry.toLowerCase())
-    //   );
-    // } else {
-    //   return list.filter((task) =>
-    //     task.name.toLowerCase().includes(querry.toLowerCase())
-    //   );
-    // }
+    if (type === "user") {
+      return list.filter((record) =>
+        record.assignee.toLowerCase().includes(querry.toLowerCase())
+      );
+    } else {
+      return list.filter((record) =>
+        record.name.toLowerCase().includes(querry.toLowerCase())
+      );
+    }
   };
 
   const applyFilter = (list: RecordResponse[]) => {
@@ -110,8 +108,8 @@ export const HistoryProvider: ProviderType = ({ children }) => {
     }
   };
 
-  const search = (newType: "dept" | "name", newQuerry: string) => {
-    setType(newType);
+  const search = (newType: SearchFilter, newQuerry: string) => {
+    setType(newType as "name" | "user");
     setQuerry(newQuerry);
   };
 

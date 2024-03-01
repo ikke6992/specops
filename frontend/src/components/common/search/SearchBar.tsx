@@ -1,9 +1,11 @@
 import { useState } from "react";
+import SearchFilter from "../../../models/filter/SearchFilter";
 
 type SearchProps = {
-  search: (type: "name" | "dept", querry: string) => void;
+  search: (type: SearchFilter, querry: string) => void;
+  isHistory: boolean;
 };
-const SearchBar = ({ search }: SearchProps) => {
+const SearchBar = ({ search, isHistory }: SearchProps) => {
   const [type, setType] = useState("name");
   const [querry, setQuerry] = useState("");
 
@@ -17,13 +19,18 @@ const SearchBar = ({ search }: SearchProps) => {
         }}
       >
         <option value="name">Name</option>
-        <option value="dept">Dept</option>
+        <option value={isHistory ? "user" : "dept"}>
+          {isHistory ? "User" : "Dept"}
+        </option>
         {/* <option value="option3">Role</option> */}
       </select>
       <input
         onChange={(e) => {
           setQuerry(e.target.value);
-          search(type === "name" ? "name" : "dept", e.target.value);
+          search(
+            type === "name" ? "name" : isHistory ? "user" : "dept",
+            e.target.value
+          );
         }}
         value={querry}
         type="text"
