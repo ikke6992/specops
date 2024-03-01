@@ -1,11 +1,11 @@
 import { useContext } from "react";
+import TaskBody from "../../models/task/TaskBody";
+import Modal from "../common/modal/Modal";
 import {
   TaskModalContext,
   TaskModalProvider,
 } from "../../contexts/TaskModalContext";
-import TaskBody from "../../models/task/TaskBody";
-import Modal from "../common/modal/Modal";
-import FieldCombination from "./fields/FieldCombination";
+import FieldCombination from "../create-tasks/fields/FieldCombination";
 
 const Content = (props: {
   close: () => void;
@@ -15,7 +15,7 @@ const Content = (props: {
 
   return (
     <Modal
-      name="create task"
+      name="edit task"
       close={props.close}
       submit={() => {
         console.log(taskName);
@@ -26,7 +26,7 @@ const Content = (props: {
   );
 };
 
-const TaskCreator = (props: {
+const TaskEditor = (props: {
   close: () => void;
   submit: (task: TaskBody) => void;
 }) => {
@@ -37,4 +37,4 @@ const TaskCreator = (props: {
   );
 };
 
-export default TaskCreator;
+export default TaskEditor;

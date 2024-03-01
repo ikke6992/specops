@@ -1,24 +1,50 @@
+import useWindowDimensions from "../../../utils/windowdimensions";
+import FilterTabs from "../filter/FilterTabs";
+import SearchBar from "../search/SearchBar";
+
 // could add header to this.
 type PropsType = {
   searchBar: React.ReactNode;
   content: React.ReactNode;
   navigation: React.ReactNode;
+  search: (type: "dept" | "name", querry: string) => void;
+  filter: (status: "all" | "pending" | "planned" | "overdue") => void;
 };
-const Layout = ({ searchBar, content, navigation }: PropsType) => {
+const Layout = ({
+  searchBar,
+  content,
+  navigation,
+  search,
+  filter,
+}: PropsType) => {
+  const { width } = useWindowDimensions();
+
   return (
     <main className="h-screen">
-      {/* Searchbar */}
+      {/* Header */}
       <section
         className="bg-slate-500 flex flex-row justify-center items-center"
-        style={{ height: "20%" }}
+        style={{ height: "10%" }}
       >
         {searchBar}
+      </section>
+      {/* Search & Filter */}
+      <section
+        className="bg-slate-600 flex flex-row justify-center items-center flex-wrap"
+        style={{ height: width > 650 ? "15%" : "20%" }}
+      >
+        <article className="flex flex-row justify-center items-center mr-4">
+          <SearchBar search={search} />
+        </article>
+        <article className="flex flex-row justify-center items-center">
+          <FilterTabs filter={filter} />
+        </article>
       </section>
       {/* Content */}
       <section
         className="p-8 bg-gray-400"
         style={{
-          height: "70%",
+          height: width > 650 ? "65%" : "60%",
         }}
       >
         {content}
