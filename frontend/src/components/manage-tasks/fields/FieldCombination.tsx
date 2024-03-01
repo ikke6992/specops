@@ -15,8 +15,6 @@ const FieldCombination = () => {
       <br />
       <DeadlineField />
       <br />
-      <DepartmentField />
-      <br />
     </div>
   );
 };

@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useContext } from "react";
+import { TaskModalContext } from "../../../contexts/TaskModalContext";
 
 const TimeframeField = () => {
-  const [timeframe, setTimeframe] = useState<number>(0);
+  const { timeframe, setTimeframe } = useContext(TaskModalContext);
 
   return (
     <label>

@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useContext } from "react";
+import { TaskModalContext } from "../../../contexts/TaskModalContext";
 
 const IntervalField = () => {
-  const [interval, setInterval] = useState<number>(0);
+  const { interval, setInterval } = useContext(TaskModalContext);
 
   return (
     <label>

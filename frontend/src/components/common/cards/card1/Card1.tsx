@@ -4,12 +4,12 @@ import Card1Dates from "./Card1Dates";
 import Card1Label from "./Card1Label";
 import Card1Name from "./Card1Name";
 import Card1Status from "./Card1Status";
-import TaskEditor from "../../../edit-tasks/TaskEditor";
+import TaskEditor from "../../../manage-tasks/TaskEditor";
 import TaskBody from "../../../../models/task/TaskBody";
 import { TaskContext } from "../../../../contexts/TaskContext";
 
 type PropsType = {
-  id: string
+  id: string;
   name: string;
   dept: string;
   start: string;

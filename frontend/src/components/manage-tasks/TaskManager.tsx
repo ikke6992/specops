@@ -2,7 +2,7 @@ import TaskList from "./TaskList";
 import { useContext, useState } from "react";
 import { TaskContext, TaskProvider } from "../../contexts/TaskContext";
 import TaskBody from "../../models/task/TaskBody";
-import TaskCreator from "../create-tasks/TaskCreator";
+import TaskCreator from "./TaskCreator";
 import { useNavigate } from "react-router-dom";
 import MoveLeftButton from "../common/buttons/MoveLeftButton";
 import MoveRightButton from "../common/buttons/MoveRightButton";

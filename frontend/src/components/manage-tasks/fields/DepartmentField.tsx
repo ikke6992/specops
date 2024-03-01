@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import getAll from "../../../services/getAll";
 import Department from "../../../models/Department";
+import { TaskModalContext } from "../../../contexts/TaskModalContext";
 
 const DepartmentField = () => {
-  const [department, setDepartment] = useState<string>("");
+  const { department, setDepartment } = useContext(TaskModalContext);
   const [departments, setDepartments] = useState<Department[]>([]);
 
   useEffect(() => {
