@@ -84,7 +84,6 @@ export const HistoryProvider: ProviderType = ({ children }) => {
   };
 
   const applySearch = (list: RecordResponse[]) => {
-    console.log(type);
     if (querry === "") {
       return list;
     } else {

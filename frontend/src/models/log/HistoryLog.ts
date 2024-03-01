@@ -1,8 +1,8 @@
-type HistoryStatus = "on time" | "too late";
+import RecordStatus from "../record/RecordStatus";
 
 export default interface HistoryLog {
   id: string;
-  status: HistoryStatus;
+  status: RecordStatus;
   name: string;
   executionDate: string;
   deadline: string;

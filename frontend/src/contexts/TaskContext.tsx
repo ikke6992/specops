@@ -57,6 +57,7 @@ export const TaskProvider: ProviderType = ({ children }) => {
     getTaskList();
   }, []);
 
+  // Navigation
   const moveRight = () => {
     if (pointer + size < tasks.length) {
       setPointer(pointer + size);
@@ -69,6 +70,51 @@ export const TaskProvider: ProviderType = ({ children }) => {
     }
   };
 
+  // Getters
+  const getTasks = () => {
+    return apply(list).slice(pointer, pointer + size);
+  };
+
+  const getLogs = () => {
+    const logs: TaskLog[] = getTasks().map((task) => {
+      return {
+        id: task.id,
+        status: task.status,
+        name: task.name,
+        startdate: task.startDate,
+        deadline: task.deadline,
+        department: task.department,
+      };
+    });
+
+    return logs;
+  };
+
+  // Setters
+  const addTask = async (task: TaskBody) => {
+    const data: TaskResponse = await postItem("tasks", { name: task.name });
+    console.log(data);
+    setList([...list, data]);
+    setTasks([...tasks, data]);
+  };
+
+  const editTask = async (id: string, task: TaskBody) => {
+    const data: TaskResponse = await editItem("tasks", id, { name: task.name });
+    console.log(data);
+    const updatedTasks = tasks.map((task) => (task.id === id ? data : task));
+    console.log(updatedTasks);
+    setList(updatedTasks);
+    setTasks(updatedTasks);
+  };
+
+  const completeTask = async (id: string) => {
+    const newTask = await updateTask("tasks", id);
+    const newList = [...tasks.filter((task) => task.id !== id), newTask];
+    setTasks(newList);
+    setList(newList);
+  };
+
+  // Search & Filter
   const apply = (list: TaskResponse[]) => {
     return applyFilter(applySearch(list));
   };
@@ -95,48 +141,6 @@ export const TaskProvider: ProviderType = ({ children }) => {
     } else {
       return list.filter((task) => task.status === status);
     }
-  };
-
-  const getTasks = () => {
-    return apply(list).slice(pointer, pointer + size);
-  };
-
-  const getLogs = () => {
-    const logs: TaskLog[] = getTasks().map((task) => {
-      return {
-        id: task.id,
-        status: task.status,
-        name: task.name,
-        startdate: task.startDate,
-        deadline: task.deadline,
-        department: task.department,
-      };
-    });
-
-    return logs;
-  };
-
-  const addTask = async (task: TaskBody) => {
-    const data: TaskResponse = await postItem("tasks", { name: task.name });
-    console.log(data);
-    setList([...list, data]);
-    setTasks([...tasks, data]);
-  };
-
-  const editTask = async (id: string, task: TaskBody) => {
-    const data: TaskResponse = await editItem("tasks", id, { name: task.name });
-    console.log(data);
-    const updatedTasks = tasks.map((task) => (task.id === id ? data : task));
-    console.log(updatedTasks);
-    setList(updatedTasks);
-    setTasks(updatedTasks);
-  };
-
-  const completeTask = async (id: string) => {
-    const newTask = await updateTask("tasks", id);
-    const newList = [...tasks.filter((task) => task.id !== id), newTask];
-    setTasks(newList);
-    setList(newList);
   };
 
   const search = (newType: "dept" | "name", newQuerry: string) => {

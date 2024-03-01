@@ -22,7 +22,8 @@ const TaskContent = (props: { toggleMode: () => void }) => {
 };
 
 const HistoryContent = (props: { toggleMode: () => void }) => {
-  const { getLogs, setSize, moveRight, moveLeft } = useContext(HistoryContext);
+  const { getLogs, setSize, moveRight, moveLeft, filter, search } =
+    useContext(HistoryContext);
   return (
     <Content
       toggleMode={props.toggleMode}
@@ -31,6 +32,8 @@ const HistoryContent = (props: { toggleMode: () => void }) => {
       setSize={setSize}
       moveRight={moveRight}
       moveLeft={moveLeft}
+      filter={filter}
+      search={search}
     />
   );
 };

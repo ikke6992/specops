@@ -1,10 +1,10 @@
 import RecordStatus from "./RecordStatus";
 
 export default interface RecordResponse {
-  id: number;
+  id: string;
   status: RecordStatus;
   name: string;
-  executionDate: Date;
-  deadline: Date;
+  executionDate: string;
+  deadline: string;
   assignee: string;
 }
