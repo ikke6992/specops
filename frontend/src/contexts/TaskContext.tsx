@@ -16,6 +16,8 @@ type ContextType = {
   addTask: (task: TaskBody) => void;
   editTask: (id: string, task: TaskBody) => void;
   completeTask: (id: string) => void;
+  search: (type: "dept" | "name", querry: string) => void;
+  filter: (status: "all" | "pending" | "planned" | "overdue") => void;
 };
 
 type ProviderType = FC<{ children: ReactNode }>;
@@ -29,17 +31,26 @@ export const TaskContext = createContext<ContextType>({
   addTask: () => {},
   editTask: () => {},
   completeTask: () => {},
+  search: () => {},
+  filter: () => {},
 });
 
 export const TaskProvider: ProviderType = ({ children }) => {
   const [tasks, setTasks] = useState<TaskResponse[]>([]);
+  const [list, setList] = useState<TaskResponse[]>([]);
   const [size, setSize] = useState(0);
   const [pointer, setPointer] = useState(0);
+  const [querry, setQuerry] = useState("");
+  const [type, setType] = useState<"dept" | "name">("name");
+  const [status, setStatus] = useState<
+    "all" | "pending" | "planned" | "overdue"
+  >("all");
 
   useEffect(() => {
     const getTaskList = async () => {
       const data = await getAllTasks();
       setTasks(data);
+      setList(data);
     };
     getTaskList();
   }, []);
@@ -56,8 +67,36 @@ export const TaskProvider: ProviderType = ({ children }) => {
     }
   };
 
+  const apply = (list: TaskResponse[]) => {
+    return applyFilter(applySearch(list));
+  };
+
+  const applySearch = (list: TaskResponse[]) => {
+    if (querry === "") {
+      return list;
+    }
+
+    if (type === "dept") {
+      return list.filter((task) =>
+        task.department.toLowerCase().includes(querry.toLowerCase())
+      );
+    } else {
+      return list.filter((task) =>
+        task.name.toLowerCase().includes(querry.toLowerCase())
+      );
+    }
+  };
+
+  const applyFilter = (list: TaskResponse[]) => {
+    if (status === "all") {
+      return list;
+    } else {
+      return list.filter((task) => task.status === status);
+    }
+  };
+
   const getTasks = () => {
-    return tasks.slice(pointer, pointer + size);
+    return apply(list).slice(pointer, pointer + size);
   };
 
   const getLogs = () => {
@@ -78,23 +117,32 @@ export const TaskProvider: ProviderType = ({ children }) => {
   const addTask = async (task: TaskBody) => {
     const data: TaskResponse = await postItem("tasks", task);
     console.log(data);
+    setList([...list, data]);
     setTasks([...tasks, data]);
   };
 
   const editTask = async (id: string, task: TaskBody) => {
     const data: TaskResponse = await editItem("tasks", id, task);
     const updatedTasks = tasks.map((task) => (task.id === id ? data : task));
+    console.log(updatedTasks);
+    setList(updatedTasks);
     setTasks(updatedTasks);
   };
 
   const completeTask = async (id: string) => {
-    // THIS NEEDS TO BE UPDATED
-    // Task status should change
-    // const data: TaskResponse = await updateTask("tasks", id);
-    // setTasks([...tasks, data]);
     const newTask = await updateTask("tasks", id);
     const newList = [...tasks.filter((task) => task.id !== id), newTask];
     setTasks(newList);
+    setList(newList);
+  };
+
+  const search = (newType: "dept" | "name", newQuerry: string) => {
+    setType(newType);
+    setQuerry(newQuerry);
+  };
+
+  const filter = (newStatus: "all" | "pending" | "planned" | "overdue") => {
+    setStatus(newStatus);
   };
 
   return (
@@ -108,6 +156,8 @@ export const TaskProvider: ProviderType = ({ children }) => {
         addTask,
         editTask,
         completeTask,
+        search,
+        filter,
       }}
     >
       {children}

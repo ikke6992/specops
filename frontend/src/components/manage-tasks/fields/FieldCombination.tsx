@@ -1,5 +1,4 @@
 import DeadlineField from "./DeadlineField";
-import DepartmentField from "./DepartmentField";
 import IntervalField from "./IntervalField";
 import NameField from "./NameField";
 import TimeframeField from "./TimeframeField";
