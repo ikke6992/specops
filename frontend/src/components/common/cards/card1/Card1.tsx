@@ -11,6 +11,8 @@ import { TaskContext } from "../../../../contexts/TaskContext";
 type PropsType = {
   id: string;
   name: string;
+  timeframe: string;
+  interval: string;
   dept: string;
   start: string;
   end: string;
@@ -20,6 +22,8 @@ type PropsType = {
 const Card1 = ({
   id,
   name,
+  timeframe,
+  interval,
   dept,
   start,
   end,
@@ -59,6 +63,9 @@ const Card1 = ({
       {showEditor && (
         <TaskEditor
           name={name}
+          timeframe={timeframe}
+          interval={interval}
+          deadline={end}
           submit={(task: TaskBody) => editTask(id, task)}
           close={() => setShowEditor(false)}
         />

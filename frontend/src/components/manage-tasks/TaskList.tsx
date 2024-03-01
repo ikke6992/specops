@@ -29,6 +29,8 @@ const TaskList = () => {
             key={task.id}
             id={task.id}
             name={task.name}
+            timeframe={task.timeframe}
+            interval={task.interval}
             canComplete={task.status !== "planned"}
             completeTask={() => completeTask(task.id)}
             dept={task.department}

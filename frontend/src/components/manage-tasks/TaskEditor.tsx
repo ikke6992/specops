@@ -9,16 +9,21 @@ import FieldCombination from "./fields/FieldCombination";
 
 const Content = (props: {
   name: string;
+  timeframe: string;
+  interval: string;
+  deadline: string;
   close: () => void;
   submit: (task: TaskBody) => void;
 }) => {
-  const { taskName, setTaskName, timeframe, interval, deadline } =
+  console.log(props);
+  const { taskName, timeframe, interval, deadline, setTaskName, setTimeframe, setInterval, setDeadline } =
     useContext(TaskModalContext);
 
     useEffect(() => {
-      if (taskName === "") {
-        setTaskName(props.name);
-      }
+      if (taskName === "") setTaskName(props.name);
+      if (timeframe === 0) setTimeframe(parseInt(props.timeframe));
+      if (interval === 0) setInterval(parseInt(props.interval));
+      if (deadline === "") setDeadline(props.deadline);
     })
 
   return (
@@ -41,12 +46,15 @@ const Content = (props: {
 
 const TaskEditor = (props: {
   name: string;
+  timeframe: string;
+  interval: string;
+  deadline: string;
   close: () => void;
   submit: (task: TaskBody) => void;
 }) => {
   return (
     <TaskModalProvider>
-      <Content name={props.name} close={props.close} submit={props.submit} />
+      <Content name={props.name} timeframe={props.timeframe} interval={props.interval} deadline={props.deadline} close={props.close} submit={props.submit} />
     </TaskModalProvider>
   );
 };
