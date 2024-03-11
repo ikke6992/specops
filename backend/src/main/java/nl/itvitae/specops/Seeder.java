@@ -104,7 +104,7 @@ public class Seeder implements CommandLineRunner {
   }
 
   private void seedFromFile() throws IOException {
-    List<String> chores = Files.readAllLines(Paths.get("datas/seederdata.txt"));
+    List<String> chores = Files.readAllLines(Paths.get("data/seederdata.txt"));
 
     for (String chore : chores) {
       String[] choreArray = chore.split(",");
