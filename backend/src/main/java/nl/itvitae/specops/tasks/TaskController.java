@@ -45,7 +45,10 @@ public class TaskController {
   public ResponseEntity<List<TaskRecordResponse>> getAllHistory() {
     final List<TaskExecution> taskExecutions = taskExecutionRepository.findAll();
     final List<TaskRecordResponse> records =
-        taskExecutions.stream().map(TaskRecordResponse::of).toList();
+        taskExecutions.stream()
+            .sorted(Comparator.comparing(TaskExecution::getExecutionDate))
+            .map(TaskRecordResponse::of)
+            .toList();
 
     return ResponseEntity.ok(records);
   }
