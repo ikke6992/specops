@@ -2,6 +2,7 @@ package nl.itvitae.specops.tasks;
 
 import java.net.URI;
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -30,8 +31,13 @@ public class TaskController {
     final List<Task> executedTasks = taskExecutions.stream().map(TaskExecution::getTask).toList();
 
     final List<Task> tasks =
-        taskService.getAllTasks().stream().filter(task -> !executedTasks.contains(task)).toList();
+        taskService.getAllTasks().stream()
+            .filter(task -> !executedTasks.contains(task)) // Filter executed tasks
+            .sorted(Comparator.comparing(Task::getDeadline)) // Sort based on deadline
+            .toList();
+
     final List<TaskResponse> data = tasks.stream().map(TaskResponse::of).toList();
+
     return ResponseEntity.ok(data);
   }
 
