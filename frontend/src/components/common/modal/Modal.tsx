@@ -1,10 +1,13 @@
 import ModalClose from "./ModalClose";
+import ModalDeactivate from "./ModalDeactivate";
 import ModalHeader from "./ModalHeader";
 import ModalSubmit from "./ModalSubmit";
 
 export default function Modal(props: {
   name: string;
+  edit: boolean;
   close: () => void;
+  deactivate: () => void;
   submit: () => void;
   form: React.ReactNode;
 }) {
@@ -27,6 +30,7 @@ export default function Modal(props: {
             {/*footer*/}
             <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
               <ModalClose close={props.close} />
+              {props.edit && <ModalDeactivate deactivate={props.deactivate} />}
               <ModalSubmit name={props.name} handleSubmit={handleSubmit} />
             </div>
           </div>
