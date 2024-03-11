@@ -53,6 +53,12 @@ public class TaskService {
     return newTask;
   }
 
+  public TaskPlanning deactivateTask(Task task) {
+    final TaskPlanning taskPlanning = task.getTaskPlanning();
+    taskRepository.delete(task);
+    return taskPlanning;
+  }
+
   public List<TaskPlanning> getAllTaskPlannings() {
     return taskPlanningRepository.findAll();
   }
