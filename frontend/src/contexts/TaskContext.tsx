@@ -123,19 +123,19 @@ export const TaskProvider: ProviderType = ({ children }) => {
 
   const editTask = async (id: string, task: TaskBody) => {
     const data: TaskResponse = await editItem("tasks", id, task);
-    const updatedTasks = tasks
-      .map((task) => (task.id === id ? data : task))
-      .sort(
-        (task1, task2) => task1.deadline.getTime() - task2.deadline.getTime()
-      );
-    console.log(updatedTasks);
+    let updatedTasks = tasks.map((task) => (task.id === id ? data : task));
+    updatedTasks = updatedTasks.sort(
+      (task1, task2) => task1.deadline.getTime() - task2.deadline.getTime()
+    );
     setList(updatedTasks);
     setTasks(updatedTasks);
   };
 
   const completeTask = async (id: string) => {
     const newTask = await updateTask("tasks", id);
-    const newList = [...tasks.filter((task) => task.id !== id), newTask].sort(
+    let newList = [...tasks.filter((task) => task.id !== id), newTask];
+    console.log(newList);
+    newList = newList.sort(
       (task1, task2) => task1.deadline.getTime() - task2.deadline.getTime()
     );
     setTasks(newList);
