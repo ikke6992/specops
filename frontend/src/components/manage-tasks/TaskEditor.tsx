@@ -15,23 +15,29 @@ const Content = (props: {
   close: () => void;
   submit: (task: TaskBody) => void;
 }) => {
-  console.log(props);
-  const { taskName, timeframe, interval, deadline, setTaskName, setTimeframe, setInterval, setDeadline } =
-    useContext(TaskModalContext);
+  const {
+    taskName,
+    timeframe,
+    interval,
+    deadline,
+    setTaskName,
+    setTimeframe,
+    setInterval,
+    setDeadline,
+  } = useContext(TaskModalContext);
 
-    useEffect(() => {
-      if (taskName === "") setTaskName(props.name);
-      if (timeframe === 0) setTimeframe(parseInt(props.timeframe));
-      if (interval === 0) setInterval(parseInt(props.interval));
-      if (deadline === "") setDeadline(props.deadline);
-    })
+  useEffect(() => {
+    if (taskName === "") setTaskName(props.name);
+    if (timeframe === 0) setTimeframe(parseInt(props.timeframe));
+    if (interval === 0) setInterval(parseInt(props.interval));
+    if (deadline === "") setDeadline(props.deadline);
+  });
 
   return (
     <Modal
       name="edit task"
       close={props.close}
       submit={() => {
-        console.log(taskName);
         props.submit({
           name: taskName,
           timeframe: timeframe,
@@ -54,7 +60,14 @@ const TaskEditor = (props: {
 }) => {
   return (
     <TaskModalProvider>
-      <Content name={props.name} timeframe={props.timeframe} interval={props.interval} deadline={props.deadline} close={props.close} submit={props.submit} />
+      <Content
+        name={props.name}
+        timeframe={props.timeframe}
+        interval={props.interval}
+        deadline={props.deadline}
+        close={props.close}
+        submit={props.submit}
+      />
     </TaskModalProvider>
   );
 };

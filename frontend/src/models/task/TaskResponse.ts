@@ -11,7 +11,7 @@ export default interface TaskResponse {
   timeframe: string;
   interval: string;
   department: string;
-  startDate: Date;
-  deadline: Date;
+  startDate: string;
+  deadline: string;
   status: TaskStatus;
 }

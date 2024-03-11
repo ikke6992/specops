@@ -105,8 +105,8 @@ export const TaskProvider: ProviderType = ({ children }) => {
         id: task.id,
         status: task.status,
         name: task.name,
-        startdate: task.startDate.toDateString(),
-        deadline: task.deadline.toDateString(),
+        startdate: task.startDate,
+        deadline: task.deadline,
         department: task.department,
       };
     });
@@ -116,16 +116,21 @@ export const TaskProvider: ProviderType = ({ children }) => {
 
   const addTask = async (task: TaskBody) => {
     const data: TaskResponse = await postItem("tasks", task);
-    console.log(data);
     setList([...list, data]);
     setTasks([...tasks, data]);
+  };
+
+  const compareDates = (task1: TaskResponse, task2: TaskResponse) => {
+    const date1 = Date.parse(task1.deadline);
+    const date2 = Date.parse(task2.deadline);
+    return date1 - date2;
   };
 
   const editTask = async (id: string, task: TaskBody) => {
     const data: TaskResponse = await editItem("tasks", id, task);
     let updatedTasks = tasks.map((task) => (task.id === id ? data : task));
-    updatedTasks = updatedTasks.sort(
-      (task1, task2) => task1.deadline.getTime() - task2.deadline.getTime()
+    updatedTasks = updatedTasks.sort((task1, task2) =>
+      compareDates(task1, task2)
     );
     setList(updatedTasks);
     setTasks(updatedTasks);
@@ -134,10 +139,7 @@ export const TaskProvider: ProviderType = ({ children }) => {
   const completeTask = async (id: string) => {
     const newTask = await updateTask("tasks", id);
     let newList = [...tasks.filter((task) => task.id !== id), newTask];
-    console.log(newList);
-    newList = newList.sort(
-      (task1, task2) => task1.deadline.getTime() - task2.deadline.getTime()
-    );
+    newList = newList.sort((task1, task2) => compareDates(task1, task2));
     setTasks(newList);
     setList(newList);
   };
