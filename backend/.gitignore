@@ -35,4 +35,6 @@ out/
 
 ### VS Code ###
 .vscode/
-/data/seederdata.txt
+
+### Data ###
+/data/
