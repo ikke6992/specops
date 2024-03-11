@@ -6,6 +6,9 @@ import postItem from "../services/postItem";
 import updateTask from "../services/updateTask";
 import editItem from "../services/editItem";
 import TaskLog from "../models/log/TaskLog";
+import StatusFilter from "../models/filter/StatusFilter";
+import TaskStatus from "../models/task/TaskStatus";
+import SearchFilter from "../models/filter/SearchFilter";
 
 type ContextType = {
   getTasks: () => TaskResponse[];
@@ -16,8 +19,8 @@ type ContextType = {
   addTask: (task: TaskBody) => void;
   editTask: (id: string, task: TaskBody) => void;
   completeTask: (id: string) => void;
-  search: (type: "dept" | "name", querry: string) => void;
-  filter: (status: "all" | "pending" | "planned" | "overdue") => void;
+  search: (type: SearchFilter, querry: string) => void;
+  filter: (status: StatusFilter) => void;
 };
 
 type ProviderType = FC<{ children: ReactNode }>;
@@ -55,6 +58,7 @@ export const TaskProvider: ProviderType = ({ children }) => {
     getTaskList();
   }, []);
 
+  // Navigation
   const moveRight = () => {
     if (pointer + size < tasks.length) {
       setPointer(pointer + size);
@@ -67,34 +71,7 @@ export const TaskProvider: ProviderType = ({ children }) => {
     }
   };
 
-  const apply = (list: TaskResponse[]) => {
-    return applyFilter(applySearch(list));
-  };
-
-  const applySearch = (list: TaskResponse[]) => {
-    if (querry === "") {
-      return list;
-    }
-
-    if (type === "dept") {
-      return list.filter((task) =>
-        task.department.toLowerCase().includes(querry.toLowerCase())
-      );
-    } else {
-      return list.filter((task) =>
-        task.name.toLowerCase().includes(querry.toLowerCase())
-      );
-    }
-  };
-
-  const applyFilter = (list: TaskResponse[]) => {
-    if (status === "all") {
-      return list;
-    } else {
-      return list.filter((task) => task.status === status);
-    }
-  };
-
+  // Getters
   const getTasks = () => {
     return apply(list).slice(pointer, pointer + size);
   };
@@ -114,6 +91,7 @@ export const TaskProvider: ProviderType = ({ children }) => {
     return logs;
   };
 
+  // Setters
   const addTask = async (task: TaskBody) => {
     const data: TaskResponse = await postItem("tasks", task);
     setList([...list, data]);
@@ -144,13 +122,42 @@ export const TaskProvider: ProviderType = ({ children }) => {
     setList(newList);
   };
 
-  const search = (newType: "dept" | "name", newQuerry: string) => {
-    setType(newType);
+  // Search & Filter
+  const apply = (list: TaskResponse[]) => {
+    return applyFilter(applySearch(list));
+  };
+
+  const applySearch = (list: TaskResponse[]) => {
+    if (querry === "") {
+      return list;
+    }
+
+    if (type === "dept") {
+      return list.filter((task) =>
+        task.department.toLowerCase().includes(querry.toLowerCase())
+      );
+    } else {
+      return list.filter((task) =>
+        task.name.toLowerCase().includes(querry.toLowerCase())
+      );
+    }
+  };
+
+  const applyFilter = (list: TaskResponse[]) => {
+    if (status === "all") {
+      return list;
+    } else {
+      return list.filter((task) => task.status === status);
+    }
+  };
+
+  const search = (newType: SearchFilter, newQuerry: string) => {
+    setType(newType as "dept" | "name");
     setQuerry(newQuerry);
   };
 
-  const filter = (newStatus: "all" | "pending" | "planned" | "overdue") => {
-    setStatus(newStatus);
+  const filter = (newStatus: StatusFilter) => {
+    setStatus(newStatus as TaskStatus);
   };
 
   return (

@@ -56,6 +56,7 @@ const Content = () => {
         content={<TaskList />}
         navigation={<Navigation />}
         filter={filter}
+        isHistory={false}
       />
       {/* Show create task menu if needed */}
       {showCreator && (

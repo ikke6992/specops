@@ -1,10 +1,10 @@
-import StatusType from "./StatusType";
+import RecordStatus from "./RecordStatus";
 
 export default interface RecordResponse {
-  id: number;
-  status: StatusType;
+  id: string;
+  status: RecordStatus;
   name: string;
-  executionDate: Date;
-  deadline: Date;
+  executionDate: string;
+  deadline: string;
   assignee: string;
 }
