@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useContext } from "react";
+import { TaskModalContext } from "../../../contexts/TaskModalContext";
 
 const DeadlineField = () => {
-  const [deadline, setDeadline] = useState("");
+  const { deadline, setDeadline } = useContext(TaskModalContext);
 
   return (
     <label>

@@ -44,21 +44,25 @@ public class TaskController {
     return ResponseEntity.ok(records);
   }
 
-  private record OldData(String name) {}
+  private record OldData(String name, int timeframe, int interval, String deadline) {}
 
   @PostMapping
   public ResponseEntity<TaskResponse> addTask(@RequestBody OldData data, UriComponentsBuilder ucb) {
     final Department department = departmentRepository.findAll().get(0);
-    if (data.name() != null) {
-      final Task task =
-          taskService.save(data.name(), 6, 7, department, LocalDate.now().minusDays(1));
-      final TaskResponse response = TaskResponse.of(task);
-      URI locationOfNewTask =
-          ucb.path("/tasks").buildAndExpand(taskService.getAllTaskPlannings().size()).toUri();
-      return ResponseEntity.created(locationOfNewTask).body(response);
-    } else {
+    if (data.name() == null || data.deadline() == null) {
       return ResponseEntity.badRequest().build();
     }
+    final Task task =
+        taskService.save(
+            data.name(),
+            data.timeframe(),
+            data.interval(),
+            department,
+            LocalDate.parse(data.deadline()));
+    final TaskResponse response = TaskResponse.of(task);
+    URI locationOfNewTask =
+        ucb.path("/tasks").buildAndExpand(taskService.getAllTaskPlannings().size()).toUri();
+    return ResponseEntity.created(locationOfNewTask).body(response);
   }
 
   // This should be used instead of the old endpoint.
@@ -87,7 +91,8 @@ public class TaskController {
     var possibleTask = taskService.findTaskById(id);
     if (possibleTask.isEmpty()) return ResponseEntity.notFound().build();
     final Task task = possibleTask.get();
-    taskService.editTask(task.getTaskPlanning(), data.name);
+    taskService.editTask(
+        task, data.name(), data.timeframe(), data.interval(), LocalDate.parse(data.deadline()));
     final TaskResponse response = TaskResponse.of(task);
     return ResponseEntity.ok(response);
   }

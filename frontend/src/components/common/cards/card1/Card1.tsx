@@ -4,13 +4,15 @@ import Card1Dates from "./Card1Dates";
 import Card1Label from "./Card1Label";
 import Card1Name from "./Card1Name";
 import Card1Status from "./Card1Status";
-import TaskEditor from "../../../edit-tasks/TaskEditor";
+import TaskEditor from "../../../manage-tasks/TaskEditor";
 import TaskBody from "../../../../models/task/TaskBody";
 import { TaskContext } from "../../../../contexts/TaskContext";
 
 type PropsType = {
-  id: string
+  id: string;
   name: string;
+  timeframe: string;
+  interval: string;
   dept: string;
   start: string;
   end: string;
@@ -20,6 +22,8 @@ type PropsType = {
 const Card1 = ({
   id,
   name,
+  timeframe,
+  interval,
   dept,
   start,
   end,
@@ -58,6 +62,10 @@ const Card1 = ({
       </article>
       {showEditor && (
         <TaskEditor
+          name={name}
+          timeframe={timeframe}
+          interval={interval}
+          deadline={end}
           submit={(task: TaskBody) => editTask(id, task)}
           close={() => setShowEditor(false)}
         />

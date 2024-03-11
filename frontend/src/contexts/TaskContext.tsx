@@ -115,15 +115,14 @@ export const TaskProvider: ProviderType = ({ children }) => {
   };
 
   const addTask = async (task: TaskBody) => {
-    const data: TaskResponse = await postItem("tasks", { name: task.name });
+    const data: TaskResponse = await postItem("tasks", task);
     console.log(data);
     setList([...list, data]);
     setTasks([...tasks, data]);
   };
 
   const editTask = async (id: string, task: TaskBody) => {
-    const data: TaskResponse = await editItem("tasks", id, { name: task.name });
-    console.log(data);
+    const data: TaskResponse = await editItem("tasks", id, task);
     const updatedTasks = tasks.map((task) => (task.id === id ? data : task));
     console.log(updatedTasks);
     setList(updatedTasks);
