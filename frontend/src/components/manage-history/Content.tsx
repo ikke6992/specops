@@ -22,7 +22,7 @@ type PropsType = {
   moveRight: () => void;
   moveLeft: () => void;
   filter: (status: "all" | TaskStatus | RecordStatus) => void;
-  search: (type: SearchFilter, querry: string) => void;
+  search: (type: SearchFilter, query: string) => void;
 };
 const Content = ({
   toggleMode,

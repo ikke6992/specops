@@ -10,7 +10,7 @@ type PropsType = {
   searchBar: React.ReactNode;
   content: React.ReactNode;
   navigation: React.ReactNode;
-  search: (type: SearchFilter, querry: string) => void;
+  search: (type: SearchFilter, query: string) => void;
   filter: (status: "all" | TaskStatus | RecordStatus) => void;
   isHistory: boolean;
 };

@@ -12,7 +12,7 @@ type ContextType = {
   setSize: (size: number) => void;
   moveRight: () => void;
   moveLeft: () => void;
-  search: (type: SearchFilter, querry: string) => void;
+  search: (type: SearchFilter, query: string) => void;
   filter: (status: StatusFilter) => void;
 };
 
@@ -33,7 +33,7 @@ export const HistoryProvider: ProviderType = ({ children }) => {
   const [list, setList] = useState<RecordResponse[]>([]);
   const [size, setSize] = useState(0);
   const [pointer, setPointer] = useState(0);
-  const [querry, setQuerry] = useState("");
+  const [query, setquery] = useState("");
   const [type, setType] = useState<"name" | "user">("name");
   const [status, setStatus] = useState<"all" | RecordStatus>("all");
 
@@ -85,17 +85,17 @@ export const HistoryProvider: ProviderType = ({ children }) => {
   };
 
   const applySearch = (list: RecordResponse[]) => {
-    if (querry === "") {
+    if (query === "") {
       return list;
     }
 
     if (type === "user") {
       return list.filter((record) =>
-        record.assignee.toLowerCase().includes(querry.toLowerCase())
+        record.assignee.toLowerCase().includes(query.toLowerCase())
       );
     } else {
       return list.filter((record) =>
-        record.name.toLowerCase().includes(querry.toLowerCase())
+        record.name.toLowerCase().includes(query.toLowerCase())
       );
     }
   };
@@ -108,9 +108,9 @@ export const HistoryProvider: ProviderType = ({ children }) => {
     }
   };
 
-  const search = (newType: SearchFilter, newQuerry: string) => {
+  const search = (newType: SearchFilter, newquery: string) => {
     setType(newType as "name" | "user");
-    setQuerry(newQuerry);
+    setquery(newquery);
   };
 
   const filter = (newStatus: StatusFilter) => {

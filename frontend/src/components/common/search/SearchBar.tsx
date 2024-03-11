@@ -2,19 +2,19 @@ import { useState } from "react";
 import SearchFilter from "../../../models/filter/SearchFilter";
 
 type SearchProps = {
-  search: (type: SearchFilter, querry: string) => void;
+  search: (type: SearchFilter, query: string) => void;
   isHistory: boolean;
 };
 const SearchBar = ({ search, isHistory }: SearchProps) => {
   const [type, setType] = useState("name");
-  const [querry, setQuerry] = useState("");
+  const [query, setquery] = useState("");
 
   return (
     <div className="flex items-center">
       <select
         className="border border-gray-300 bg-blue-300 rounded px-2 py-2 text-black"
         onChange={(e) => {
-          setQuerry("");
+          setquery("");
           setType(e.target.value);
         }}
       >
@@ -26,13 +26,13 @@ const SearchBar = ({ search, isHistory }: SearchProps) => {
       </select>
       <input
         onChange={(e) => {
-          setQuerry(e.target.value);
+          setquery(e.target.value);
           search(
             type === "name" ? "name" : isHistory ? "user" : "dept",
             e.target.value
           );
         }}
-        value={querry}
+        value={query}
         type="text"
         className="border border-gray-300 bg-blue-200 rounded px-4 py-2 bg-transparent text-black"
         placeholder="Search..."
