@@ -6,6 +6,9 @@ import postItem from "../services/postItem";
 import updateTask from "../services/updateTask";
 import editItem from "../services/editItem";
 import TaskLog from "../models/log/TaskLog";
+import StatusFilter from "../models/filter/StatusFilter";
+import TaskStatus from "../models/task/TaskStatus";
+import SearchFilter from "../models/filter/SearchFilter";
 
 type ContextType = {
   getTasks: () => TaskResponse[];
@@ -16,8 +19,8 @@ type ContextType = {
   addTask: (task: TaskBody) => void;
   editTask: (id: string, task: TaskBody) => void;
   completeTask: (id: string) => void;
-  search: (type: "dept" | "name", querry: string) => void;
-  filter: (status: "all" | "pending" | "planned" | "overdue") => void;
+  search: (type: SearchFilter, querry: string) => void;
+  filter: (status: StatusFilter) => void;
 };
 
 type ProviderType = FC<{ children: ReactNode }>;
@@ -55,6 +58,7 @@ export const TaskProvider: ProviderType = ({ children }) => {
     getTaskList();
   }, []);
 
+  // Navigation
   const moveRight = () => {
     if (pointer + size < tasks.length) {
       setPointer(pointer + size);
@@ -67,6 +71,50 @@ export const TaskProvider: ProviderType = ({ children }) => {
     }
   };
 
+  // Getters
+  const getTasks = () => {
+    return apply(list).slice(pointer, pointer + size);
+  };
+
+  const getLogs = () => {
+    const logs: TaskLog[] = getTasks().map((task) => {
+      return {
+        id: task.id,
+        status: task.status,
+        name: task.name,
+        startdate: task.startDate,
+        deadline: task.deadline,
+        department: task.department,
+      };
+    });
+
+    return logs;
+  };
+
+  // Setters
+  const addTask = async (task: TaskBody) => {
+    const data: TaskResponse = await postItem("tasks", task);
+    console.log(data);
+    setList([...list, data]);
+    setTasks([...tasks, data]);
+  };
+
+  const editTask = async (id: string, task: TaskBody) => {
+    const data: TaskResponse = await editItem("tasks", id, task);
+    const updatedTasks = tasks.map((task) => (task.id === id ? data : task));
+    console.log(updatedTasks);
+    setList(updatedTasks);
+    setTasks(updatedTasks);
+  };
+
+  const completeTask = async (id: string) => {
+    const newTask = await updateTask("tasks", id);
+    const newList = [...tasks.filter((task) => task.id !== id), newTask];
+    setTasks(newList);
+    setList(newList);
+  };
+
+  // Search & Filter
   const apply = (list: TaskResponse[]) => {
     return applyFilter(applySearch(list));
   };
@@ -95,54 +143,13 @@ export const TaskProvider: ProviderType = ({ children }) => {
     }
   };
 
-  const getTasks = () => {
-    return apply(list).slice(pointer, pointer + size);
-  };
-
-  const getLogs = () => {
-    const logs: TaskLog[] = getTasks().map((task) => {
-      return {
-        id: task.id,
-        status: task.status,
-        name: task.name,
-        startdate: task.startDate,
-        deadline: task.deadline,
-        department: task.department,
-      };
-    });
-
-    return logs;
-  };
-
-  const addTask = async (task: TaskBody) => {
-    const data: TaskResponse = await postItem("tasks", task);
-    console.log(data);
-    setList([...list, data]);
-    setTasks([...tasks, data]);
-  };
-
-  const editTask = async (id: string, task: TaskBody) => {
-    const data: TaskResponse = await editItem("tasks", id, task);
-    const updatedTasks = tasks.map((task) => (task.id === id ? data : task));
-    console.log(updatedTasks);
-    setList(updatedTasks);
-    setTasks(updatedTasks);
-  };
-
-  const completeTask = async (id: string) => {
-    const newTask = await updateTask("tasks", id);
-    const newList = [...tasks.filter((task) => task.id !== id), newTask];
-    setTasks(newList);
-    setList(newList);
-  };
-
-  const search = (newType: "dept" | "name", newQuerry: string) => {
-    setType(newType);
+  const search = (newType: SearchFilter, newQuerry: string) => {
+    setType(newType as "dept" | "name");
     setQuerry(newQuerry);
   };
 
-  const filter = (newStatus: "all" | "pending" | "planned" | "overdue") => {
-    setStatus(newStatus);
+  const filter = (newStatus: StatusFilter) => {
+    setStatus(newStatus as TaskStatus);
   };
 
   return (

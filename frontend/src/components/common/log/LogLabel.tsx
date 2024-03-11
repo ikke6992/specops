@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import StatusType from "../../../models/record/StatusType";
+import TaskStatus from "../../../models/task/TaskStatus";
+import RecordStatus from "../../../models/record/RecordStatus";
 
-type PropsType = { status: StatusType };
+type PropsType = { status: TaskStatus | RecordStatus };
 const LogLabel = ({ status }: PropsType) => {
   const [background, setBackground] = useState("");
 
