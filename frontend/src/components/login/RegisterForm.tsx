@@ -42,15 +42,11 @@ const RegisterForm = () => {
 
   useEffect(() => {
     const result = USER_REGEX.test(user);
-    console.log(result);
-    console.log(user);
     setValidName(result);
   }, [user]);
 
   useEffect(() => {
     const result = PWD_REGEX.test(pwd);
-    console.log(result);
-    console.log(pwd);
     setValidPwd(result);
     const match = pwd === matchPwd;
     setValidMatch(match);
@@ -63,28 +59,28 @@ const RegisterForm = () => {
   return (
     <form>
       {/* Component Wrapper */}
-      <div className="bg-slate-200 rounded-md">
+      <div className="bg-slate-200 rounded-md w-80 h-auto">
         {/* Content Wrapper */}
         <div className="p-3 border-b border-gray-900/10 pb-12">
-          <div className="size-auto">
-            <p ref={errRef} className={errMsg ? "errmsg" : "invisible"}>
+          <div className="">
+            <p ref={errRef} className={errMsg ? "errmsg" : "hidden"}>
               {errMsg}
             </p>
           </div>
 
-          <h2 className="font-semibold leading-7 text-xl text-gray-900">
+          <h2 className="font-semibold leading-7 text-xl text-gray-900 mb-5">
             Register
           </h2>
 
-          {/* Username + Password Wrapper */}
-          <div className="mt-5 grid grid-col-1">
+          {/* Input fields wrapper */}
+          <div className="grid grid-col-1">
             <label htmlFor="username">
               Username:
-              <span className={validName ? "text-green-500" : "invisible"}>
+              <span className={validName ? "ml-2 text-green-500" : "hidden"}>
                 <FontAwesomeIcon icon={faCheck} />
               </span>
               <span
-                className={validName || !user ? "invisible" : "text-red-500"}
+                className={validName || !user ? "hidden" : "ml-2 text-red-500"}
               >
                 <FontAwesomeIcon icon={faTimes} />
               </span>
@@ -100,30 +96,30 @@ const RegisterForm = () => {
               aria-describedby="uidnote"
               onFocus={() => setUserFocus(true)}
               onBlur={() => setUserFocus(false)}
-              className="rounded border border-gray-400 p-1"
+              className="rounded border border-gray-400 p-1 h-9"
             />
             <p
               id="uidnote"
               className={
                 userFocus && user && !validName
-                  ? "bg-black text-xs text-white size-fit rounded-lg p-2 mt-2 mb-2"
-                  : "invisible"
+                  ? "bg-black text-xs text-white rounded-lg p-2 mt-2 mb-1 "
+                  : "hidden"
               }
             >
               <FontAwesomeIcon className="pr-1" icon={faInfoCircle} />
-              6 to 24 characters.
-              <br />
-              Must begin with a letter.
+              6 to 24 characters. Must begin with a letter.
               <br />
               Letters, numbers, underscores, hyphens allowed.
             </p>
 
-            <label htmlFor="password">
+            <label htmlFor="password" className="mt-3">
               Password:
-              <span className={validPwd ? "text-green-500" : "invisible"}>
+              <span className={validPwd ? "ml-2 text-green-500" : "hidden"}>
                 <FontAwesomeIcon icon={faCheck} />
               </span>
-              <span className={validPwd || !pwd ? "invisible" : "text-red-500"}>
+              <span
+                className={validPwd || !pwd ? "hidden" : "ml-2 text-red-500"}
+              >
                 <FontAwesomeIcon icon={faTimes} />
               </span>
             </label>
@@ -136,14 +132,14 @@ const RegisterForm = () => {
               aria-describedby="pwdnote"
               onFocus={() => setPwdFocus(true)}
               onBlur={() => setPwdFocus(false)}
-              className="rounded border border-gray-400 p-1"
+              className="rounded border border-gray-400 p-1 h-9"
             />
             <p
               id="pwd"
               className={
                 pwdFocus && !validPwd
-                  ? "bg-black text-xs text-white size-fit rounded-lg p-2 mt-2 mb-2"
-                  : "invisible"
+                  ? "bg-black text-xs text-white rounded-lg p-2 mt-2"
+                  : "hidden"
               }
             >
               <FontAwesomeIcon className="pr-1" icon={faInfoCircle} />
@@ -151,6 +147,53 @@ const RegisterForm = () => {
               <br />
               Must include at least one uppercase character and a number.
             </p>
+
+            <label htmlFor="confirm_pwd" className="mt-3">
+              Confirm Password:
+              <span
+                className={
+                  validMatch && matchPwd ? "ml-2 text-green-500" : "hidden"
+                }
+              >
+                <FontAwesomeIcon icon={faCheck} />
+              </span>
+              <span
+                className={
+                  validMatch || !matchPwd ? "hidden" : "ml-2 text-red-500"
+                }
+              >
+                <FontAwesomeIcon icon={faTimes} />
+              </span>
+            </label>
+            <input
+              type="password"
+              id="confirm_pwd"
+              onChange={(e) => setMatchPwd(e.target.value)}
+              required
+              aria-invalid={validMatch ? false : true}
+              aria-describedby="confirmnote"
+              onFocus={() => setMatchFocus(true)}
+              onBlur={() => setMatchFocus(false)}
+              className="rounded border border-gray-400 p-1 h-9"
+            />
+            <p
+              id="confirmnote"
+              className={
+                matchFocus && !validMatch
+                  ? "bg-black text-xs text-white rounded-lg p-2 mt-2"
+                  : "hidden"
+              }
+            >
+              <FontAwesomeIcon className="pr-1" icon={faInfoCircle} />
+              Passwords do not match.
+            </p>
+
+            <button
+              disabled={!validName || !validPwd || !validMatch ? true : false}
+              className={!validName || !validPwd || !validMatch ? "" : ""}
+            >
+              Add User
+            </button>
           </div>
         </div>
       </div>
