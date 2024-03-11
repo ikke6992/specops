@@ -36,7 +36,14 @@ const Card1 = ({
     <>
       <article
         className="container mx-auto max-w-sm relative bg-white rounded-xl shadow-md overflow-hidden p-5 h-fit hover:bg-slate-200 hover:cursor-pointer"
-        onClick={() => setShowEditor(true)}
+        onClick={(e) => {
+          if (
+            e.target instanceof HTMLElement &&
+            !e.target.classList.contains("no-click")
+          ) {
+            setShowEditor(true);
+          }
+        }}
       >
         <a>
           <div className="flex justify-between items-end">

@@ -94,22 +94,30 @@ export const TaskProvider: ProviderType = ({ children }) => {
   // Setters
   const addTask = async (task: TaskBody) => {
     const data: TaskResponse = await postItem("tasks", task);
-    console.log(data);
     setList([...list, data]);
     setTasks([...tasks, data]);
   };
 
+  const compareDates = (task1: TaskResponse, task2: TaskResponse) => {
+    const date1 = Date.parse(task1.deadline);
+    const date2 = Date.parse(task2.deadline);
+    return date1 - date2;
+  };
+
   const editTask = async (id: string, task: TaskBody) => {
     const data: TaskResponse = await editItem("tasks", id, task);
-    const updatedTasks = tasks.map((task) => (task.id === id ? data : task));
-    console.log(updatedTasks);
+    let updatedTasks = tasks.map((task) => (task.id === id ? data : task));
+    updatedTasks = updatedTasks.sort((task1, task2) =>
+      compareDates(task1, task2)
+    );
     setList(updatedTasks);
     setTasks(updatedTasks);
   };
 
   const completeTask = async (id: string) => {
     const newTask = await updateTask("tasks", id);
-    const newList = [...tasks.filter((task) => task.id !== id), newTask];
+    let newList = [...tasks.filter((task) => task.id !== id), newTask];
+    newList = newList.sort((task1, task2) => compareDates(task1, task2));
     setTasks(newList);
     setList(newList);
   };

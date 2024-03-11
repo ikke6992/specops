@@ -19,7 +19,6 @@ const Content = (props: {
       name="create task"
       close={props.close}
       submit={() => {
-        console.log(taskName);
         props.submit({
           name: taskName,
           timeframe: timeframe,
