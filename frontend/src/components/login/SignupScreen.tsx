@@ -1,5 +1,4 @@
-import React from "react";
-import RegisterForm from "./RegisterForm";
+import RegisterForm from "./SignupForm";
 import {
   SecurityContext,
   SecurityProvider,
@@ -35,7 +34,7 @@ const Content = () => {
   );
 };
 
-const LoginScreen = () => {
+const SignupScreen = () => {
   return (
     <SecurityProvider>
       <Content />
@@ -43,4 +42,4 @@ const LoginScreen = () => {
   );
 };
 
-export default LoginScreen;
+export default SignupScreen;

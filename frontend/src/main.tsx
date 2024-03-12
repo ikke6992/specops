@@ -6,13 +6,13 @@ import App from "./App.tsx";
 import TaskTest from "./components/test/TaskTest.tsx";
 import UserTest from "./components/test/UserTest.tsx";
 import DepartmentTest from "./components/test/DepartmentTest.tsx";
-import LoginScreen from "./components/login/LoginScreen.tsx";
+import SignupScreen from "./components/login/SignupScreen.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <BrowserRouter>
     <Routes>
       <Route path="/testing" element={<App />} />
-      <Route path="/login" element={<LoginScreen />} />
+      <Route path="/signup" element={<SignupScreen />} />
       <Route path="/taskmanager" element={<TaskManager />} />
       <Route path="/task-test" element={<TaskTest />} />
       <Route path="/user-test" element={<UserTest />} />

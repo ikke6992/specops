@@ -9,7 +9,7 @@ import nl.itvitae.specops.departments.Department;
 @Setter
 @Entity(name = "users")
 @RequiredArgsConstructor
-@NoArgsConstructor
+@NoArgsConstructor(force = true)
 public class User {
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
@@ -19,7 +19,7 @@ public class User {
 
   @NonNull private String password;
 
-  @NonNull private String employeeName;
+  private String employeeName;
 
   @ManyToOne private Department department;
 }
