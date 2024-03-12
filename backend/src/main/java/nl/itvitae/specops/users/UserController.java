@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
-import java.util.UUID;
 
 @RestController
 @CrossOrigin
@@ -14,12 +13,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class UserController {
   private final UserRepository userRepository;
-
-  record UserRegistrationDto(String username, String password) {
-  }
-
-  record UserRegistrationResultDto(UUID id, String username) {
-  }
+  private final UserService userService;
 
   @GetMapping
   public Iterable<User> getAll() {
@@ -27,20 +21,12 @@ public class UserController {
   }
 
   @PostMapping("/signup")
-  public ResponseEntity<?> register(@RequestBody UserRegistrationDto userRegistrationDto, UriComponentsBuilder ucb) {
-    var username = userRegistrationDto.username.trim();
-    if (username.isEmpty()) throw new BadInputException("username should not be blank");
-    var password = userRegistrationDto.password.trim();
-    if (password.isBlank()) throw new BadInputException("password should not be blank");
-    var possibleUser = userRepository.findByUsername(username);
-    if (possibleUser.isPresent()) throw new BadInputException("username already exists");
+  public ResponseEntity<UserDTO> saveUser(@RequestBody User user, UriComponentsBuilder ucb) {
+    User savedUser = userService.saveUser(user);
 
-    var newUser = new User(username, password);
-    userRepository.save(newUser);
-    URI locationOfNewUser = ucb
-            .path("{id}")
-            .buildAndExpand(newUser.getId())
-            .toUri();
-    return ResponseEntity.created((locationOfNewUser)).body(new UserRegistrationResultDto(newUser.getId(), newUser.getUsername()));
+    URI locationOfNewUser =
+            ucb.path("users/{id}").buildAndExpand(savedUser.getId()).toUri();
+
+    return ResponseEntity.created(locationOfNewUser).body(new UserDTO(savedUser));
   }
 }

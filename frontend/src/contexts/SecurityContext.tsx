@@ -56,7 +56,7 @@ export const SecurityProvider: ProviderType = ({ children }) => {
   const handleAddUser = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await axios.post()
+      const response = await api.post()
     } catch (err) {
 
     }
