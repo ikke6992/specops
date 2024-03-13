@@ -21,7 +21,6 @@ const Content = (props: {
       close={props.close}
       deactivate={props.close}
       submit={() => {
-        console.log(taskName);
         props.submit({
           name: taskName,
           timeframe: timeframe,

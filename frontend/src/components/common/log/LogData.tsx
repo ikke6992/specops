@@ -13,8 +13,8 @@ const HistoryData = (props: { log: HistoryLog }) => {
         <LogLabel status={props.log.status} />
       </td>
       <td className="px-4 py-2">{props.log.name}</td>
-      <td className="px-4 py-2">{props.log.deadline}</td>
       <td className="px-4 py-2">{props.log.executionDate}</td>
+      <td className="px-4 py-2">{props.log.deadline}</td>
       <td className="px-4 py-2">{props.log.assignee}</td>
     </tr>
   );

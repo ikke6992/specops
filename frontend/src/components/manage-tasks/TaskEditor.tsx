@@ -16,7 +16,6 @@ const Content = (props: {
   deactivate: () => void;
   submit: (task: TaskBody) => void;
 }) => {
-  console.log(props);
   const {
     taskName,
     timeframe,
@@ -42,7 +41,6 @@ const Content = (props: {
       close={props.close}
       deactivate={props.deactivate}
       submit={() => {
-        console.log(taskName);
         props.submit({
           name: taskName,
           timeframe: timeframe,
