@@ -118,7 +118,7 @@ export const TaskProvider: ProviderType = ({ children }) => {
   };
 
   const deactivateTask = async (id: string) => {
-    const data: TaskResponse = await deactivateItem("tasks", id);
+    await deactivateItem("tasks", id);
     let updatedTasks = tasks.filter((task) => task.id !== id);
     setList(updatedTasks);
     setTasks(updatedTasks);
