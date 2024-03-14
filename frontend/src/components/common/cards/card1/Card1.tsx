@@ -31,7 +31,7 @@ const Card1 = ({
   completeTask,
 }: PropsType) => {
   const [showEditor, setShowEditor] = useState(false);
-  const { editTask } = useContext(TaskContext);
+  const { editTask, deactivateTask } = useContext(TaskContext);
   return (
     <>
       <article
@@ -74,6 +74,7 @@ const Card1 = ({
           interval={interval}
           deadline={end}
           submit={(task: TaskBody) => editTask(id, task)}
+          deactivate={() => deactivateTask(id)}
           close={() => setShowEditor(false)}
         />
       )}
