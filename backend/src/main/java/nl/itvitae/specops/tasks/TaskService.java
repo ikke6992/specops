@@ -59,6 +59,12 @@ public class TaskService {
     return taskPlanning;
   }
 
+  public Task reactivateTask(TaskPlanning taskPlanning) {
+    Task task = new Task(taskPlanning, LocalDate.now().plusDays(taskPlanning.getInterval()));
+    taskRepository.save(task);
+    return task;
+  }
+
   public List<TaskPlanning> getAllTaskPlannings() {
     return taskPlanningRepository.findAll();
   }

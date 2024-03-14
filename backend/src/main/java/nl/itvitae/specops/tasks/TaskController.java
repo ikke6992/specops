@@ -126,4 +126,14 @@ public class TaskController {
     final TaskResponse response = TaskResponse.of(task);
     return ResponseEntity.ok(response);
   }
+
+  @PatchMapping("/activate/{id}")
+  public ResponseEntity<TaskResponse> reactivateTask(@PathVariable UUID id) {
+    var possiblePlanning = taskService.findTaskPlanningById(id);
+    if (possiblePlanning.isEmpty()) return ResponseEntity.notFound().build();
+    final TaskPlanning planning = possiblePlanning.get();
+    final Task task = taskService.reactivateTask(planning);
+    final TaskResponse response = TaskResponse.of(task);
+    return ResponseEntity.ok(response);
+  }
 }
