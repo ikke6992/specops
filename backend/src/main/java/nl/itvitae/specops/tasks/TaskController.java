@@ -64,6 +64,7 @@ public class TaskController {
     if (data.name() == null || data.deadline() == null) {
       return ResponseEntity.badRequest().build();
     }
+    
     final Task task =
         taskService.save(
             data.name(),
@@ -78,12 +79,19 @@ public class TaskController {
   }
 
   @PatchMapping("/edit/{id}")
-  public ResponseEntity<TaskResponse> editTask(@PathVariable UUID id, @RequestBody OldData data) {
+  public ResponseEntity<TaskResponse> editTask(
+      @PathVariable UUID id, @RequestBody TaskRequest data) {
     var possibleTask = taskService.findTaskById(id);
     if (possibleTask.isEmpty()) return ResponseEntity.notFound().build();
     final Task task = possibleTask.get();
+    final Department department = departmentService.getByName(data.dept());
     taskService.editTask(
-        task, data.name(), data.timeframe(), data.interval(), LocalDate.parse(data.deadline()));
+        task,
+        data.name(),
+        department,
+        data.timeframe(),
+        data.interval(),
+        LocalDate.parse(data.deadline()));
     final TaskResponse response = TaskResponse.of(task);
     return ResponseEntity.ok(response);
   }
