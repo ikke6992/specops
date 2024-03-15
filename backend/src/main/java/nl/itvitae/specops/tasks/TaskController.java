@@ -116,4 +116,24 @@ public class TaskController {
     final TaskResponse response = TaskResponse.of(newTask);
     return ResponseEntity.ok(response);
   }
+
+  @DeleteMapping("/delete/{id}")
+  public ResponseEntity<TaskResponse> deactivateTask(@PathVariable UUID id) {
+    var possibleTask = taskService.findTaskById(id);
+    if (possibleTask.isEmpty()) return ResponseEntity.notFound().build();
+    final Task task = possibleTask.get();
+    taskService.deactivateTask(task);
+    final TaskResponse response = TaskResponse.of(task);
+    return ResponseEntity.ok(response);
+  }
+
+  @PatchMapping("/activate/{id}")
+  public ResponseEntity<TaskResponse> reactivateTask(@PathVariable UUID id) {
+    var possiblePlanning = taskService.findTaskPlanningById(id);
+    if (possiblePlanning.isEmpty()) return ResponseEntity.notFound().build();
+    final TaskPlanning planning = possiblePlanning.get();
+    final Task task = taskService.reactivateTask(planning);
+    final TaskResponse response = TaskResponse.of(task);
+    return ResponseEntity.ok(response);
+  }
 }

@@ -13,6 +13,7 @@ const Content = (props: {
   interval: string;
   deadline: string;
   close: () => void;
+  deactivate: () => void;
   submit: (task: TaskBody) => void;
 }) => {
   const {
@@ -36,7 +37,9 @@ const Content = (props: {
   return (
     <Modal
       name="edit task"
+      edit={true}
       close={props.close}
+      deactivate={props.deactivate}
       submit={() => {
         props.submit({
           name: taskName,
@@ -56,6 +59,7 @@ const TaskEditor = (props: {
   interval: string;
   deadline: string;
   close: () => void;
+  deactivate: () => void;
   submit: (task: TaskBody) => void;
 }) => {
   return (
@@ -66,6 +70,7 @@ const TaskEditor = (props: {
         interval={props.interval}
         deadline={props.deadline}
         close={props.close}
+        deactivate={props.deactivate}
         submit={props.submit}
       />
     </TaskModalProvider>
