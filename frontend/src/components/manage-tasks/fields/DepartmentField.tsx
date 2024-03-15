@@ -1,23 +1,15 @@
 import { useContext, useEffect, useState } from "react";
-import getAll from "../../../services/getAll";
 import Department from "../../../models/Department";
 import { TaskModalContext } from "../../../contexts/TaskModalContext";
+import { DepartmentContext } from "../../../contexts/DepartmentContext";
 
 const DepartmentField = () => {
-  const { department, setDepartment } = useContext(TaskModalContext);
-  const [departments, setDepartments] = useState<Department[]>([]);
-
-  useEffect(() => {
-    const getDepartments = async () => {
-      const data = await getAll("departments");
-      setDepartments(data);
-    };
-    getDepartments();
-  });
+  const { dept, setDept } = useContext(TaskModalContext);
+  const { departments } = useContext(DepartmentContext);
 
   const departmentOptions = departments.map((department: Department) => {
     return (
-      <option key={department.id} value={department.id}>
+      <option key={department.name} value={department.name}>
         {department.name}
       </option>
     );
@@ -27,9 +19,10 @@ const DepartmentField = () => {
     <label>
       Department:{" "}
       <select
-        value={department}
+        value={dept}
         onChange={(e) => {
-          setDepartment(e.target.value);
+          setDept(e.target.value);
+          console.log(dept);
         }}
       >
         {departmentOptions}

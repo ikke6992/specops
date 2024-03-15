@@ -6,12 +6,13 @@ import {
 import TaskBody from "../../models/task/TaskBody";
 import Modal from "../common/modal/Modal";
 import FieldCombination from "./fields/FieldCombination";
+import { DepartmentProvider } from "../../contexts/DepartmentContext";
 
 const Content = (props: {
   close: () => void;
   submit: (task: TaskBody) => void;
 }) => {
-  const { taskName, timeframe, interval, deadline } =
+  const { taskName, dept, timeframe, interval, deadline } =
     useContext(TaskModalContext);
 
   return (
@@ -21,6 +22,7 @@ const Content = (props: {
       submit={() => {
         props.submit({
           name: taskName,
+          dept: dept,
           timeframe: timeframe,
           interval: interval,
           deadline: deadline,
@@ -37,7 +39,9 @@ const TaskCreator = (props: {
 }) => {
   return (
     <TaskModalProvider>
-      <Content close={props.close} submit={props.submit} />
+      <DepartmentProvider>
+        <Content close={props.close} submit={props.submit} />
+      </DepartmentProvider>
     </TaskModalProvider>
   );
 };

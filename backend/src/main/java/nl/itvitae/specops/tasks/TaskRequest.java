@@ -4,4 +4,4 @@ import java.time.LocalDate;
 import nl.itvitae.specops.departments.Department;
 
 public record TaskRequest(
-    String name, int timeframe, int interval, Department department, LocalDate date) {}
+    String name, String departmentId, int timeframe, int interval, String deadline) {}

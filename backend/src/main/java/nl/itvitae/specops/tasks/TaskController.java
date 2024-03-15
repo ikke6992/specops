@@ -4,6 +4,7 @@ import java.net.URI;
 import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import nl.itvitae.specops.departments.Department;
@@ -56,9 +57,11 @@ public class TaskController {
   private record OldData(String name, int timeframe, int interval, String deadline) {}
 
   @PostMapping
-  public ResponseEntity<TaskResponse> addTask(@RequestBody OldData data, UriComponentsBuilder ucb) {
-    final Department department = departmentRepository.findAll().get(0);
-    if (data.name() == null || data.deadline() == null) {
+  public ResponseEntity<TaskResponse> addTask(
+      @RequestBody TaskRequest data, UriComponentsBuilder ucb) {
+    final Optional<Department> department =
+        departmentRepository.findById(UUID.fromString(data.departmentId()));
+    if (data.name() == null || data.deadline() == null || department.isEmpty()) {
       return ResponseEntity.badRequest().build();
     }
     final Task task =
@@ -66,33 +69,12 @@ public class TaskController {
             data.name(),
             data.timeframe(),
             data.interval(),
-            department,
+            department.get(),
             LocalDate.parse(data.deadline()));
     final TaskResponse response = TaskResponse.of(task);
     URI locationOfNewTask =
         ucb.path("/tasks").buildAndExpand(taskService.getAllTaskPlannings().size()).toUri();
     return ResponseEntity.created(locationOfNewTask).body(response);
-  }
-
-  // This should be used instead of the old endpoint.
-  @PostMapping("/new")
-  public ResponseEntity<TaskResponse> addTaskNew(
-      @RequestBody TaskRequest taskData, UriComponentsBuilder ucb) {
-    if (taskData.name() != null) {
-      final Task task =
-          taskService.save(
-              taskData.name(),
-              taskData.timeframe(),
-              taskData.interval(),
-              taskData.department(),
-              taskData.date());
-      final TaskResponse taskResponse = TaskResponse.of(task);
-      URI locationOfNewTask =
-          ucb.path("/tasks").buildAndExpand(taskService.getAllTaskPlannings().size()).toUri();
-      return ResponseEntity.created(locationOfNewTask).body(taskResponse);
-    } else {
-      return ResponseEntity.badRequest().build();
-    }
   }
 
   @PatchMapping("/edit/{id}")
