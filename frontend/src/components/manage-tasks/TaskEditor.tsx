@@ -31,8 +31,6 @@ const Content = (props: {
   } = useContext(TaskModalContext);
 
   useEffect(() => {
-    console.log(props.name);
-    console.log(props.dept);
     if (taskName === "") setTaskName(props.name);
     if (timeframe === 0) setTimeframe(parseInt(props.timeframe));
     if (interval === 0) setInterval(parseInt(props.interval));

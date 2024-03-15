@@ -18,12 +18,11 @@ export const DepartmentProvider: ProviderType = ({ children }) => {
   useEffect(() => {
     const getDepartments = async () => {
       const data = await getAll("departments");
-      console.log(data);
       setDepartments(data);
     };
     getDepartments();
   }, []);
-  
+
   return (
     <DepartmentContext.Provider value={{ departments }}>
       {children}
