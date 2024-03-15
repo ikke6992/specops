@@ -7,7 +7,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { SecurityContext } from "../../contexts/SecurityContext";
 
-const SignupForm = () => {
+const SignupForm = (props: { type: "signup" | "login" }) => {
   const {
     user,
     setUser,
@@ -79,7 +79,7 @@ const SignupForm = () => {
               </div>
 
               <h2 className="font-semibold leading-7 text-xl text-gray-900 mb-5">
-                Register
+                {props.type === "signup" ? "Register" : "Welcome"}
               </h2>
 
               {/* Input fields wrapper */}
@@ -163,47 +163,54 @@ const SignupForm = () => {
                   <br />
                   Must include at least one uppercase character and a number.
                 </p>
-
-                <label htmlFor="confirm_pwd" className="mt-3">
-                  Confirm Password:
-                  <span
-                    className={
-                      validMatch && matchPwd ? "ml-2 text-green-500" : "hidden"
-                    }
-                  >
-                    <FontAwesomeIcon icon={faCheck} />
-                  </span>
-                  <span
-                    className={
-                      validMatch || !matchPwd ? "hidden" : "ml-2 text-red-500"
-                    }
-                  >
-                    <FontAwesomeIcon icon={faTimes} />
-                  </span>
-                </label>
-                <input
-                  type="password"
-                  id="confirm_pwd"
-                  onChange={(e) => setMatchPwd(e.target.value)}
-                  required
-                  aria-invalid={validMatch ? false : true}
-                  aria-describedby="confirmnote"
-                  onFocus={() => setMatchFocus(true)}
-                  onBlur={() => setMatchFocus(false)}
-                  className="rounded border border-gray-400 p-1 h-9"
-                />
-                <p
-                  id="confirmnote"
-                  className={
-                    matchFocus && !validMatch
-                      ? "bg-black text-xs text-white rounded-lg p-2 mt-2"
-                      : "hidden"
-                  }
-                >
-                  <FontAwesomeIcon className="pr-1" icon={faInfoCircle} />
-                  Passwords do not match.
-                </p>
-
+                {props.type === "signup" && (
+                  <>
+                    {" "}
+                    <label htmlFor="confirm_pwd" className="mt-3">
+                      Confirm Password:
+                      <span
+                        className={
+                          validMatch && matchPwd
+                            ? "ml-2 text-green-500"
+                            : "hidden"
+                        }
+                      >
+                        <FontAwesomeIcon icon={faCheck} />
+                      </span>
+                      <span
+                        className={
+                          validMatch || !matchPwd
+                            ? "hidden"
+                            : "ml-2 text-red-500"
+                        }
+                      >
+                        <FontAwesomeIcon icon={faTimes} />
+                      </span>
+                    </label>
+                    <input
+                      type="password"
+                      id="confirm_pwd"
+                      onChange={(e) => setMatchPwd(e.target.value)}
+                      required
+                      aria-invalid={validMatch ? false : true}
+                      aria-describedby="confirmnote"
+                      onFocus={() => setMatchFocus(true)}
+                      onBlur={() => setMatchFocus(false)}
+                      className="rounded border border-gray-400 p-1 h-9"
+                    />
+                    <p
+                      id="confirmnote"
+                      className={
+                        matchFocus && !validMatch
+                          ? "bg-black text-xs text-white rounded-lg p-2 mt-2"
+                          : "hidden"
+                      }
+                    >
+                      <FontAwesomeIcon className="pr-1" icon={faInfoCircle} />
+                      Passwords do not match.
+                    </p>
+                  </>
+                )}
                 <button
                   disabled={
                     !validName || !validPwd || !validMatch ? true : false
@@ -214,7 +221,7 @@ const SignupForm = () => {
                       : "bg-green-500/30 rounded mt-8 p-1 border-2 border-green-900"
                   }
                 >
-                  Add User
+                  {props.type === "signup" ? "Signup" : "Login"}
                 </button>
               </div>
             </div>

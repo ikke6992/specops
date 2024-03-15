@@ -1,7 +1,7 @@
 import RegisterForm from "./SignupForm";
 import { SecurityProvider } from "../../contexts/SecurityContext";
 
-const Content = () => {
+const Content = (props: { type: "signup" | "login" }) => {
   return (
     <main className="h-screen">
       <section
@@ -18,7 +18,7 @@ const Content = () => {
           height: "70%",
         }}
       >
-        <RegisterForm />
+        <RegisterForm type={props.type} />
       </section>
       <section
         className="bg-zinc-700 grid grid-cols-3 grid-rows-1 p-2"
@@ -29,10 +29,10 @@ const Content = () => {
   );
 };
 
-const SignupScreen = () => {
+const SignupScreen = (props: { type: "signup" | "login" }) => {
   return (
     <SecurityProvider>
-      <Content />
+      <Content type={props.type} />
     </SecurityProvider>
   );
 };

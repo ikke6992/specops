@@ -13,7 +13,8 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   <BrowserRouter>
     <Routes>
       <Route path="/testing" element={<App />} />
-      <Route path="/signup" element={<SignupScreen />} />
+      <Route path="/signup" element={<SignupScreen type="signup" />} />
+      <Route path="/login" element={<SignupScreen type="login" />} />
       <Route path="/tasks" element={<TaskManager />} />
       <Route path="/history" element={<HistoryManager />} />
       <Route path="/task-test" element={<TaskTest />} />
