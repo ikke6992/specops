@@ -79,6 +79,7 @@ const TaskEditor = (props: {
           interval={props.interval}
           deadline={props.deadline}
           close={props.close}
+          deactivate={props.deactivate}
           submit={props.submit}
         />
       </DepartmentProvider>
