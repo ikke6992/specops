@@ -58,8 +58,14 @@ public class TaskController {
   @PostMapping
   public ResponseEntity<TaskResponse> addTask(@RequestBody OldData data, UriComponentsBuilder ucb) {
     final Department department = departmentRepository.findAll().get(0);
+    List<TaskPlanning> plannings = taskService.getAllTaskPlannings();
     if (data.name() == null || data.deadline() == null) {
       return ResponseEntity.badRequest().build();
+    }
+    for (TaskPlanning planning : plannings) {
+      if (data.name().equals(planning.getName()) && department.equals(planning.getDepartment())) {
+        return ResponseEntity.badRequest().build();
+      }
     }
     final Task task =
         taskService.save(
@@ -69,8 +75,7 @@ public class TaskController {
             department,
             LocalDate.parse(data.deadline()));
     final TaskResponse response = TaskResponse.of(task);
-    URI locationOfNewTask =
-        ucb.path("/tasks").buildAndExpand(taskService.getAllTaskPlannings().size()).toUri();
+    URI locationOfNewTask = ucb.path("/tasks").buildAndExpand(plannings.size()).toUri();
     return ResponseEntity.created(locationOfNewTask).body(response);
   }
 
