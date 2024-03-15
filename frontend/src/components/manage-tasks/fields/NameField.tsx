@@ -1,8 +1,8 @@
 import { useContext } from "react";
-import { CreateTaskContext } from "../../../contexts/CreateTaskContext";
+import { TaskModalContext } from "../../../contexts/TaskModalContext";
 
 const NameField = () => {
-  const { taskName, setTaskName } = useContext(CreateTaskContext);
+  const { taskName, setTaskName } = useContext(TaskModalContext);
 
   return (
     <label>

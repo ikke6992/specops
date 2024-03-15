@@ -18,7 +18,6 @@ const TaskTest = () => {
       try {
         const fetchedTasks = await getAll("tasks");
         setTasks(fetchedTasks);
-        console.log(fetchedTasks);
       } catch (error) {
         console.error(error);
       }

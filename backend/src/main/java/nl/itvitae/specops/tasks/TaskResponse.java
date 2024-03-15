@@ -6,6 +6,8 @@ import java.util.UUID;
 public record TaskResponse(
     UUID id,
     String name,
+    int timeframe,
+    int interval,
     String department,
     LocalDate startDate,
     LocalDate deadline,
@@ -13,23 +15,26 @@ public record TaskResponse(
   static String getStatus(LocalDate deadline, LocalDate startDate) {
     final LocalDate now = LocalDate.now();
 
-    if (now.isBefore(startDate)) {
-      return "planned";
-    } else if (now.isBefore(deadline)) {
-      return "pending";
-    } else {
+    if (now.isAfter(deadline)) {
       return "overdue";
+    } else if (now.isBefore(startDate)) {
+      return "planned";
+    } else {
+      return "pending";
     }
   }
 
   static TaskResponse of(Task task) {
+    final TaskPlanning taskPlanning = task.getTaskPlanning();
     final UUID id = task.getId();
-    final String name = task.getTaskPlanning().getName();
-    final String department = task.getTaskPlanning().getDepartment().getName();
+    final String name = taskPlanning.getName();
+    final int timeframe = taskPlanning.getTimeframe();
+    final int interval = taskPlanning.getInterval();
+    final String department = taskPlanning.getDepartment().getName();
     final LocalDate deadline = task.getDeadline();
-    final LocalDate startDate = deadline.minusDays(task.getTaskPlanning().getTimeframe());
+    final LocalDate startDate = deadline.minusDays(taskPlanning.getTimeframe());
     final String status = getStatus(deadline, startDate);
 
-    return new TaskResponse(id, name, department, startDate, deadline, status);
+    return new TaskResponse(id, name, timeframe, interval, department, startDate, deadline, status);
   }
 }

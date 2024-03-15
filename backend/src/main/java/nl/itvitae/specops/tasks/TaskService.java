@@ -21,15 +21,28 @@ public class TaskService {
     return taskRepository.findAll();
   }
 
-  public TaskPlanning save(
+  public Task save(
       String name, int timeframe, int interval, Department department, LocalDate date) {
     TaskPlanning taskPlanning =
         taskPlanningRepository.save(new TaskPlanning(name, timeframe, interval, department));
-    taskRepository.save(new Task(taskPlanning, date));
+    final Task task = new Task(taskPlanning, date);
+    taskRepository.save(task);
+    return task;
+  }
+
+  public TaskPlanning editTask(
+      Task task, String name, int timeframe, int interval, LocalDate deadline) {
+    final TaskPlanning taskPlanning = task.getTaskPlanning();
+    taskPlanning.setName(name);
+    taskPlanning.setTimeframe(timeframe);
+    taskPlanning.setInterval(interval);
+    task.setDeadline(deadline);
+    taskPlanningRepository.save(taskPlanning);
+    taskRepository.save(task);
     return taskPlanning;
   }
 
-  public TaskExecution execute(Task task, User user) {
+  public Task execute(Task task, User user) {
     LocalDate executionDate = LocalDate.now();
     TaskExecution executedTask = new TaskExecution(task, user, executionDate);
     taskExecutionRepository.save(executedTask);
@@ -37,14 +50,30 @@ public class TaskService {
         new Task(
             task.getTaskPlanning(), executionDate.plusDays(task.getTaskPlanning().getInterval()));
     taskRepository.save(newTask);
-    return executedTask;
+    return newTask;
+  }
+
+  public TaskPlanning deactivateTask(Task task) {
+    final TaskPlanning taskPlanning = task.getTaskPlanning();
+    taskRepository.delete(task);
+    return taskPlanning;
+  }
+
+  public Task reactivateTask(TaskPlanning taskPlanning) {
+    Task task = new Task(taskPlanning, LocalDate.now().plusDays(taskPlanning.getInterval()));
+    taskRepository.save(task);
+    return task;
   }
 
   public List<TaskPlanning> getAllTaskPlannings() {
     return taskPlanningRepository.findAll();
   }
 
-  public Optional<Task> findById(UUID id) {
+  public Optional<Task> findTaskById(UUID id) {
     return taskRepository.findById(id);
+  }
+
+  public Optional<TaskPlanning> findTaskPlanningById(UUID id) {
+    return taskPlanningRepository.findById(id);
   }
 }

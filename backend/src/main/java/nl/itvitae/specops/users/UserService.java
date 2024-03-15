@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+import java.util.List;
+
 // 2 Warnings, Fine for now
 @Service
 @RequiredArgsConstructor
@@ -29,5 +31,9 @@ public class UserService {
 
   public User getByName(String name) {
     return userRepository.findByUsername(name).get();
+  }
+
+  public List<User> getAll() {
+    return userRepository.findAll();
   }
 }

@@ -1,50 +1,63 @@
-import SearchFilter from "./filter/Filter";
-import TaskList from "./list/TaskList";
+import TaskList from "./TaskList";
 import { useContext, useState } from "react";
 import { TaskContext, TaskProvider } from "../../contexts/TaskContext";
 import TaskBody from "../../models/task/TaskBody";
-import CreateTaskButton from "./create/CreateTaskButton";
-import MoveLeft from "./navigate/MoveLeft";
-import MoveRight from "./navigate/MoveRight";
-import TaskCreator from "../create-tasks/TaskCreator";
+import TaskCreator from "./TaskCreator";
+import { useNavigate } from "react-router-dom";
+import MoveLeftButton from "../common/buttons/MoveLeftButton";
+import MoveRightButton from "../common/buttons/MoveRightButton";
+import NavigateButton from "../common/buttons/NavigateButton";
+import FunctionButton from "../common/buttons/FunctionButton";
+import Layout from "../common/layout/Layout";
 
 const Content = () => {
-  const { addTask } = useContext(TaskContext);
+  const { addTask, moveLeft, moveRight, search, filter } =
+    useContext(TaskContext);
   const [showCreator, setShowCreator] = useState(false);
+  const navigate = useNavigate();
 
-  return (
-    <main className="h-screen">
-      {/* Search & Filter */}
-      <section
-        className="bg-slate-500 flex flex-row justify-center items-center"
-        style={{ height: "20%" }}
-      >
-        <SearchFilter />
-      </section>
-      {/* Task List */}
-      <section
-        className="p-8 bg-gray-400"
-        style={{
-          height: "70%",
-        }}
-      >
-        <TaskList />
-      </section>
-      {/* Navigation */}
-      <section
-        className="bg-zinc-700 grid grid-cols-3 grid-rows-1 p-2"
-        style={{ height: "10%" }}
-      >
-        {/* Go to history */}
-        <div></div>
+  const SearchBar = () => {
+    return (
+      <h1 className="text-3xl text-slate-950 font-black uppercase">
+        Task Dashboard
+      </h1>
+    );
+  };
+
+  const Navigation = () => {
+    return (
+      <>
+        {/* Go to list mode */}
+        <NavigateButton
+          name="Open list"
+          navigate={() => {
+            navigate("/history");
+          }}
+        />
         {/* Browse through tasks */}
         <div className="p-2 flex flex-row justify-center items-center">
-          <MoveLeft />
-          <MoveRight />
+          <MoveLeftButton moveLeft={() => moveLeft()} />
+          <MoveRightButton moveRight={() => moveRight()} />
         </div>
         {/* Create task */}
-        <CreateTaskButton onClick={() => setShowCreator(true)} />
-      </section>
+        <FunctionButton
+          name="Open Create Task"
+          method={() => setShowCreator(true)}
+        />
+      </>
+    );
+  };
+
+  return (
+    <>
+      <Layout
+        search={search}
+        searchBar={<SearchBar />}
+        content={<TaskList />}
+        navigation={<Navigation />}
+        filter={filter}
+        isHistory={false}
+      />
       {/* Show create task menu if needed */}
       {showCreator && (
         <TaskCreator
@@ -52,7 +65,7 @@ const Content = () => {
           close={() => setShowCreator(false)}
         />
       )}
-    </main>
+    </>
   );
 };
 

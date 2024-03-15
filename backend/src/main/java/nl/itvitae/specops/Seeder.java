@@ -12,7 +12,12 @@ import nl.itvitae.specops.users.UserService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -27,16 +32,15 @@ public class Seeder implements CommandLineRunner {
 
   @Override
   public void run(String... args) {
+
     if (userRepository.count() == 0) {
       seedAdmins();
       seedUsers();
     }
-
     if (departmentRepository.count() == 0) {
       seedDepartments();
       assignDepartments();
     }
-
     if (taskRepository.count() == 0) {
       seedTasks();
     }
@@ -55,50 +59,64 @@ public class Seeder implements CommandLineRunner {
   }
 
   private void seedDepartments() {
-    departmentService.save("general", userService.getByName("thomas"));
-    departmentService.save("maintenance", userService.getByName("thomas"));
-    departmentService.save("chemistry", userService.getByName("peter"));
-    departmentService.save("biology", userService.getByName("tuyan"));
+    try {
+      List<String> departments = Files.readAllLines(Paths.get("data/departments.txt"));
+      for (String department : departments) {
+        departmentService.save(department, userService.getByName("thomas"));
+      }
+    } catch (IOException e) {
+      departmentService.save("general", userService.getByName("thomas"));
+      departmentService.save("maintenance", userService.getByName("thomas"));
+      departmentService.save("chemistry", userService.getByName("peter"));
+      departmentService.save("biology", userService.getByName("tuyan"));
+    }
   }
 
   private void assignDepartments() {
-    for (int i = 0; i < 5; i++) {
-      User employee = userService.getByName("employee" + i);
-      employee.setDepartment(departmentService.getByName("general"));
+
+    List<User> employees = userService.getAll();
+    List<Department> departments = departmentService.getAll();
+    int counter = 0;
+
+    for (User employee : employees) {
+      employee.setDepartment(departments.get(counter));
       userRepository.save(employee);
-    }
-    for (int i = 5; i < 10; i++) {
-      User employee = userService.getByName("employee" + i);
-      employee.setDepartment(departmentService.getByName("maintenance"));
-      userRepository.save(employee);
-    }
-    for (int i = 10; i < 15; i++) {
-      User employee = userService.getByName("employee" + i);
-      employee.setDepartment(departmentService.getByName("chemistry"));
-      userRepository.save(employee);
-    }
-    for (int i = 15; i < 20; i++) {
-      User employee = userService.getByName("employee" + i);
-      employee.setDepartment(departmentService.getByName("biology"));
-      userRepository.save(employee);
+      counter = (counter + 1) % departments.size();
     }
   }
 
-  // interval < timeframe, otherwise you can infinitely repeat tasks.
+  // interval > timeframe, otherwise you can infinitely repeat tasks.
   private void seedTasks() {
-    taskService.save(
-        "Clean toilets",
-        2,
-        7,
-        departmentService.getByName("maintenance"),
-        LocalDate.now().plusWeeks(1));
-    taskService.save(
-        "Prepare lunch", 1, 2, departmentService.getByName("general"), LocalDate.now());
-    taskService.save(
-        "Build machine",
-        30,
-        365,
-        departmentService.getByName("maintenance"),
-        LocalDate.now().plusMonths(6));
+
+    try {
+      List<String> chores = Files.readAllLines(Paths.get("data/tasks.txt"));
+
+      for (String chore : chores) {
+        String[] choreArray = chore.split(",");
+        taskService.save(
+            choreArray[1],
+            Integer.parseInt(choreArray[4]),
+            Integer.parseInt(choreArray[5]),
+            departmentService.getByName(choreArray[0]),
+            LocalDate.parse(choreArray[3]));
+      }
+    } catch (IOException e) {
+      taskService.save(
+          "Clean toilets",
+          2,
+          7,
+          departmentService.getByName("maintenance"),
+          LocalDate.now().plusWeeks(1));
+      taskService.save(
+          "Prepare lunch", 1, 2, departmentService.getByName("general"), LocalDate.now());
+      taskService.save(
+          "Build machine",
+          30,
+          365,
+          departmentService.getByName("maintenance"),
+          LocalDate.now().plusMonths(6));
+    }
   }
+
+  private void seedFromFile() throws IOException {}
 }
