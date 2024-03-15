@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import Department from "../../../models/Department";
 import { TaskModalContext } from "../../../contexts/TaskModalContext";
 import { DepartmentContext } from "../../../contexts/DepartmentContext";
@@ -22,7 +22,6 @@ const DepartmentField = () => {
         value={dept}
         onChange={(e) => {
           setDept(e.target.value);
-          console.log(dept);
         }}
       >
         {departmentOptions}

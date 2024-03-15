@@ -9,6 +9,7 @@ import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import nl.itvitae.specops.departments.Department;
 import nl.itvitae.specops.departments.DepartmentRepository;
+import nl.itvitae.specops.departments.DepartmentService;
 import nl.itvitae.specops.users.User;
 import nl.itvitae.specops.users.UserRepository;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 public class TaskController {
   private final TaskService taskService;
   private final UserRepository userRepository;
-  private final DepartmentRepository departmentRepository;
+  private final DepartmentService departmentService;
   private final TaskExecutionRepository taskExecutionRepository;
 
   @GetMapping
@@ -59,9 +60,8 @@ public class TaskController {
   @PostMapping
   public ResponseEntity<TaskResponse> addTask(
       @RequestBody TaskRequest data, UriComponentsBuilder ucb) {
-    final Optional<Department> department =
-        departmentRepository.findById(UUID.fromString(data.departmentId()));
-    if (data.name() == null || data.deadline() == null || department.isEmpty()) {
+    final Department department = departmentService.getByName(data.dept());
+    if (data.name() == null || data.deadline() == null) {
       return ResponseEntity.badRequest().build();
     }
     final Task task =
@@ -69,7 +69,7 @@ public class TaskController {
             data.name(),
             data.timeframe(),
             data.interval(),
-            department.get(),
+            department,
             LocalDate.parse(data.deadline()));
     final TaskResponse response = TaskResponse.of(task);
     URI locationOfNewTask =
