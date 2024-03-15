@@ -17,7 +17,10 @@ type ContextType = {
   success: boolean;
   setSuccess: (boolean: boolean) => void;
 
-  handleAddUser: (e: React.FormEvent<HTMLFormElement>) => void;
+  handleAddUser: (
+    e: React.FormEvent<HTMLFormElement>,
+    type: "signup" | "login"
+  ) => void;
 };
 
 type ProviderType = FC<{ children: ReactNode }>;
@@ -52,17 +55,26 @@ export const SecurityProvider: ProviderType = ({ children }) => {
 
   const [success, setSuccess] = useState(false);
 
-  const handleAddUser = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleAddUser = async (
+    e: React.FormEvent<HTMLFormElement>,
+    type: "signup" | "login"
+  ) => {
     e.preventDefault();
+
     try {
-      const response = await signup({
-        username: user,
-        password: pwd,
-      });
+      const response = await signup(
+        {
+          username: user,
+          password: pwd,
+        },
+        type
+      );
       setSuccess(true);
       return response;
     } catch (err) {
-      setErrMsg("User already exists");
+      setErrMsg(
+        type === "signup" ? "User already exists" : "User does not exist"
+      );
       return null;
     }
   };

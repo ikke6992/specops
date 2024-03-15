@@ -6,6 +6,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { SecurityContext } from "../../contexts/SecurityContext";
+import { useNavigate } from "react-router-dom";
 
 const SignupForm = (props: { type: "signup" | "login" }) => {
   const {
@@ -20,6 +21,8 @@ const SignupForm = (props: { type: "signup" | "login" }) => {
     success,
     handleAddUser,
   } = useContext(SecurityContext);
+
+  const navigate = useNavigate();
 
   const userRef = useRef<HTMLInputElement>(null);
   const errRef = useRef<HTMLInputElement>(null);
@@ -58,6 +61,10 @@ const SignupForm = (props: { type: "signup" | "login" }) => {
     setErrMsg("");
   }, [user, pwd, matchPwd]);
 
+  useEffect(() => {
+    if (success) navigate("/tasks");
+  }, [success]);
+
   return (
     <>
       {success ? (
@@ -69,7 +76,7 @@ const SignupForm = (props: { type: "signup" | "login" }) => {
         </div>
       ) : (
         <div className="bg-slate-200 rounded-md w-80 size-fit">
-          <form onSubmit={handleAddUser}>
+          <form onSubmit={(e) => handleAddUser(e, props.type)}>
             {/* Content Wrapper */}
             <div className="p-3 border-b border-gray-900/10 pb-12">
               <div className="">
@@ -213,7 +220,9 @@ const SignupForm = (props: { type: "signup" | "login" }) => {
                 )}
                 <button
                   disabled={
-                    !validName || !validPwd || !validMatch ? true : false
+                    !validName ||
+                    !validPwd ||
+                    (props.type === "signup" && !validMatch)
                   }
                   className={
                     !validName || !validPwd || !validMatch

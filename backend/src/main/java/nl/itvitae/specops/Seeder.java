@@ -62,13 +62,13 @@ public class Seeder implements CommandLineRunner {
     try {
       List<String> departments = Files.readAllLines(Paths.get("data/departments.txt"));
       for (String department : departments) {
-        departmentService.save(department, userService.getByName("thomas"));
+        departmentService.save(department, userService.getByName("thomas").get());
       }
     } catch (IOException e) {
-      departmentService.save("general", userService.getByName("thomas"));
-      departmentService.save("maintenance", userService.getByName("thomas"));
-      departmentService.save("chemistry", userService.getByName("peter"));
-      departmentService.save("biology", userService.getByName("tuyan"));
+      departmentService.save("general", userService.getByName("thomas").get());
+      departmentService.save("maintenance", userService.getByName("thomas").get());
+      departmentService.save("chemistry", userService.getByName("peter").get());
+      departmentService.save("biology", userService.getByName("tuyan").get());
     }
   }
 
