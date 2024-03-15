@@ -89,6 +89,14 @@ public class TaskController {
     if (possibleTask.isEmpty()) return ResponseEntity.notFound().build();
     final Task task = possibleTask.get();
     final Department department = departmentService.getByName(data.dept());
+    List<TaskPlanning> plannings = taskService.getAllTaskPlannings();
+    for (TaskPlanning planning : plannings) {
+      if (!planning.equals(task.getTaskPlanning())
+          && data.name().equals(planning.getName())
+          && department.equals(planning.getDepartment())) {
+        return ResponseEntity.badRequest().build();
+      }
+    }
     taskService.editTask(
         task,
         data.name(),
