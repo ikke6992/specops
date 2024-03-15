@@ -1,6 +1,5 @@
 import { FC, ReactNode, createContext, useState } from "react";
-import api from "../services/api-client";
-import axios from "axios";
+import signup from "../services/signup";
 
 type ContextType = {
   user: string;
@@ -56,9 +55,15 @@ export const SecurityProvider: ProviderType = ({ children }) => {
   const handleAddUser = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await api.post()
+      const response = await signup({
+        username: user,
+        password: pwd,
+      });
+      setSuccess(true);
+      return response;
     } catch (err) {
-
+      setErrMsg("User already exists");
+      return null;
     }
   };
 

@@ -1,10 +1,5 @@
 import RegisterForm from "./SignupForm";
-import {
-  SecurityContext,
-  SecurityProvider,
-} from "../../contexts/SecurityContext";
-
-interface Props {}
+import { SecurityProvider } from "../../contexts/SecurityContext";
 
 const Content = () => {
   return (
