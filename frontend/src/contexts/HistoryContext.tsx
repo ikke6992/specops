@@ -30,7 +30,6 @@ export const HistoryContext = createContext<ContextType>({
 
 export const HistoryProvider: ProviderType = ({ children }) => {
   const [records, setRecords] = useState<RecordResponse[]>([]);
-  const [list, setList] = useState<RecordResponse[]>([]);
   const [size, setSize] = useState(0);
   const [pointer, setPointer] = useState(0);
   const [query, setquery] = useState("");
@@ -41,7 +40,6 @@ export const HistoryProvider: ProviderType = ({ children }) => {
     const getTaskList = async () => {
       const data = await getAllRecords();
       setRecords(data);
-      setList(data);
     };
     getTaskList();
   }, []);
@@ -61,7 +59,7 @@ export const HistoryProvider: ProviderType = ({ children }) => {
 
   // Getters
   const getRecords = () => {
-    return apply(list).slice(pointer, pointer + size);
+    return apply(records).slice(pointer, pointer + size);
   };
 
   const getLogs = () => {
