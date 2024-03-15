@@ -61,10 +61,15 @@ public class TaskController {
   public ResponseEntity<TaskResponse> addTask(
       @RequestBody TaskRequest data, UriComponentsBuilder ucb) {
     final Department department = departmentService.getByName(data.dept());
+    List<TaskPlanning> plannings = taskService.getAllTaskPlannings();
     if (data.name() == null || data.deadline() == null) {
       return ResponseEntity.badRequest().build();
     }
-    
+    for (TaskPlanning planning : plannings) {
+      if (data.name().equals(planning.getName()) && department.equals(planning.getDepartment())) {
+        return ResponseEntity.badRequest().build();
+      }
+    }
     final Task task =
         taskService.save(
             data.name(),
@@ -73,8 +78,7 @@ public class TaskController {
             department,
             LocalDate.parse(data.deadline()));
     final TaskResponse response = TaskResponse.of(task);
-    URI locationOfNewTask =
-        ucb.path("/tasks").buildAndExpand(taskService.getAllTaskPlannings().size()).toUri();
+    URI locationOfNewTask = ucb.path("/tasks").buildAndExpand(plannings.size()).toUri();
     return ResponseEntity.created(locationOfNewTask).body(response);
   }
 
@@ -104,6 +108,26 @@ public class TaskController {
     final Task task = possibleTask.get();
     final Task newTask = taskService.execute(task, user);
     final TaskResponse response = TaskResponse.of(newTask);
+    return ResponseEntity.ok(response);
+  }
+
+  @DeleteMapping("/delete/{id}")
+  public ResponseEntity<TaskResponse> deactivateTask(@PathVariable UUID id) {
+    var possibleTask = taskService.findTaskById(id);
+    if (possibleTask.isEmpty()) return ResponseEntity.notFound().build();
+    final Task task = possibleTask.get();
+    taskService.deactivateTask(task);
+    final TaskResponse response = TaskResponse.of(task);
+    return ResponseEntity.ok(response);
+  }
+
+  @PatchMapping("/activate/{id}")
+  public ResponseEntity<TaskResponse> reactivateTask(@PathVariable UUID id) {
+    var possiblePlanning = taskService.findTaskPlanningById(id);
+    if (possiblePlanning.isEmpty()) return ResponseEntity.notFound().build();
+    final TaskPlanning planning = possiblePlanning.get();
+    final Task task = taskService.reactivateTask(planning);
+    final TaskResponse response = TaskResponse.of(task);
     return ResponseEntity.ok(response);
   }
 }
