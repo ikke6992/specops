@@ -60,7 +60,7 @@ const Card1 = ({
             <Card1Name name={name} />
           </div>
           <div>
-            <Card1Status />
+            <Card1Status start={start} end={end} />
           </div>
           <div>
             <Card1Dates start={start} end={end} />
