@@ -107,7 +107,7 @@ public class Seeder implements CommandLineRunner {
           departmentService.getByName("maintenance"),
           LocalDate.now().plusWeeks(1));
       taskService.save(
-          "Prepare lunch", 1, 2, departmentService.getByName("general"), LocalDate.now().minusDays(5));
+          "Prepare lunch", 1, 2, departmentService.getByName("general"), LocalDate.now().minusDays(3));
       taskService.save(
           "Build machine",
           30,
