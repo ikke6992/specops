@@ -31,9 +31,15 @@ public class TaskService {
   }
 
   public TaskPlanning editTask(
-      Task task, String name, int timeframe, int interval, LocalDate deadline) {
+      Task task,
+      String name,
+      Department department,
+      int timeframe,
+      int interval,
+      LocalDate deadline) {
     final TaskPlanning taskPlanning = task.getTaskPlanning();
     taskPlanning.setName(name);
+    taskPlanning.setDepartment(department);
     taskPlanning.setTimeframe(timeframe);
     taskPlanning.setInterval(interval);
     task.setDeadline(deadline);

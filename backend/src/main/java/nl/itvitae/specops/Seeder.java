@@ -42,6 +42,7 @@ public class Seeder implements CommandLineRunner {
     }
     if (taskRepository.count() == 0) {
       seedTasks();
+      taskService.execute(taskRepository.findAll().get(0), userRepository.findAll().get(0));
     }
   }
 
@@ -61,13 +62,13 @@ public class Seeder implements CommandLineRunner {
     try {
       List<String> departments = Files.readAllLines(Paths.get("data/departments.txt"));
       for (String department : departments) {
-        departmentService.save(department, userService.getByName("thomas").get());
+        departmentService.save(department);
       }
     } catch (IOException e) {
-      departmentService.save("general", userService.getByName("thomas").get());
-      departmentService.save("maintenance", userService.getByName("thomas").get());
-      departmentService.save("chemistry", userService.getByName("peter").get());
-      departmentService.save("biology", userService.getByName("tuyan").get());
+      departmentService.save("general");
+      departmentService.save("maintenance");
+      departmentService.save("chemistry");
+      departmentService.save("biology");
     }
   }
 

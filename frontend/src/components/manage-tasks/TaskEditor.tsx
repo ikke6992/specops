@@ -6,9 +6,11 @@ import {
   TaskModalProvider,
 } from "../../contexts/TaskModalContext";
 import FieldCombination from "./fields/FieldCombination";
+import { DepartmentProvider } from "../../contexts/DepartmentContext";
 
 const Content = (props: {
   name: string;
+  dept: string;
   timeframe: string;
   interval: string;
   deadline: string;
@@ -21,10 +23,12 @@ const Content = (props: {
     timeframe,
     interval,
     deadline,
+    dept,
     setTaskName,
     setTimeframe,
     setInterval,
     setDeadline,
+    setDept,
   } = useContext(TaskModalContext);
 
   useEffect(() => {
@@ -32,7 +36,8 @@ const Content = (props: {
     if (timeframe === 0) setTimeframe(parseInt(props.timeframe));
     if (interval === 0) setInterval(parseInt(props.interval));
     if (deadline === "") setDeadline(props.deadline);
-  });
+    if (dept === "") setDept(props.dept);
+  }, []);
 
   return (
     <Modal
@@ -43,6 +48,7 @@ const Content = (props: {
       submit={() => {
         props.submit({
           name: taskName,
+          dept: dept,
           timeframe: timeframe,
           interval: interval,
           deadline: deadline,
@@ -58,21 +64,25 @@ const TaskEditor = (props: {
   timeframe: string;
   interval: string;
   deadline: string;
+  dept: string;
   close: () => void;
   deactivate: () => void;
   submit: (task: TaskBody) => void;
 }) => {
   return (
     <TaskModalProvider>
-      <Content
-        name={props.name}
-        timeframe={props.timeframe}
-        interval={props.interval}
-        deadline={props.deadline}
-        close={props.close}
-        deactivate={props.deactivate}
-        submit={props.submit}
-      />
+      <DepartmentProvider>
+        <Content
+          name={props.name}
+          dept={props.dept}
+          timeframe={props.timeframe}
+          interval={props.interval}
+          deadline={props.deadline}
+          close={props.close}
+          deactivate={props.deactivate}
+          submit={props.submit}
+        />
+      </DepartmentProvider>
     </TaskModalProvider>
   );
 };

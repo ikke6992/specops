@@ -4,10 +4,12 @@ import java.net.URI;
 import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import nl.itvitae.specops.departments.Department;
 import nl.itvitae.specops.departments.DepartmentRepository;
+import nl.itvitae.specops.departments.DepartmentService;
 import nl.itvitae.specops.users.User;
 import nl.itvitae.specops.users.UserRepository;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +23,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 public class TaskController {
   private final TaskService taskService;
   private final UserRepository userRepository;
-  private final DepartmentRepository departmentRepository;
+  private final DepartmentService departmentService;
   private final TaskExecutionRepository taskExecutionRepository;
 
   @GetMapping
@@ -56,8 +58,9 @@ public class TaskController {
   private record OldData(String name, int timeframe, int interval, String deadline) {}
 
   @PostMapping
-  public ResponseEntity<TaskResponse> addTask(@RequestBody OldData data, UriComponentsBuilder ucb) {
-    final Department department = departmentRepository.findAll().get(0);
+  public ResponseEntity<TaskResponse> addTask(
+      @RequestBody TaskRequest data, UriComponentsBuilder ucb) {
+    final Department department = departmentService.getByName(data.dept());
     List<TaskPlanning> plannings = taskService.getAllTaskPlannings();
     if (data.name() == null || data.deadline() == null) {
       return ResponseEntity.badRequest().build();
@@ -79,34 +82,28 @@ public class TaskController {
     return ResponseEntity.created(locationOfNewTask).body(response);
   }
 
-  // This should be used instead of the old endpoint.
-  @PostMapping("/new")
-  public ResponseEntity<TaskResponse> addTaskNew(
-      @RequestBody TaskRequest taskData, UriComponentsBuilder ucb) {
-    if (taskData.name() != null) {
-      final Task task =
-          taskService.save(
-              taskData.name(),
-              taskData.timeframe(),
-              taskData.interval(),
-              taskData.department(),
-              taskData.date());
-      final TaskResponse taskResponse = TaskResponse.of(task);
-      URI locationOfNewTask =
-          ucb.path("/tasks").buildAndExpand(taskService.getAllTaskPlannings().size()).toUri();
-      return ResponseEntity.created(locationOfNewTask).body(taskResponse);
-    } else {
-      return ResponseEntity.badRequest().build();
-    }
-  }
-
   @PatchMapping("/edit/{id}")
-  public ResponseEntity<TaskResponse> editTask(@PathVariable UUID id, @RequestBody OldData data) {
+  public ResponseEntity<TaskResponse> editTask(
+      @PathVariable UUID id, @RequestBody TaskRequest data) {
     var possibleTask = taskService.findTaskById(id);
     if (possibleTask.isEmpty()) return ResponseEntity.notFound().build();
     final Task task = possibleTask.get();
+    final Department department = departmentService.getByName(data.dept());
+    List<TaskPlanning> plannings = taskService.getAllTaskPlannings();
+    for (TaskPlanning planning : plannings) {
+      if (!planning.equals(task.getTaskPlanning())
+          && data.name().equals(planning.getName())
+          && department.equals(planning.getDepartment())) {
+        return ResponseEntity.badRequest().build();
+      }
+    }
     taskService.editTask(
-        task, data.name(), data.timeframe(), data.interval(), LocalDate.parse(data.deadline()));
+        task,
+        data.name(),
+        department,
+        data.timeframe(),
+        data.interval(),
+        LocalDate.parse(data.deadline()));
     final TaskResponse response = TaskResponse.of(task);
     return ResponseEntity.ok(response);
   }
