@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useContext } from "react";
+import { ConfirmationContext } from "../../../contexts/ConfirmationContext";
 
 const Notes = () => {
-  const [notes, setNotes] = useState("");
+  const {notes, setNotes} = useContext(ConfirmationContext);
   return (
     <label className="no-click">
       Notes:{" "}

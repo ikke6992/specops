@@ -2,7 +2,7 @@ import { useState } from "react";
 import TaskComplete from "../../../manage-tasks/TaskComplete";
 
 interface Props {
-  completeTask: () => void;
+  completeTask: (notes: string) => void;
 }
 
 const Card1CompleteButton = ({ completeTask }: Props) => {
