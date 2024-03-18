@@ -33,12 +33,22 @@ public class UserController {
     }
   }
 
-  @PostMapping("/login")
+  @PostMapping("/login-old")
   public ResponseEntity<User> login(@RequestBody User user, UriComponentsBuilder ucb) {
     if (userService.getByName(user.getUsername()).isPresent()) {
       return ResponseEntity.ok(userService.getByName(user.getUsername()).get());
     } else {
       return ResponseEntity.badRequest().build();
     }
+  }
+
+  @PostMapping("/register")
+  public LoginResponse register(@RequestBody LoginRequest req) {
+    return userService.register(req);
+  }
+
+  @PostMapping("/login")
+  public LoginResponse login(@RequestBody LoginRequest req) {
+    return userService.login(req);
   }
 }
