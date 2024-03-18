@@ -8,9 +8,9 @@ type PropsType = {
 const Tab = ({ name, color, selected, onClick }: PropsType) => {
   return (
     <button
-      className={`px-4 py-2 text-sm font-medium text-white bg-${color}-500 ${
-        selected ? "border-4" : "border-b-2"
-      } border-${color}-700 hover:bg-${color}-600 focus:outline-none focus:border-${color}-800`}
+      className={`h-12 px-4 py-2 text-sm font-medium text-white hover:bg-${color}-600 ${
+        selected ? `border-4 bg-${color}-600` : `border-b-4 bg-${color}-500`
+      } border-${color}-700`}
       onClick={onClick}
     >
       {name}

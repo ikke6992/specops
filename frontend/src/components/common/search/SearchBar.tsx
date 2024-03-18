@@ -10,9 +10,9 @@ const SearchBar = ({ search, isHistory }: SearchProps) => {
   const [query, setquery] = useState("");
 
   return (
-    <div className="flex items-center">
+    <div className="flex">
       <select
-        className="border border-gray-300 bg-blue-300 rounded px-2 py-2 text-black"
+        className="h-10 bg-white px-4 text-black outline-none text-left"
         onChange={(e) => {
           setquery("");
           setType(e.target.value);
@@ -34,7 +34,7 @@ const SearchBar = ({ search, isHistory }: SearchProps) => {
         }}
         value={query}
         type="text"
-        className="border border-gray-300 bg-blue-200 rounded px-4 py-2 bg-transparent text-black"
+        className="h-10 bg-white ml-2 px-3 text-black outline-none"
         placeholder="Search..."
       />
     </div>
