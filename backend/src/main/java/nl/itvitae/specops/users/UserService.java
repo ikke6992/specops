@@ -7,6 +7,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -46,9 +47,18 @@ public class UserService {
   }
 
   public LoginResponse login(LoginRequest request) {
-    if (userRepository.findByUsername(request.username()).isEmpty()) {
-      return new LoginResponse("User does not exists", "");
+    final Optional<User> optionalUser = userRepository.findByUsername(request.username());
+
+    if (optionalUser.isEmpty()) {
+      return new LoginResponse("User does not exist", "");
     }
+
+    final User user = optionalUser.get();
+
+    if (!passwordEncoder.matches(request.password(), user.getPassword())) {
+      return new LoginResponse("Incorrect password", "");
+    }
+
     Authentication authentication =
         authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(request.username(), request.password()));

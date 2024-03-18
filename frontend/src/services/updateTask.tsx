@@ -1,11 +1,9 @@
-import axios from "axios";
 import TaskResponse from "../models/task/TaskResponse";
+import { patch } from "./api-client";
 
 const updateTask = async (dataType: string, id: string) => {
   try {
-    const response = await axios.patch(
-      `http://localhost:8080/${dataType}/setComplete/${id}`
-    );
+    const response = await patch(`${dataType}/setComplete/${id}`);
     const data: TaskResponse = response.data;
     return data;
   } catch (error) {

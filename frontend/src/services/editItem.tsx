@@ -1,11 +1,8 @@
-import axios from "axios";
+import { patch } from "./api-client";
 
 const editItem = async (dataType: string, id: string, body: object) => {
   try {
-    const response = await axios.patch(
-      `http://localhost:8080/${dataType}/edit/${id}`,
-      { ...body }
-    );
+    const response = await patch(`${dataType}/edit/${id}`, { ...body });
     return response.data;
   } catch (error) {
     console.error(error);

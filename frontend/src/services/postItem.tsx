@@ -1,8 +1,8 @@
-import axios from "axios";
+import { post } from "./api-client";
 
 const postItem = async (dataType: string, body: object) => {
   try {
-    const response = await axios.post(`http://localhost:8080/${dataType}`, {
+    const response = await post(`${dataType}`, {
       ...body,
     });
     return response.data;
