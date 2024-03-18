@@ -17,7 +17,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -109,13 +108,19 @@ public class Seeder implements CommandLineRunner {
           departmentService.getByName("maintenance"),
           LocalDate.now().plusWeeks(1));
       taskService.save(
-          "Prepare lunch", 1, 2, departmentService.getByName("general"), LocalDate.now());
+          "Prepare lunch", 1, 2, departmentService.getByName("general"), LocalDate.now().minusDays(3));
       taskService.save(
           "Build machine",
           30,
           365,
           departmentService.getByName("maintenance"),
           LocalDate.now().plusMonths(6));
+      taskService.save(
+          "Progress Bar",
+          10,
+          365,
+           departmentService.getByName("maintenance"),
+           LocalDate.now().plusDays(4));
     }
   }
 
