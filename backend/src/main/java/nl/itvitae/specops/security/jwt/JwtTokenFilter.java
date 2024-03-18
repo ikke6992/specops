@@ -1,4 +1,4 @@
-package nl.itvitae.specops.security.config;
+package nl.itvitae.specops.security.jwt;
 
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
