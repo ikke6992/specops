@@ -37,6 +37,7 @@ const Card1 = ({
       <article
         className="container mx-auto max-w-sm relative bg-white rounded-xl shadow-md overflow-hidden p-5 h-fit hover:bg-slate-200 hover:cursor-pointer"
         onClick={(e) => {
+          console.log(e.target);
           if (
             e.target instanceof HTMLElement &&
             !e.target.classList.contains("no-click")
