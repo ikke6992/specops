@@ -5,23 +5,26 @@ type ContextType = {
   timeframe: number;
   interval: number;
   deadline: string;
-  department: string;
+  dept: string;
   setTaskName: (taskName: string) => void;
   setTimeframe: (timeframe: number) => void;
   setInterval: (interval: number) => void;
   setDeadline: (deadline: string) => void;
-  setDepartment: (department: string) => void;
+  setDept: (dept: string) => void;
 };
 type ProviderType = FC<{ children: ReactNode }>;
 
 export const TaskModalContext = createContext<ContextType>({
   taskName: "",
+  dept: "",
   timeframe: 0,
   interval: 0,
   deadline: "",
-  department: "",
   setTaskName: (taskName) => {
     return taskName;
+  },
+  setDept: (dept) => {
+    return dept;
   },
   setTimeframe: (timeframe) => {
     return timeframe;
@@ -32,31 +35,28 @@ export const TaskModalContext = createContext<ContextType>({
   setDeadline: (deadline) => {
     return deadline;
   },
-  setDepartment: (department) => {
-    return department;
-  },
 });
 
 export const TaskModalProvider: ProviderType = ({ children }) => {
   const [taskName, setTaskName] = useState<string>("");
+  const [dept, setDept] = useState<string>("");
   const [timeframe, setTimeframe] = useState<number>(0);
   const [interval, setInterval] = useState<number>(0);
   const [deadline, setDeadline] = useState<string>("");
-  const [department, setDepartment] = useState<string>("");
 
   return (
     <TaskModalContext.Provider
       value={{
         taskName,
+        dept,
         timeframe,
         interval,
         deadline,
-        department,
         setTaskName,
+        setDept,
         setTimeframe,
         setInterval,
         setDeadline,
-        setDepartment,
       }}
     >
       {children}

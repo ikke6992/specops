@@ -19,10 +19,7 @@ public class Department {
 
   private String name;
 
-  @ManyToOne private User departmentHead;
-
-  public Department(String name, User departmentHead) {
+  public Department(String name) {
     this.name = name;
-    this.departmentHead = departmentHead;
   }
 }

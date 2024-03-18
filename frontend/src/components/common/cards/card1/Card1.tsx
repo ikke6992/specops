@@ -70,6 +70,7 @@ const Card1 = ({
       {showEditor && (
         <TaskEditor
           name={name}
+          dept={dept}
           timeframe={timeframe}
           interval={interval}
           deadline={end}
