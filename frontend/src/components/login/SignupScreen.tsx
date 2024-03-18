@@ -9,7 +9,7 @@ const Content = (props: { type: "signup" | "login" }) => {
         style={{ height: "20%" }}
       >
         <h1 className="text-3xl text-slate-950 font-black uppercase">
-          Welcome to LamaLab
+          LamaLab
         </h1>
       </section>
       <section

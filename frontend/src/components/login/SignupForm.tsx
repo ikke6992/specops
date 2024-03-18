@@ -67,176 +67,172 @@ const SignupForm = (props: { type: "signup" | "login" }) => {
 
   return (
     <>
-      {success ? (
-        <div>
-          <h1>User Added.</h1>
-          <p>
-            <a href="http://localhost:5173/login">Sign In</a>
-          </p>
-        </div>
-      ) : (
-        <div className="bg-slate-200 rounded-md w-80 size-fit">
-          <form onSubmit={(e) => handleAddUser(e, props.type)}>
-            {/* Content Wrapper */}
-            <div className="p-3 border-b border-gray-900/10 pb-12">
-              <div className="">
-                <p ref={errRef} className={errMsg ? "errmsg" : "hidden"}>
-                  {errMsg}
-                </p>
-              </div>
+      <div className="bg-slate-200 rounded-md w-80 size-fit">
+        <form onSubmit={(e) => handleAddUser(e, props.type)}>
+          {/* Content Wrapper */}
+          <div className="p-3 border-b border-gray-900/10 pb-12">
+            <div className="">
+              <p ref={errRef} className={errMsg ? "errmsg" : "hidden"}>
+                {errMsg}
+              </p>
+            </div>
 
-              <h2 className="font-semibold leading-7 text-xl text-gray-900 mb-5">
-                {props.type === "signup" ? "Register" : "Welcome"}
-              </h2>
+            <h2 className="font-semibold leading-7 text-xl text-gray-900 mb-5">
+              Welcome
+            </h2>
 
-              {/* Input fields wrapper */}
-              <div className="grid grid-col-1">
-                <label htmlFor="username">
-                  Username:
-                  <span
-                    className={validName ? "ml-2 text-green-500" : "hidden"}
-                  >
-                    <FontAwesomeIcon icon={faCheck} />
-                  </span>
-                  <span
-                    className={
-                      validName || !user ? "hidden" : "ml-2 text-red-500"
-                    }
-                  >
-                    <FontAwesomeIcon icon={faTimes} />
-                  </span>
-                </label>
-                <input
-                  type="text"
-                  id="username"
-                  ref={userRef}
-                  autoComplete="off"
-                  onChange={(e) => setUser(e.target.value)}
-                  required
-                  aria-invalid={validName ? false : true}
-                  aria-describedby="uidnote"
-                  onFocus={() => setUserFocus(true)}
-                  onBlur={() => setUserFocus(false)}
-                  className="rounded border border-gray-400 p-1 h-9"
-                />
-                <p
-                  id="uidnote"
+            {/* Input fields wrapper */}
+            <div className="grid grid-col-1">
+              <label htmlFor="username">
+                Username:
+                <span className={validName ? "ml-2 text-green-500" : "hidden"}>
+                  <FontAwesomeIcon icon={faCheck} />
+                </span>
+                <span
                   className={
-                    userFocus && user && !validName
-                      ? "bg-black text-xs text-white rounded-lg p-2 mt-2 mb-1 "
-                      : "hidden"
+                    validName || !user ? "hidden" : "ml-2 text-red-500"
                   }
                 >
-                  <FontAwesomeIcon className="pr-1" icon={faInfoCircle} />
-                  6 to 24 characters. Must begin with a letter.
-                  <br />
-                  Letters, numbers, underscores, hyphens allowed.
-                </p>
+                  <FontAwesomeIcon icon={faTimes} />
+                </span>
+              </label>
+              <input
+                type="text"
+                id="username"
+                ref={userRef}
+                autoComplete="off"
+                onChange={(e) => setUser(e.target.value)}
+                required
+                aria-invalid={validName ? false : true}
+                aria-describedby="uidnote"
+                onFocus={() => setUserFocus(true)}
+                onBlur={() => setUserFocus(false)}
+                className="rounded border border-gray-400 p-1 h-9"
+              />
+              <p
+                id="uidnote"
+                className={
+                  userFocus && user && !validName
+                    ? "bg-black text-xs text-white rounded-lg p-2 mt-2 mb-1 "
+                    : "hidden"
+                }
+              >
+                <FontAwesomeIcon className="pr-1" icon={faInfoCircle} />
+                6 to 24 characters. Must begin with a letter.
+                <br />
+                Letters, numbers, underscores, hyphens allowed.
+              </p>
 
-                <label htmlFor="password" className="mt-3">
-                  Password:
-                  <span className={validPwd ? "ml-2 text-green-500" : "hidden"}>
-                    <FontAwesomeIcon icon={faCheck} />
-                  </span>
-                  <span
-                    className={
-                      validPwd || !pwd ? "hidden" : "ml-2 text-red-500"
-                    }
-                  >
-                    <FontAwesomeIcon icon={faTimes} />
-                  </span>
-                </label>
-                <input
-                  type="password"
-                  id="password"
-                  onChange={(e) => setPwd(e.target.value)}
-                  required
-                  aria-invalid={validPwd ? false : true}
-                  aria-describedby="pwdnote"
-                  onFocus={() => setPwdFocus(true)}
-                  onBlur={() => setPwdFocus(false)}
-                  className="rounded border border-gray-400 p-1 h-9"
-                />
-                <p
-                  id="pwd"
-                  className={
-                    pwdFocus && !validPwd
-                      ? "bg-black text-xs text-white rounded-lg p-2 mt-2"
-                      : "hidden"
-                  }
+              <label htmlFor="password" className="mt-3">
+                Password:
+                <span className={validPwd ? "ml-2 text-green-500" : "hidden"}>
+                  <FontAwesomeIcon icon={faCheck} />
+                </span>
+                <span
+                  className={validPwd || !pwd ? "hidden" : "ml-2 text-red-500"}
                 >
-                  <FontAwesomeIcon className="pr-1" icon={faInfoCircle} />
-                  8 to 24 characters.
-                  <br />
-                  Must include at least one uppercase character and a number.
-                </p>
-                {props.type === "signup" && (
-                  <>
-                    {" "}
-                    <label htmlFor="confirm_pwd" className="mt-3">
-                      Confirm Password:
-                      <span
-                        className={
-                          validMatch && matchPwd
-                            ? "ml-2 text-green-500"
-                            : "hidden"
-                        }
-                      >
-                        <FontAwesomeIcon icon={faCheck} />
-                      </span>
-                      <span
-                        className={
-                          validMatch || !matchPwd
-                            ? "hidden"
-                            : "ml-2 text-red-500"
-                        }
-                      >
-                        <FontAwesomeIcon icon={faTimes} />
-                      </span>
-                    </label>
-                    <input
-                      type="password"
-                      id="confirm_pwd"
-                      onChange={(e) => setMatchPwd(e.target.value)}
-                      required
-                      aria-invalid={validMatch ? false : true}
-                      aria-describedby="confirmnote"
-                      onFocus={() => setMatchFocus(true)}
-                      onBlur={() => setMatchFocus(false)}
-                      className="rounded border border-gray-400 p-1 h-9"
-                    />
-                    <p
-                      id="confirmnote"
+                  <FontAwesomeIcon icon={faTimes} />
+                </span>
+              </label>
+              <input
+                type="password"
+                id="password"
+                onChange={(e) => setPwd(e.target.value)}
+                required
+                aria-invalid={validPwd ? false : true}
+                aria-describedby="pwdnote"
+                onFocus={() => setPwdFocus(true)}
+                onBlur={() => setPwdFocus(false)}
+                className="rounded border border-gray-400 p-1 h-9"
+              />
+              <p
+                id="pwd"
+                className={
+                  pwdFocus && !validPwd
+                    ? "bg-black text-xs text-white rounded-lg p-2 mt-2"
+                    : "hidden"
+                }
+              >
+                <FontAwesomeIcon className="pr-1" icon={faInfoCircle} />
+                8 to 24 characters.
+                <br />
+                Must include at least one uppercase character and a number.
+              </p>
+              {props.type === "signup" && (
+                <>
+                  {" "}
+                  <label htmlFor="confirm_pwd" className="mt-3">
+                    Confirm Password:
+                    <span
                       className={
-                        matchFocus && !validMatch
-                          ? "bg-black text-xs text-white rounded-lg p-2 mt-2"
+                        validMatch && matchPwd
+                          ? "ml-2 text-green-500"
                           : "hidden"
                       }
                     >
-                      <FontAwesomeIcon className="pr-1" icon={faInfoCircle} />
-                      Passwords do not match.
-                    </p>
-                  </>
-                )}
-                <button
-                  disabled={
-                    !validName ||
-                    !validPwd ||
-                    (props.type === "signup" && !validMatch)
-                  }
-                  className={
-                    !validName || !validPwd || !validMatch
-                      ? "bg-red-500/30 rounded mt-8 p-1 border-2 border-red-900"
-                      : "bg-green-500/30 rounded mt-8 p-1 border-2 border-green-900"
-                  }
+                      <FontAwesomeIcon icon={faCheck} />
+                    </span>
+                    <span
+                      className={
+                        validMatch || !matchPwd ? "hidden" : "ml-2 text-red-500"
+                      }
+                    >
+                      <FontAwesomeIcon icon={faTimes} />
+                    </span>
+                  </label>
+                  <input
+                    type="password"
+                    id="confirm_pwd"
+                    onChange={(e) => setMatchPwd(e.target.value)}
+                    required
+                    aria-invalid={validMatch ? false : true}
+                    aria-describedby="confirmnote"
+                    onFocus={() => setMatchFocus(true)}
+                    onBlur={() => setMatchFocus(false)}
+                    className="rounded border border-gray-400 p-1 h-9"
+                  />
+                  <p
+                    id="confirmnote"
+                    className={
+                      matchFocus && !validMatch
+                        ? "bg-black text-xs text-white rounded-lg p-2 mt-2"
+                        : "hidden"
+                    }
+                  >
+                    <FontAwesomeIcon className="pr-1" icon={faInfoCircle} />
+                    Passwords do not match.
+                  </p>
+                </>
+              )}
+              <button
+                disabled={
+                  !validName ||
+                  !validPwd ||
+                  (props.type === "signup" && !validMatch)
+                }
+                className={
+                  !validName || !validPwd || !validMatch
+                    ? "bg-red-500/30 rounded mt-8 p-1 border-2 border-red-900"
+                    : "bg-green-500/30 rounded mt-8 p-1 border-2 border-green-900"
+                }
+              >
+                {props.type === "signup" ? "Signup" : "Login"}
+              </button>
+              <p className="text-center mt-4">
+                {props.type === "login"
+                  ? "No account yet? "
+                  : "Already an account? "}
+                <a
+                  href={props.type === "login" ? "/signup" : "/login"}
+                  className="font-bold underline hover:underline-offset-4"
                 >
-                  {props.type === "signup" ? "Signup" : "Login"}
-                </button>
-              </div>
+                  {props.type === "login" ? "Signup" : "Login"}
+                </a>
+              </p>
             </div>
-          </form>
-        </div>
-      )}
+          </div>
+        </form>
+      </div>
     </>
   );
 };
