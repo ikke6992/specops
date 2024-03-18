@@ -8,26 +8,21 @@ const IntervalField = () => {
   const [focus, setFocus] = useState(false);
 
   return (
-    <label>
-      Interval:{" "}
-      <input
-        type="number"
-        value={interval}
-        onChange={(e) => setInterval(parseInt(e.target.value))}
-      />
-      <FontAwesomeIcon
-        className="pr-1"
-        icon={faInfoCircle}
-        onClick={() => setFocus(!focus)}
-      />
-      <p
-        className={
-          focus ? "bg-black text-xs text-white rounded-lg p-2 mt-2" : "hidden"
-        }
-      >
-        The amount of days between the last execution date and the next deadline
-      </p>
-    </label>
+    <div className="group">
+      <label>
+        Interval:{" "}
+        <input
+          type="number"
+          value={interval}
+          onChange={(e) => setInterval(parseInt(e.target.value))}
+        />
+        <FontAwesomeIcon className="pr-1" icon={faInfoCircle} />
+        <span className="absolute scale-0 bg-black text-xs text-white rounded-lg p-2 mt-2 group-hover:scale-100">
+          The amount of days between the last execution date and the next
+          deadline
+        </span>
+      </label>
+    </div>
   );
 };
 
