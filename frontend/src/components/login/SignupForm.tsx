@@ -62,7 +62,9 @@ const SignupForm = (props: { type: "signup" | "login" }) => {
   }, [user, pwd, matchPwd]);
 
   useEffect(() => {
-    if (success) navigate("/tasks");
+    if (success) {
+      setTimeout(() => navigate("/tasks"), 1000);
+    }
   }, [success]);
 
   return (

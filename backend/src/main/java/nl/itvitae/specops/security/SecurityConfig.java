@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import nl.itvitae.specops.users.MyUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -35,7 +36,27 @@ public class SecurityConfig {
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     http.csrf(csrf -> csrf.disable())
-        .authorizeHttpRequests(requests -> requests.requestMatchers("/**").permitAll())
+        .authorizeHttpRequests(
+            requests ->
+                requests
+                    .requestMatchers(HttpMethod.GET, "/tasks")
+                    .hasRole("USER")
+                    .requestMatchers(HttpMethod.GET, "/departments")
+                    .hasRole("USER")
+                    .requestMatchers(HttpMethod.GET, "/tasks/history")
+                    .hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.POST, "/tasks")
+                    .hasRole("MANAGER")
+                    .requestMatchers(HttpMethod.PATCH, "/tasks/edit/{id}")
+                    .hasRole("MANAGER")
+                    .requestMatchers(HttpMethod.PATCH, "/tasks/setComplete/{id}")
+                    .hasRole("USER")
+                    .requestMatchers(HttpMethod.DELETE, "/tasks/delete/{id}")
+                    .hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.PATCH, "/tasks/activate/{id}")
+                    .hasRole("ADMIN")
+                    .requestMatchers("/**")
+                    .permitAll())
         .sessionManagement(
             session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);

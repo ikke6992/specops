@@ -24,22 +24,9 @@ public class UserService {
   private final PasswordEncoder passwordEncoder;
   private final UserRepository userRepository;
 
-  public User save(String username, String password, String employeeName) {
+  public User save(String username, String password, String roles, String employeeName) {
     return userRepository.save(
-        new User(username, passwordEncoder.encode(password), "", employeeName));
-  }
-
-  public User saveUser(User user) {
-    Optional<User> theUser = userRepository.findByUsername(user.getUsername());
-    if (theUser.isPresent()) {
-      throw new UserAlreadyExistsException(user.getUsername());
-    }
-    user.setPassword(passwordEncoder.encode(user.getPassword()));
-    return userRepository.save(user);
-  }
-
-  public Optional<User> getByName(String name) {
-    return userRepository.findByUsername(name);
+        new User(username, passwordEncoder.encode(password), roles, employeeName));
   }
 
   public List<User> getAll() {
@@ -50,20 +37,21 @@ public class UserService {
     final Optional<User> optionalUser = userRepository.findByUsername(request.username());
 
     if (optionalUser.isEmpty()) {
-      return new LoginResponse("User does not exist", "");
+      return new LoginResponse("User does not exist", "", "");
     }
 
     final User user = optionalUser.get();
 
     if (!passwordEncoder.matches(request.password(), user.getPassword())) {
-      return new LoginResponse("Incorrect password", "");
+      return new LoginResponse("Incorrect password", "", "");
     }
 
     Authentication authentication =
         authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(request.username(), request.password()));
     UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-    return new LoginResponse(request.username(), jwtTokenProvider.generateToken(userDetails));
+    return new LoginResponse(
+        request.username(), jwtTokenProvider.generateToken(userDetails), user.getRoles());
   }
 
   public LoginResponse register(LoginRequest request) {
@@ -73,6 +61,6 @@ public class UserService {
       userRepository.save(user);
       return login(request);
     }
-    return new LoginResponse("User already exists", "");
+    return new LoginResponse("User already exists", "", "");
   }
 }
