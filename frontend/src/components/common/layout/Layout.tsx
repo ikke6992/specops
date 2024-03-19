@@ -30,7 +30,7 @@ const Layout = ({
     <main className="h-screen flex flex-col">
       {/* Header */}
       <section
-        className="shrink-0 bg-slate-500 flex flex-row justify-center items-center"
+        className="shrink-0 bg-slate-500 flex flex-row justify-center items-center min-w-[90px]"
         style={{ height: "10%" }}
       >
         {searchBar}
@@ -54,7 +54,7 @@ const Layout = ({
         </article>
       </section>
       {/* Content */}
-      <section className="p-8 bg-gray-400 flex-1 overflow-auto">
+      <section className="shrink-0 p-8 bg-gray-400 flex-1 overflow-x-hidden overflow-y-scroll ">
         {content}
       </section>
       {/* Navigation */}

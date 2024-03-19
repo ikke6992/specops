@@ -13,16 +13,7 @@ const TaskList = () => {
   });
 
   return (
-    <div
-      className="h-auto w-full"
-      style={{
-        display: "grid",
-        gridTemplateRows: `repeat(${rows(height)}, minmax(0, 1fr))`,
-        gridTemplateColumns: `repeat(${cols(width)}, minmax(0, 1fr))`,
-        columnGap: "2em",
-        rowGap: "2em",
-      }}
-    >
+    <div className="h-auto w-full grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       {getTasks().map((task) => {
         return (
           <Card1

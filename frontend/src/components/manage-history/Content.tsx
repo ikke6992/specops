@@ -45,7 +45,7 @@ const Content = ({
   const SearchBar = () => {
     return (
       <h1 className="text-3xl text-slate-950 font-black uppercase">
-        {mode === "tasks" ? "History List" : "Task List"}
+        {mode === "tasks" ? "Hisory List" : "Task List"}
       </h1>
     );
   };

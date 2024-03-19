@@ -35,7 +35,7 @@ const Card1 = ({
   return (
     <>
       <article
-        className="container mx-auto min-w-max max-w-sm relative bg-white rounded-xl shadow-md overflow-hidden p-5 h-fit hover:bg-slate-200 hover:cursor-pointer"
+        className="container mx-auto max-w-sm relative bg-white rounded-xl shadow-md overflow-hidden p-5 h-fit hover:bg-slate-200 hover:cursor-pointer"
         onClick={(e) => {
           if (
             e.target instanceof HTMLElement &&

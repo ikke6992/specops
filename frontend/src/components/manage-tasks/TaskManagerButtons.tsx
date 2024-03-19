@@ -5,28 +5,32 @@ import { useNavigate } from "react-router-dom";
 import TaskCreator from "./TaskCreator";
 import TaskBody from "../../models/task/TaskBody";
 import { TaskContext } from "../../contexts/TaskContext";
-import { HistoryContext } from "../../contexts/HistoryContext";
 
 const TaskManagerButtons = () => {
   const { addTask } = useContext(TaskContext);
   const [showCreator, setShowCreator] = useState(false);
   const navigate = useNavigate();
+  const path = window.location.pathname;
 
   return (
     <>
-      <NavigateButton
-        name="Overwiew"
-        navigate={() => {
-          navigate("/tasks");
-        }}
-      />
+        <NavigateButton
+          name="Overwiew"
+          color="emerald"
+          active={path ==="/tasks" ? true : false}
+          navigate={() => {
+            navigate("/tasks");
+          }}
+        />
 
-      <NavigateButton
-        name="History"
-        navigate={() => {
-          navigate("/history");
-        }}
-      />
+        <NavigateButton
+          name="History"
+          color="cyan"
+          active={path ==="/history" ? true : false}
+          navigate={() => {
+            navigate("/history");
+          }}
+        />
 
       <FunctionButton name="Create Task" method={() => setShowCreator(true)} />
       {showCreator && (
