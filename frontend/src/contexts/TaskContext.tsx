@@ -74,7 +74,7 @@ export const TaskProvider: ProviderType = ({ children }) => {
 
   // Getters
   const getTasks = () => {
-    return apply(tasks).slice(pointer, pointer + size);
+    return apply(tasks);
   };
 
   const getLogs = () => {

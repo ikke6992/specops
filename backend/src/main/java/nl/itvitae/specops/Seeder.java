@@ -121,6 +121,11 @@ public class Seeder implements CommandLineRunner {
           365,
            departmentService.getByName("maintenance"),
            LocalDate.now().plusDays(4));
+      for (int x = 0; x < 30; x++) {
+        taskService.save(
+                "Test for scroll", 1, 2, departmentService.getByName("general"), LocalDate.now().minusDays(3));
+        System.out.println("Added test task");
+      }
     }
   }
 

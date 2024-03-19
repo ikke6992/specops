@@ -1,10 +1,8 @@
-import { useNavigate } from "react-router-dom";
 import HistoryLog from "../../models/log/HistoryLog";
 import TaskLog from "../../models/log/TaskLog";
 import useWindowDimensions from "../../utils/windowdimensions";
 import { useEffect } from "react";
 import size from "../../utils/loglistsize";
-import NavigateButton from "../common/buttons/NavigateButton";
 import MoveLeftButton from "../common/buttons/MoveLeftButton";
 import MoveRightButton from "../common/buttons/MoveRightButton";
 import FunctionButton from "../common/buttons/FunctionButton";
@@ -35,7 +33,6 @@ const Content = ({
   search,
 }: PropsType) => {
   const { height } = useWindowDimensions();
-  const navigate = useNavigate();
 
   useEffect(() => {
     const updateSize = () => {
@@ -56,15 +53,8 @@ const Content = ({
   const Navigation = () => {
     return (
       <>
-        {/* Go to task dashboard */}
-        <NavigateButton
-          name="Open dashboard"
-          navigate={() => {
-            navigate("/tasks");
-          }}
-        />
         {/* Browse through tasks */}
-        <div className="p-2 flex flex-row justify-center items-center">
+        <div className="flex justify-center object-bottom">
           <MoveLeftButton moveLeft={() => moveLeft()} />
           <MoveRightButton moveRight={() => moveRight()} />
         </div>

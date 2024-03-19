@@ -14,7 +14,7 @@ const TaskList = () => {
 
   return (
     <div
-      className="h-full w-full"
+      className="h-auto w-full"
       style={{
         display: "grid",
         gridTemplateRows: `repeat(${rows(height)}, minmax(0, 1fr))`,

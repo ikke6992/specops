@@ -35,26 +35,24 @@ const Card1 = ({
   return (
     <>
       <article
-        className="container mx-auto max-w-sm relative bg-white rounded-xl shadow-md overflow-hidden p-5 h-fit hover:bg-slate-200 hover:cursor-pointer"
-        onClick={(e) => {
-          if (
-            e.target instanceof HTMLElement &&
-            !e.target.classList.contains("no-click")
-          ) {
-            setShowEditor(true);
-          }
-        }}
+        className="container mx-auto min-w-max max-w-sm relative bg-white rounded-xl shadow-md overflow-hidden p-5 h-fit hover:bg-slate-200 hover:cursor-pointer"
+        // onClick={(e) => {
+        //   if (
+        //     e.target instanceof HTMLElement &&
+        //     !e.target.classList.contains("no-click")
+        //   ) {
+        //     setShowEditor(true);
+        //   }
+        // }}
       >
         <a>
           <div className="flex justify-between items-end">
             <div>
               <Card1Label dept={dept} />
             </div>
-            {shouldComplete && (
-              <div className="absolute right-4 top-4">
-                <Card1CompleteButton completeTask={completeTask} />
-              </div>
-            )}
+            <div className="absolute right-4 top-4">
+              <Card1CompleteButton completeTask={completeTask} completeStatus={shouldComplete}/>
+            </div>
           </div>
           <div className="mb-4">
             <Card1Name name={name} />
@@ -67,7 +65,7 @@ const Card1 = ({
           </div>
         </a>
       </article>
-      {showEditor && (
+      {/* {showEditor && (
         <TaskEditor
           name={name}
           dept={dept}
@@ -78,7 +76,7 @@ const Card1 = ({
           deactivate={() => deactivateTask(id)}
           close={() => setShowEditor(false)}
         />
-      )}
+      )} */}
     </>
   );
 };
