@@ -1,4 +1,3 @@
-import { HistoryProvider } from "../../../contexts/HistoryContext";
 import SearchFilter from "../../../models/filter/SearchFilter";
 import RecordStatus from "../../../models/record/RecordStatus";
 import TaskStatus from "../../../models/task/TaskStatus";
@@ -30,15 +29,14 @@ const Layout = ({
     <main className="h-screen flex flex-col">
       {/* Header */}
       <section
-        className="shrink-0 bg-slate-500 flex flex-row justify-center items-center min-w-[90px]"
+        className="shrink-0 bg-orange-500/65 flex flex-row justify-center items-center min-w-[90px]"
         style={{ height: "10%" }}
       >
         {searchBar}
       </section>
       {/* Search & Filter */}
       <section
-        className="shrink-0 bg-slate-600 flex flex-row justify-center items-center flex-wrap"
-        style={{ height: width > 650 ? "15%" : "20%" }}
+        className="shrink-0 bg-black/70 flex flex-row justify-center flex-wrap content-end h-auto gap-2 pt-2"
       >
         <article className="flex flex-row justify-center items-center mr-4">
           <SearchBar search={search} isHistory={isHistory} />
@@ -54,11 +52,11 @@ const Layout = ({
         </article>
       </section>
       {/* Content */}
-      <section className="shrink-0 p-8 bg-gray-400 flex-1 overflow-x-hidden overflow-y-scroll ">
+      <section className="shrink-0 p-8 bg-gray-200 flex-1 overflow-x-hidden overflow-y-scroll ">
         {content}
       </section>
       {/* Navigation */}
-      <section className="shrink-0 bg-zinc-700 p-2 h-min">{navigation}</section>
+      <section className="shrink-0 bg-black/70 h-min">{navigation}</section>
     </main>
   );
 };

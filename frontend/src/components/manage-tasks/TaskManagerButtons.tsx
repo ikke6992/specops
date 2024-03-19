@@ -14,25 +14,31 @@ const TaskManagerButtons = () => {
 
   return (
     <>
-        <NavigateButton
-          name="Overwiew"
-          color="emerald"
-          active={path ==="/tasks" ? true : false}
-          navigate={() => {
-            navigate("/tasks");
-          }}
-        />
+      <NavigateButton
+        name="Overwiew"
+        color="emerald"
+        active={path === "/tasks" ? true : false}
+        navigate={() => {
+          navigate("/tasks");
+        }}
+      />
 
-        <NavigateButton
-          name="History"
-          color="cyan"
-          active={path ==="/history" ? true : false}
-          navigate={() => {
-            navigate("/history");
-          }}
-        />
+      <NavigateButton
+        name="History"
+        color="cyan"
+        active={path === "/history" ? true : false}
+        navigate={() => {
+          navigate("/history");
+        }}
+      />
 
-      <FunctionButton name="Create Task" method={() => setShowCreator(true)} />
+      {path === "/tasks" && (
+        <FunctionButton
+          name="Create Task"
+          method={() => setShowCreator(true)}
+        />
+      )}
+
       {showCreator && (
         <TaskCreator
           submit={(task: TaskBody) => addTask(task)}
