@@ -63,7 +63,7 @@ const SignupForm = (props: { type: "signup" | "login" }) => {
 
   useEffect(() => {
     if (success) {
-      setTimeout(() => navigate("/tasks"), 1000);
+      navigate("/tasks");
     }
   }, [success]);
 
