@@ -9,6 +9,7 @@ import SignupScreen from "./components/login/SignupScreen.tsx";
 import UserTest from "./components/test/UserTest.tsx";
 import TaskTest from "./components/test/TaskTest.tsx";
 import ProtectedRoute from "./utils/ProtectedRoute.tsx";
+import { isAdmin, isUser } from "./services/api-client.ts";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <BrowserRouter>
@@ -16,14 +17,14 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       <Route path="/" element={<SignupScreen type="login" />} />
       <Route path="/signup" element={<SignupScreen type="signup" />} />
       <Route path="/login" element={<SignupScreen type="login" />} />
-      <Route element={<ProtectedRoute role="ROLE_ADMIN" />}>
+      <Route element={<ProtectedRoute authenticate={isAdmin} />}>
         <Route path="/testing" element={<App />} />
         <Route path="/task-test" element={<TaskTest />} />
         <Route path="/user-test" element={<UserTest />} />
         <Route path="/department-test" element={<DepartmentTest />} />
         <Route path="/history" element={<HistoryManager />} />
       </Route>
-      <Route element={<ProtectedRoute role="ROLE_USER" />}>
+      <Route element={<ProtectedRoute authenticate={isUser} />}>
         <Route path="/tasks" element={<TaskManager />} />
       </Route>
     </Routes>

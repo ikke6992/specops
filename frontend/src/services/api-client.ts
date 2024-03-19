@@ -38,11 +38,11 @@ export const get = (resource: string) => {
 };
 
 export const isUser = () =>
-  sessionStorage.getItem("roles")?.includes("ROLE_USER");
+  sessionStorage.getItem("roles")?.includes("ROLE_USER") || false;
 export const isManager = () =>
-  sessionStorage.getItem("roles")?.includes("ROLE_MANAGER");
+  sessionStorage.getItem("roles")?.includes("ROLE_MANAGER") || false;
 export const isAdmin = () =>
-  sessionStorage.getItem("roles")?.includes("ROLE_ADMIN");
+  sessionStorage.getItem("roles")?.includes("ROLE_ADMIN") || false;
 
 export const connect = async (
   type: "login" | "signup",
