@@ -52,14 +52,17 @@ const Content = ({
 
   const Navigation = () => {
     return (
-      <>
+      <div className="flex justify-between">
         {/* Browse through tasks */}
-        <div className="flex justify-center object-bottom">
+        {/* <div className="flex justify-center object-bottom">
           <MoveLeftButton moveLeft={() => moveLeft()} />
           <MoveRightButton moveRight={() => moveRight()} />
-        </div>
+        </div> */}
         <FunctionButton method={() => toggleMode()} name={`View ${mode}`} />
-      </>
+        <p className="text-white font-semibold text-xs">
+          Itvitae - Java Groep 53
+        </p>
+      </div>
     );
   };
 

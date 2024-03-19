@@ -36,14 +36,14 @@ const Card1 = ({
     <>
       <article
         className="container mx-auto min-w-max max-w-sm relative bg-white rounded-xl shadow-md overflow-hidden p-5 h-fit hover:bg-slate-200 hover:cursor-pointer"
-        // onClick={(e) => {
-        //   if (
-        //     e.target instanceof HTMLElement &&
-        //     !e.target.classList.contains("no-click")
-        //   ) {
-        //     setShowEditor(true);
-        //   }
-        // }}
+        onClick={(e) => {
+          if (
+            e.target instanceof HTMLElement &&
+            !e.target.classList.contains("no-click")
+          ) {
+            setShowEditor(true);
+          }
+        }}
       >
         <a>
           <div className="flex justify-between items-end">
@@ -65,7 +65,7 @@ const Card1 = ({
           </div>
         </a>
       </article>
-      {/* {showEditor && (
+      {showEditor && (
         <TaskEditor
           name={name}
           dept={dept}
@@ -76,7 +76,7 @@ const Card1 = ({
           deactivate={() => deactivateTask(id)}
           close={() => setShowEditor(false)}
         />
-      )} */}
+      )}
     </>
   );
 };

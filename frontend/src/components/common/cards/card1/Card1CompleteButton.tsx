@@ -14,7 +14,9 @@ const Card1CompleteButton = ({ completeTask, completeStatus }: Props) => {
         type="checkbox"
         checked={!completeStatus}
         value=""
-        className="appearance-none shrink-0 w-4 h-4 border-2 rounded-sm bg-white checked:bg-green-100 border-black/50 hover:border-green-500 checked:border-green-500"
+        className={`appearance-none shrink-0 w-4 h-4 border-2 rounded-sm bg-white checked:bg-green-100 border-black/50 hover:border-green-500 checked:border-green-500 ${
+          !completeStatus && "pointer-events-none"
+        }`}
         onClick={completeTask}
       />
       {!completeStatus && (

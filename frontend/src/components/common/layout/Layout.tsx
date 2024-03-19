@@ -1,10 +1,9 @@
+import { HistoryProvider } from "../../../contexts/HistoryContext";
 import SearchFilter from "../../../models/filter/SearchFilter";
 import RecordStatus from "../../../models/record/RecordStatus";
 import TaskStatus from "../../../models/task/TaskStatus";
 import useWindowDimensions from "../../../utils/windowdimensions";
 import TaskManagerButtons from "../../manage-tasks/TaskManagerButtons";
-import FunctionButton from "../buttons/FunctionButton";
-import NavigateButton from "../buttons/NavigateButton";
 import FilterTabs from "../filter/FilterTabs";
 import SearchBar from "../search/SearchBar";
 
@@ -48,7 +47,7 @@ const Layout = ({
           <FilterTabs filter={filter} isHistory={isHistory} />
         </article>
         <article className="flex flex-row justify-center items-center ml-4">
-          <TaskManagerButtons />
+          <TaskManagerButtons/>
         </article>
         <article>
           

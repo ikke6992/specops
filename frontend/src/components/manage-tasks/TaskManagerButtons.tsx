@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import TaskCreator from "./TaskCreator";
 import TaskBody from "../../models/task/TaskBody";
 import { TaskContext } from "../../contexts/TaskContext";
+import { HistoryContext } from "../../contexts/HistoryContext";
 
 const TaskManagerButtons = () => {
   const { addTask } = useContext(TaskContext);
@@ -19,6 +20,7 @@ const TaskManagerButtons = () => {
           navigate("/tasks");
         }}
       />
+
       <NavigateButton
         name="History"
         navigate={() => {
