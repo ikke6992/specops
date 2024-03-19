@@ -29,7 +29,7 @@ const Layout = ({
     <main className="h-screen flex flex-col">
       {/* Header */}
       <section
-        className="shrink-0 bg-orange-500/65 flex flex-row justify-center items-center min-w-[90px]"
+        className="shrink-0 bg-orange-500/60 flex flex-row justify-center items-center min-w-[90px]"
         style={{ height: "10%" }}
       >
         {searchBar}
