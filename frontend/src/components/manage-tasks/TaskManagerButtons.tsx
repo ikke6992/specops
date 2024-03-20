@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import TaskCreator from "./TaskCreator";
 import TaskBody from "../../models/task/TaskBody";
 import { TaskContext } from "../../contexts/TaskContext";
+import { isAdmin, isManager } from "../../services/api-client";
 
 const TaskManagerButtons = () => {
   const { addTask } = useContext(TaskContext);
@@ -14,29 +15,37 @@ const TaskManagerButtons = () => {
 
   return (
     <>
-      {path.includes("/list") ? (
-        <NavigateButton
-          name="Overview"
-          color="emerald"
-          navigate={() => {
-            navigate("/tasks");
-          }}
-        />
+      {isAdmin() ? (
+        path.includes("/list") ? (
+          <NavigateButton
+            name="Overview"
+            color="emerald"
+            navigate={() => {
+              navigate("/tasks");
+            }}
+          />
+        ) : (
+          <NavigateButton
+            name="List"
+            color="cyan"
+            navigate={() => {
+              navigate("/list/old");
+            }}
+          />
+        )
       ) : (
-        <NavigateButton
-          name="List"
-          color="cyan"
-          navigate={() => {
-            navigate("/list/old");
-          }}
-        />
+        <></>
       )}
 
-      {path === "/tasks" && (
-        <FunctionButton
-          name="Create Task"
-          method={() => setShowCreator(true)}
-        />
+      {isManager() ? (
+        path === "/tasks" && (
+          <FunctionButton
+            name="Create Task"
+            method={() => setShowCreator(true)}
+          />
+        )
+      ) : (
+        <></>
       )}
 
       {path.includes("/list") && (
