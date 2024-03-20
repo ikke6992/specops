@@ -15,12 +15,10 @@ type ContextType = {
   getTasks: () => TaskResponse[];
   getLogs: () => TaskLog[];
   setSize: (size: number) => void;
-  moveRight: () => void;
-  moveLeft: () => void;
   addTask: (task: TaskBody) => void;
   editTask: (id: string, task: TaskBody) => void;
   deactivateTask: (id: string) => void;
-  completeTask: (id: string) => void;
+  completeTask: (id: string, notes: string) => void;
   search: (type: SearchFilter, querry: string) => void;
   filter: (status: StatusFilter) => void;
 };
@@ -31,8 +29,6 @@ export const TaskContext = createContext<ContextType>({
   getTasks: () => [],
   getLogs: () => [],
   setSize: () => {},
-  moveRight: () => {},
-  moveLeft: () => {},
   addTask: () => {},
   editTask: () => {},
   deactivateTask: () => {},
@@ -59,22 +55,9 @@ export const TaskProvider: ProviderType = ({ children }) => {
     getTaskList();
   }, []);
 
-  // Navigation
-  const moveRight = () => {
-    if (pointer + size < tasks.length) {
-      setPointer(pointer + size);
-    }
-  };
-
-  const moveLeft = () => {
-    if (pointer - size >= 0) {
-      setPointer(pointer - size);
-    }
-  };
-
   // Getters
   const getTasks = () => {
-    return apply(tasks).slice(pointer, pointer + size);
+    return apply(tasks);
   };
 
   const getLogs = () => {
@@ -122,8 +105,8 @@ export const TaskProvider: ProviderType = ({ children }) => {
     setTasks(updatedTasks);
   };
 
-  const completeTask = async (id: string) => {
-    const newTask = await updateTask("tasks", id);
+  const completeTask = async (id: string, notes: string) => {
+    const newTask = await updateTask("tasks", id, notes);
     let newList = [...tasks.filter((task) => task.id !== id), newTask];
     newList = newList.sort((task1, task2) => compareDates(task1, task2));
     setTasks(newList);
@@ -173,8 +156,6 @@ export const TaskProvider: ProviderType = ({ children }) => {
         getTasks,
         getLogs,
         setSize,
-        moveRight,
-        moveLeft,
         addTask,
         editTask,
         deactivateTask,

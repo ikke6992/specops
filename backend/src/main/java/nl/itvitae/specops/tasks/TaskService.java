@@ -48,9 +48,9 @@ public class TaskService {
     return taskPlanning;
   }
 
-  public Task execute(Task task, User user) {
+  public Task execute(Task task, User user, String notes) {
     LocalDate executionDate = LocalDate.now();
-    TaskExecution executedTask = new TaskExecution(task, user, executionDate);
+    TaskExecution executedTask = new TaskExecution(task, user, executionDate, notes);
     taskExecutionRepository.save(executedTask);
     Task newTask =
         new Task(

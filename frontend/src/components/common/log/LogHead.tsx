@@ -3,8 +3,8 @@ import TaskLog from "../../../models/log/TaskLog";
 
 const HistoryHead = () => {
   return (
-    <tr className="">
-      <th className="px-4 py-2 text-left text-gray-600">Label</th>
+    <tr className="border-b-2 border-gray-500/30">
+      <th className="px-4 py-2 text-left text-gray-600">Status</th>
       <th className="px-4 py-2 text-left text-gray-600">Name</th>
       <th className="px-4 py-2 text-left text-gray-600">Execution Date</th>
       <th className="px-4 py-2 text-left text-gray-600">Deadline</th>
@@ -15,8 +15,8 @@ const HistoryHead = () => {
 
 const TaskHead = () => {
   return (
-    <tr className="">
-      <th className="px-4 py-2 text-left text-gray-600">Label</th>
+    <tr className="border-b-2 border-gray-500/30">
+      <th className="px-4 py-2 text-left text-gray-600">Status</th>
       <th className="px-4 py-2 text-left text-gray-600">Name</th>
       <th className="px-4 py-2 text-left text-gray-600">Startdate</th>
       <th className="px-4 py-2 text-left text-gray-600">Deadline</th>

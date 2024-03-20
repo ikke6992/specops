@@ -108,13 +108,15 @@ public class TaskController {
     return ResponseEntity.ok(response);
   }
 
+  private record Notes(String notes) {}
+
   @PatchMapping("/setComplete/{id}")
-  public ResponseEntity<TaskResponse> setComplete(@PathVariable UUID id) {
+  public ResponseEntity<TaskResponse> setComplete(@PathVariable UUID id, @RequestBody Notes notes) {
     final User user = userRepository.findAll().get(0);
     var possibleTask = taskService.findTaskById(id);
     if (possibleTask.isEmpty()) return ResponseEntity.notFound().build();
     final Task task = possibleTask.get();
-    final Task newTask = taskService.execute(task, user);
+    final Task newTask = taskService.execute(task, user, notes.notes());
     final TaskResponse response = TaskResponse.of(newTask);
     return ResponseEntity.ok(response);
   }

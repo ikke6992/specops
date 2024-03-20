@@ -17,7 +17,7 @@ type PropsType = {
   start: string;
   end: string;
   canComplete: boolean;
-  completeTask: () => void;
+  completeTask: (notes: string) => void;
 };
 const Card1 = ({
   id,
@@ -50,11 +50,9 @@ const Card1 = ({
             <div>
               <Card1Label dept={dept} />
             </div>
-            {shouldComplete && (
-              <div className="absolute right-4 top-4">
-                <Card1CompleteButton completeTask={completeTask} />
-              </div>
-            )}
+            <div className="absolute right-4 top-4">
+              <Card1CompleteButton completeTask={completeTask} completeStatus={shouldComplete}/>
+            </div>
           </div>
           <div className="mb-4">
             <Card1Name name={name} />

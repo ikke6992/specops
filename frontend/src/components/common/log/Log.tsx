@@ -9,7 +9,7 @@ type PropsType = {
 };
 const Log = ({ logs }: PropsType) => {
   return (
-    <table className="table-auto w-full">
+    <table className="table-auto min-w-fit w-full bg-white rounded-md shadow-lg">
       <thead>
         {logs
           .filter((_, i) => i === 0)

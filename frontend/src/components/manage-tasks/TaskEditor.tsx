@@ -41,7 +41,7 @@ const Content = (props: {
 
   return (
     <Modal
-      name="edit task"
+      name="Edit Task"
       edit={true}
       close={props.close}
       deactivate={props.deactivate}

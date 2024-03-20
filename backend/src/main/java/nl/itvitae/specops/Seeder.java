@@ -42,7 +42,7 @@ public class Seeder implements CommandLineRunner {
     }
     if (taskRepository.count() == 0) {
       seedTasks();
-      taskService.execute(taskRepository.findAll().get(0), userRepository.findAll().get(0));
+      taskService.execute(taskRepository.findAll().get(0), userRepository.findAll().get(0), "Test");
     }
   }
 

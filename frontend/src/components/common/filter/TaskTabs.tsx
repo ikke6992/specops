@@ -28,7 +28,7 @@ const TaskTabs = ({ filter, selected, setSelected }: PropsType) => {
         }}
       />
       <Tab
-        name="Pending"
+        name="Active"
         color="yellow"
         selected={selected === 2}
         onClick={() => {

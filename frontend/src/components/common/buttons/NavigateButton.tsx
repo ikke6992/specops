@@ -1,7 +1,11 @@
-const NavigateButton = (props: { navigate: () => void; name: string }) => {
+const NavigateButton = (props: {
+  navigate: () => void;
+  name: string;
+  color: string;
+}) => {
   return (
     <button
-      className="bg-blue-600 hover:bg-blue-300 pt-2 pb-2 pl-4 pr-4 border-gray-300  border-2 text-white"
+      className={`w-24 h-12 self-end px-4 py-2 text-sm font-medium text-white bg-${props.color}-500 border-x-4 border-t-4 hover:bg-${props.color}-600 border-${props.color}-700 rounded-t-md`}
       onClick={props.navigate}
     >
       {props.name}

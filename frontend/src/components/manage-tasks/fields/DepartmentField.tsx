@@ -16,9 +16,10 @@ const DepartmentField = () => {
   });
 
   return (
-    <label>
-      Department:{" "}
+    <>
+      <label>Department: </label>
       <select
+        className="border rounded-md p-1 outline-none border-gray-400"
         value={dept}
         onChange={(e) => {
           setDept(e.target.value);
@@ -26,7 +27,7 @@ const DepartmentField = () => {
       >
         {departmentOptions}
       </select>
-    </label>
+    </>
   );
 };
 

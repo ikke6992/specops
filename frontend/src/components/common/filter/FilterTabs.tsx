@@ -12,8 +12,8 @@ const FilterTabs = ({ filter, isHistory }: PropsType) => {
   const [selected, setSelected] = useState(0);
 
   return (
-    <div className="w-full">
-      <div className="grid grid-cols-4 grid-rows-1">
+    <div className="">
+      <div className="w-96 grid grid-flow-col auto-cols-auto grid-rows-1 justify-center">
         {isHistory ? (
           <HistoryTabs
             filter={filter}

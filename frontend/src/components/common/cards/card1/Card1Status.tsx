@@ -29,36 +29,36 @@ const Card1Status = ({ start, end }: Props) => {
     endDate + 1000 * 60 * 60 * 24 >= currentDate
   ) {
     return (
-      <div className="grid bg-yellow-600 rounded-full border-2 border-yellow-600">
+      <div className="grid bg-yellow-600 rounded-full border-4 border-yellow-600">
         <div
           className="col-start-1 row-start-1 bg-yellow-500 rounded-full p-3"
           style={{ width: formatProgress() }}
         ></div>
-        <p className="grid col-start-1 row-start-1 text-sm justify-items-center content-center">
+        <p className="grid col-start-1 row-start-1 text-sm justify-items-center content-center font-semibold">
           Days Left: {daysRemaining}
         </p>
       </div>
     );
   } else if (startDate > currentDate) {
     return (
-      <div className="grid bg-green-600 rounded-full border-2 border-green-600">
+      <div className="grid bg-green-600 rounded-full border-4 border-green-600">
         <div
           className="col-start-1 row-start-1 bg-green-500 rounded-full p-3"
           style={{ width: "100%" }}
         ></div>
-        <p className="grid col-start-1 row-start-1 text-sm justify-items-center content-center">
+        <p className="grid col-start-1 row-start-1 text-sm justify-items-center content-center font-semibold">
           Days Untill Task: {daysUntill}
         </p>
       </div>
     );
   } else if (endDate + 1000 * 60 * 60 * 24 < currentDate) {
     return (
-      <div className="grid bg-red-600 rounded-full border-2 border-red-600">
+      <div className="grid bg-red-600 rounded-full border-4 border-red-600">
         <div
           className="col-start-1 row-start-1 bg-red-400 rounded-full p-3"
           style={{ width: "100%" }}
         ></div>
-        <p className="grid col-start-1 row-start-1 text-sm justify-items-center content-center">
+        <p className="grid col-start-1 row-start-1 text-sm justify-items-center content-center font-semibold">
           Days Overdue: {daysOverdue}
         </p>
       </div>
