@@ -1,5 +1,5 @@
 import { FC, ReactNode, createContext, useState } from "react";
-import signup from "../services/signup";
+import { connect } from "../services/api-client";
 
 type ContextType = {
   user: string;
@@ -61,22 +61,18 @@ export const SecurityProvider: ProviderType = ({ children }) => {
   ) => {
     e.preventDefault();
 
-    try {
-      const response = await signup(
-        {
-          username: user,
-          password: pwd,
-        },
-        type
-      );
+    const data = await connect(type, {
+      username: user,
+      password: pwd,
+    });
+
+    if (data.token !== "") {
       setSuccess(true);
-      return response;
-    } catch (err) {
-      setErrMsg(
-        type === "signup" ? "User already exists" : "User does not exist"
-      );
-      return null;
+    } else {
+      setErrMsg(data.username);
     }
+
+    return data;
   };
 
   return (

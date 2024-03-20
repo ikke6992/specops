@@ -19,6 +19,8 @@ public class User {
 
   @NonNull private String password;
 
+  @NonNull private String roles;
+
   @NonNull private String employeeName;
 
   @ManyToOne private Department department;

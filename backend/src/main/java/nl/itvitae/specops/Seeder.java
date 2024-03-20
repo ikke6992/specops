@@ -47,14 +47,15 @@ public class Seeder implements CommandLineRunner {
   }
 
   private void seedAdmins() {
-    userService.save("tuyan", "test", "Tuyan Tatliparmak");
-    userService.save("peter", "password", "Peter Diepstraten");
-    userService.save("thomas", "abc123", "Thomas Vrielink");
+    userService.save("TuyanTat", "TuyanTat123", "ROLE_USER", "Tuyan Tatliparmak");
+    userService.save("PeterDiep", "PeterDiep123", "ROLE_USER,ROLE_MANAGER", "Peter Diepstraten");
+    userService.save(
+        "ThomasVrie", "ThomasVrie123", "ROLE_USER,ROLE_MANAGER,ROLE_ADMIN", "Thomas Vrielink");
   }
 
   private void seedUsers() {
     for (int i = 0; i < 20; i++) {
-      userService.save("employee" + i, "password" + i, "Employee Number " + i);
+      userService.save("employee" + i, "Employee" + i, "ROLE_USER", "Employee Number " + i);
     }
   }
 

@@ -1,8 +1,8 @@
-import axios from "axios";
+import { get } from "./api-client";
 
 const getAll = async (dataType: string) => {
   try {
-    const response = await axios.get(`http://localhost:8080/${dataType}`);
+    const response = await get(`${dataType}`);
     return response.data;
   } catch (error) {
     console.error(error);

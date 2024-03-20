@@ -22,23 +22,12 @@ public class UserController {
   }
 
   @PostMapping("/signup")
-  public ResponseEntity<UserDTO> signup(@RequestBody User user, UriComponentsBuilder ucb) {
-    try {
-      User savedUser = userService.saveUser(user);
-      URI locationOfNewUser = ucb.path("users/{id}").buildAndExpand(savedUser.getId()).toUri();
-
-      return ResponseEntity.created(locationOfNewUser).body(new UserDTO(savedUser));
-    } catch (UserAlreadyExistsException e) {
-      return ResponseEntity.badRequest().build();
-    }
+  public LoginResponse register(@RequestBody LoginRequest req) {
+    return userService.register(req);
   }
 
   @PostMapping("/login")
-  public ResponseEntity<User> login(@RequestBody User user, UriComponentsBuilder ucb) {
-    if (userService.getByName(user.getUsername()).isPresent()) {
-      return ResponseEntity.ok(userService.getByName(user.getUsername()).get());
-    } else {
-      return ResponseEntity.badRequest().build();
-    }
+  public LoginResponse login(@RequestBody LoginRequest req) {
+    return userService.login(req);
   }
 }
