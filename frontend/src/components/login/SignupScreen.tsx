@@ -12,6 +12,7 @@ const Content = (props: { type: "signup" | "login" }) => {
             <RegisterForm type={props.type} />
           </section>
         }
+        isLogin={true}
       />
     </>
   );
