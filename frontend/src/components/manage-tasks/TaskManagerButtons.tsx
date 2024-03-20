@@ -17,7 +17,7 @@ const TaskManagerButtons = () => {
       {path.includes("/list") ? (
         <NavigateButton
           name="Overview"
-          color="emerald"
+          color="cyan"
           navigate={() => {
             navigate("/tasks");
           }}
