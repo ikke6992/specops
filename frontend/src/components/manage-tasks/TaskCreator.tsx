@@ -6,19 +6,34 @@ import {
 import TaskBody from "../../models/task/TaskBody";
 import Modal from "../common/modal/Modal";
 import FieldCombination from "./fields/FieldCombination";
-import { DepartmentContext, DepartmentProvider } from "../../contexts/DepartmentContext";
+import {
+  DepartmentContext,
+  DepartmentProvider,
+} from "../../contexts/DepartmentContext";
+import getAll from "../../services/getAll";
 
 const Content = (props: {
   close: () => void;
   submit: (task: TaskBody) => void;
 }) => {
-  const { taskName, dept, timeframe, interval, deadline, setDept } =
-    useContext(TaskModalContext);
-  const {departments} = useContext(DepartmentContext);
+  const {
+    taskName,
+    dept,
+    timeframe,
+    interval,
+    deadline,
+    setDept,
+    setDeadline,
+  } = useContext(TaskModalContext);
 
   useEffect(() => {
-    const department = departments.length === 0 ? "General" : departments[0].name;
-    setDept(department);
+    const getDepartment = async () => {
+      const data = await getAll("departments");
+      setDept(data[0].name);
+    };
+    getDepartment();
+    const date = new Date().toJSON().slice(0, 10);
+    setDeadline(date);
   }, []);
 
   return (
