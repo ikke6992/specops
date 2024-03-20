@@ -1,12 +1,12 @@
 import { useContext, useState } from "react";
 import Card1CompleteButton from "./Card1CompleteButton";
-import Card1Dates from "./Card1Dates";
 import Card1Label from "./Card1Label";
 import Card1Name from "./Card1Name";
 import Card1Status from "./Card1Status";
 import TaskEditor from "../../../manage-tasks/TaskEditor";
 import TaskBody from "../../../../models/task/TaskBody";
 import { TaskContext } from "../../../../contexts/TaskContext";
+import Card1Dates from "./Card1Dates";
 
 type PropsType = {
   id: string;
@@ -51,7 +51,10 @@ const Card1 = ({
               <Card1Label dept={dept} />
             </div>
             <div className="absolute right-4 top-4">
-              <Card1CompleteButton completeTask={completeTask} completeStatus={shouldComplete}/>
+              <Card1CompleteButton
+                completeTask={completeTask}
+                completeStatus={shouldComplete}
+              />
             </div>
           </div>
           <div className="mb-4">
@@ -61,7 +64,7 @@ const Card1 = ({
             <Card1Status start={start} end={end} />
           </div>
           <div>
-            <Card1Dates start={start} end={end} />
+            <Card1Dates end={end} />
           </div>
         </a>
       </article>

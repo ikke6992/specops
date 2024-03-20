@@ -1,4 +1,4 @@
-const Card1Dates = (props: { start: string; end: string }) => {
+const Card1Dates = (props: { end: string }) => {
   const formatDate = (date: string) => {
     const parts = date.split("-");
     const year = parts[0];
@@ -9,8 +9,6 @@ const Card1Dates = (props: { start: string; end: string }) => {
 
   return (
     <div className="mt-2 text-gray-500 flex justify-between">
-      <span>ACTIVATES: {formatDate(props.start)}</span>
-      <span>-</span>
       <span>DEADLINE: {formatDate(props.end)}</span>
     </div>
   );
