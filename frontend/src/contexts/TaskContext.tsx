@@ -15,8 +15,6 @@ type ContextType = {
   getTasks: () => TaskResponse[];
   getLogs: () => TaskLog[];
   setSize: (size: number) => void;
-  moveRight: () => void;
-  moveLeft: () => void;
   addTask: (task: TaskBody) => void;
   editTask: (id: string, task: TaskBody) => void;
   deactivateTask: (id: string) => void;
@@ -31,8 +29,6 @@ export const TaskContext = createContext<ContextType>({
   getTasks: () => [],
   getLogs: () => [],
   setSize: () => {},
-  moveRight: () => {},
-  moveLeft: () => {},
   addTask: () => {},
   editTask: () => {},
   deactivateTask: () => {},
@@ -58,19 +54,6 @@ export const TaskProvider: ProviderType = ({ children }) => {
     };
     getTaskList();
   }, []);
-
-  // Navigation
-  const moveRight = () => {
-    if (pointer + size < tasks.length) {
-      setPointer(pointer + size);
-    }
-  };
-
-  const moveLeft = () => {
-    if (pointer - size >= 0) {
-      setPointer(pointer - size);
-    }
-  };
 
   // Getters
   const getTasks = () => {
@@ -173,8 +156,6 @@ export const TaskProvider: ProviderType = ({ children }) => {
         getTasks,
         getLogs,
         setSize,
-        moveRight,
-        moveLeft,
         addTask,
         editTask,
         deactivateTask,
