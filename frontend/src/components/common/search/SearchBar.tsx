@@ -12,7 +12,7 @@ const SearchBar = ({ search, isHistory }: SearchProps) => {
   return (
     <div className="flex">
       <select
-        className="h-10 bg-white px-4 text-black outline-none text-left"
+        className="w-36 h-10 bg-white px-4 text-black outline-none text-left"
         onChange={(e) => {
           setquery("");
           setType(e.target.value);
@@ -20,7 +20,7 @@ const SearchBar = ({ search, isHistory }: SearchProps) => {
       >
         <option value="name">Task Name</option>
         <option value={isHistory ? "user" : "dept"}>
-          {isHistory ? "User" : "Department"}
+          {isHistory ? "User Name" : "Department"}
         </option>
         {/* <option value="option3">Role</option> */}
       </select>

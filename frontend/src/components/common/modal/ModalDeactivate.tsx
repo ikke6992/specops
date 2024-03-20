@@ -5,9 +5,9 @@ const ModalDeactivate = (props: { deactivate: () => void }) => {
       type="button"
       onClick={props.deactivate}
     >
-      Deactivate
+      Deactivate Task
     </button>
   );
-}
+};
 
 export default ModalDeactivate;
