@@ -1,15 +1,15 @@
 import { HistoryContext, HistoryProvider } from "../../contexts/HistoryContext";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { TaskContext, TaskProvider } from "../../contexts/TaskContext";
 import Content from "./Content";
+import { useParams } from "react-router-dom";
 
 // Task View, Task Manager, History Manager
-const TaskContent = (props: { toggleMode: () => void }) => {
+const TaskContent = () => {
   const { getLogs, setSize, moveRight, moveLeft, filter, search } =
     useContext(TaskContext);
   return (
     <Content
-      toggleMode={props.toggleMode}
       mode="history"
       getLogs={getLogs}
       setSize={setSize}
@@ -21,12 +21,11 @@ const TaskContent = (props: { toggleMode: () => void }) => {
   );
 };
 
-const HistoryContent = (props: { toggleMode: () => void }) => {
+const HistoryContent = () => {
   const { getLogs, setSize, moveRight, moveLeft, filter, search } =
     useContext(HistoryContext);
   return (
     <Content
-      toggleMode={props.toggleMode}
       mode="tasks"
       getLogs={getLogs}
       setSize={setSize}
@@ -39,21 +38,17 @@ const HistoryContent = (props: { toggleMode: () => void }) => {
 };
 
 const HistoryManager = () => {
-  const [historyMode, setHistoryMode] = useState(true);
-
-  const toggleMode = () => {
-    setHistoryMode(!historyMode);
-  };
+  const { type } = useParams();
 
   return (
     <>
-      {historyMode ? (
+      {type === "old" ? (
         <HistoryProvider>
-          <HistoryContent toggleMode={toggleMode} />
+          <HistoryContent />
         </HistoryProvider>
       ) : (
         <TaskProvider>
-          <TaskContent toggleMode={toggleMode} />
+          <TaskContent />
         </TaskProvider>
       )}
     </>

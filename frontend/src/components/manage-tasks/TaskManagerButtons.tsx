@@ -15,7 +15,7 @@ const TaskManagerButtons = () => {
   return (
     <>
       <NavigateButton
-        name="Overwiew"
+        name="Overview"
         color="emerald"
         active={path === "/tasks" ? true : false}
         navigate={() => {
@@ -24,11 +24,11 @@ const TaskManagerButtons = () => {
       />
 
       <NavigateButton
-        name="History"
+        name="List"
         color="cyan"
         active={path === "/history" ? true : false}
         navigate={() => {
-          navigate("/history");
+          navigate("/list/old");
         }}
       />
 
@@ -36,6 +36,19 @@ const TaskManagerButtons = () => {
         <FunctionButton
           name="Create Task"
           method={() => setShowCreator(true)}
+        />
+      )}
+
+      {path.includes("/list") && (
+        <FunctionButton
+          name="Toggle View"
+          method={() => {
+            if (path === "/list/old") {
+              navigate("/list/current");
+            } else {
+              navigate("/list/old");
+            }
+          }}
         />
       )}
 
