@@ -6,7 +6,7 @@ import Card1Status from "./Card1Status";
 import TaskEditor from "../../../manage-tasks/TaskEditor";
 import TaskBody from "../../../../models/task/TaskBody";
 import { TaskContext } from "../../../../contexts/TaskContext";
-import Card1Dates from "./Card1Dates";
+import { isManager } from "../../../../services/api-client";
 
 type PropsType = {
   id: string;
@@ -35,11 +35,14 @@ const Card1 = ({
   return (
     <>
       <article
-        className="container mx-auto max-w-sm relative bg-white rounded-xl shadow-md overflow-hidden p-5 h-fit hover:bg-slate-200 hover:cursor-pointer"
+        className={`container mx-auto max-w-sm relative bg-white rounded-xl shadow-md overflow-hidden p-5 h-fit ${
+          isManager() && "hover:bg-slate-200 hover:cursor-pointer"
+        }`}
         onClick={(e) => {
           if (
             e.target instanceof HTMLElement &&
-            !e.target.classList.contains("no-click")
+            !e.target.classList.contains("no-click") &&
+            isManager()
           ) {
             setShowEditor(true);
           }
@@ -64,7 +67,7 @@ const Card1 = ({
             <Card1Status start={start} end={end} />
           </div>
           <div>
-            <Card1Dates end={end} />
+            <p className="mt-2 text-gray-500">Deadline: {end}</p>
           </div>
         </a>
       </article>
