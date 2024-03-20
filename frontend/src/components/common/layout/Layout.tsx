@@ -28,13 +28,13 @@ const Layout = ({ header, content, search, filter, isHistory }: PropsType) => {
       </section>
       {/* Search & Filter */}
       <section className="shrink-0 bg-black/70 flex flex-row justify-center flex-wrap content-end h-auto gap-2 pt-2">
-        <article className="flex flex-row justify-center items-center mr-4 border">
+        <article className="flex flex-row justify-center items-center mr-4">
           <SearchBar search={search} isHistory={isHistory} />
         </article>
-        <article className="w-96 flex flex-row justify-center items-center border">
+        <article className="w-96 flex flex-row justify-center items-center">
           <FilterTabs filter={filter} isHistory={isHistory} />
         </article>
-        <article className="flex flex-row justify-center items-center ml-4 border">
+        <article className="flex flex-row justify-center items-center ml-4">
           <TaskManagerButtons />
         </article>
       </section>
