@@ -1,7 +1,7 @@
 const ModalDeactivate = (props: { deactivate: () => void }) => {
   return (
     <button
-      className="bg-red-500 text-white active:bg-red-600 font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 no-click"
+      className="h-11 w-26 px-4 py-2 text-sm font-medium text-white bg-red-500 hover:bg-red-600 border-2 border-red-700 ml-4 rounded-md"
       type="button"
       onClick={props.deactivate}
     >

@@ -1,7 +1,7 @@
 const FunctionButton = (props: { method: () => void; name: string }) => {
   return (
     <button
-      className="bg-green-600 hover:bg-green-700 pt-2 pb-2 pl-4 pr-4 border-gray-300  border-2 text-white"
+      className="h-11 w-26 px-4 py-2 text-sm font-medium text-white bg-emerald-500 hover:bg-emerald-600 border-x-2 border-t-2 border-emerald-700 ml-4 rounded-t-md self-end"
       onClick={props.method}
     >
       {props.name}

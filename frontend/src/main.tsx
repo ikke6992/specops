@@ -16,7 +16,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       <Route path="/signup" element={<SignupScreen type="signup" />} />
       <Route path="/login" element={<SignupScreen type="login" />} />
       <Route path="/tasks" element={<TaskManager />} />
-      <Route path="/history" element={<HistoryManager />} />
+      <Route path="/list/:type" element={<HistoryManager />} />
       <Route path="/task-test" element={<TaskTest />} />
       <Route path="/user-test" element={<UserTest />} />
       <Route path="/department-test" element={<DepartmentTest />} />

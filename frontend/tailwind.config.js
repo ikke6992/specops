@@ -8,7 +8,7 @@ export default {
   plugins: [],
   safelist: [
     {
-      pattern: /(bg|border)-(red|green|blue|yellow)-.+/,
+      pattern: /(bg|border)-(red|green|blue|yellow|emerald|cyan)-.+/,
       variants: ['hover'],
     }
   ]

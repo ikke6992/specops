@@ -8,7 +8,7 @@ type PropsType = {
 
 const HistoryData = (props: { log: HistoryLog }) => {
   return (
-    <tr className="border-b border-gray-600 h-20 max-h-20">
+    <tr className=" h-20 max-h-20 border-t">
       <td className="px-4 py-2">
         <LogLabel status={props.log.status} />
       </td>
@@ -22,7 +22,7 @@ const HistoryData = (props: { log: HistoryLog }) => {
 
 const TaskData = (props: { log: TaskLog }) => {
   return (
-    <tr className="border-b border-gray-600 h-20 max-h-20">
+    <tr className="h-20 max-h-20 border-t">
       <td className="px-4 py-2">
         <LogLabel status={props.log.status} />
       </td>

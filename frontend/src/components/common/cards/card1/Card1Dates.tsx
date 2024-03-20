@@ -8,10 +8,11 @@ const Card1Dates = (props: { start: string; end: string }) => {
   };
 
   return (
-    <p className="mt-2 text-gray-500 flex justify-between">
-      <span>START: {formatDate(props.start)}</span>
-      <span>END: {formatDate(props.end)}</span>
-    </p>
+    <div className="mt-2 text-gray-500 flex justify-between">
+      <span>ACTIVATES: {formatDate(props.start)}</span>
+      <span>-</span>
+      <span>DEADLINE: {formatDate(props.end)}</span>
+    </div>
   );
 };
 

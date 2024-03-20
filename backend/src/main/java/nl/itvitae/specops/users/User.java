@@ -19,7 +19,7 @@ public class User {
 
   @NonNull private String password;
 
-  private String employeeName;
+  @NonNull private String employeeName;
 
   @ManyToOne private Department department;
 }
