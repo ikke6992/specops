@@ -15,7 +15,7 @@ const TaskManagerButtons = () => {
   return (
     <>
       <NavigateButton
-        name="Overwiew"
+        name="Overview"
         color="emerald"
         active={path === "/tasks" ? true : false}
         navigate={() => {
