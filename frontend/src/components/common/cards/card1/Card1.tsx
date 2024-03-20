@@ -67,7 +67,9 @@ const Card1 = ({
             <Card1Status start={start} end={end} />
           </div>
           <div>
-            <p className="mt-2 text-gray-500">Deadline: {end}</p>
+            <p className="mt-2 text-gray-500">
+              Deadline: {end.split(/(-)/).reverse()}
+            </p>
           </div>
         </a>
       </article>
