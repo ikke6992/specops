@@ -7,6 +7,7 @@ public record TaskRecordResponse(
     UUID id,
     String name,
     String assignee,
+    String notes,
     LocalDate executionDate,
     LocalDate deadline,
     String status) {
@@ -22,10 +23,11 @@ public record TaskRecordResponse(
     final UUID id = execution.getId();
     final String name = execution.getTask().getTaskPlanning().getName();
     final String assignee = execution.getUser().getEmployeeName();
+    final String notes = execution.getNotes();
     final LocalDate deadline = execution.getTask().getDeadline();
     final LocalDate executionDate = execution.getExecutionDate();
     final String status = getStatus(deadline, executionDate);
 
-    return new TaskRecordResponse(id, name, assignee, executionDate, deadline, status);
+    return new TaskRecordResponse(id, name, assignee, notes, executionDate, deadline, status);
   }
 }

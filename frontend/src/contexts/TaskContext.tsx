@@ -20,7 +20,7 @@ type ContextType = {
   addTask: (task: TaskBody) => void;
   editTask: (id: string, task: TaskBody) => void;
   deactivateTask: (id: string) => void;
-  completeTask: (id: string) => void;
+  completeTask: (id: string, notes: string) => void;
   search: (type: SearchFilter, querry: string) => void;
   filter: (status: StatusFilter) => void;
 };
@@ -122,8 +122,8 @@ export const TaskProvider: ProviderType = ({ children }) => {
     setTasks(updatedTasks);
   };
 
-  const completeTask = async (id: string) => {
-    const newTask = await updateTask("tasks", id);
+  const completeTask = async (id: string, notes: string) => {
+    const newTask = await updateTask("tasks", id, notes);
     let newList = [...tasks.filter((task) => task.id !== id), newTask];
     newList = newList.sort((task1, task2) => compareDates(task1, task2));
     setTasks(newList);

@@ -17,7 +17,7 @@ type PropsType = {
   start: string;
   end: string;
   canComplete: boolean;
-  completeTask: () => void;
+  completeTask: (notes: string) => void;
 };
 const Card1 = ({
   id,

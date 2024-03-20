@@ -23,9 +23,12 @@ public class TaskExecution {
 
   private LocalDate executionDate;
 
-  public TaskExecution(Task task, User user, LocalDate executionDate) {
+  private String notes;
+
+  public TaskExecution(Task task, User user, LocalDate executionDate, String notes) {
     this.task = task;
     this.user = user;
     this.executionDate = executionDate;
+    this.notes = notes;
   }
 }
