@@ -1,8 +1,5 @@
 import HistoryLog from "../../models/log/HistoryLog";
 import TaskLog from "../../models/log/TaskLog";
-import useWindowDimensions from "../../utils/windowdimensions";
-import { useEffect } from "react";
-import size from "../../utils/loglistsize";
 
 import Log from "../common/log/Log";
 import Layout from "../common/layout/Layout";
@@ -13,23 +10,10 @@ import SearchFilter from "../../models/filter/SearchFilter";
 type PropsType = {
   mode: "tasks" | "history";
   getLogs: () => HistoryLog[] | TaskLog[];
-  setSize: (size: number) => void;
-  moveRight: () => void;
-  moveLeft: () => void;
   filter: (status: "all" | TaskStatus | RecordStatus) => void;
   search: (type: SearchFilter, query: string) => void;
 };
-const Content = ({ mode, getLogs, setSize, filter, search }: PropsType) => {
-  const { height } = useWindowDimensions();
-
-  useEffect(() => {
-    const updateSize = () => {
-      const newSize = size(height);
-      setSize(newSize);
-    };
-    updateSize();
-  }, [height, setSize]);
-
+const Content = ({ mode, filter, getLogs, search }: PropsType) => {
   return (
     <>
       <Layout

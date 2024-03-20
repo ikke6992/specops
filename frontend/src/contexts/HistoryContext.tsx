@@ -9,9 +9,6 @@ import SearchFilter from "../models/filter/SearchFilter";
 type ContextType = {
   getRecords: () => RecordResponse[];
   getLogs: () => HistoryLog[];
-  setSize: (size: number) => void;
-  moveRight: () => void;
-  moveLeft: () => void;
   search: (type: SearchFilter, query: string) => void;
   filter: (status: StatusFilter) => void;
 };
@@ -21,17 +18,12 @@ type ProviderType = FC<{ children: ReactNode }>;
 export const HistoryContext = createContext<ContextType>({
   getRecords: () => [],
   getLogs: () => [],
-  setSize: () => {},
-  moveRight: () => {},
-  moveLeft: () => {},
   search: () => {},
   filter: () => {},
 });
 
 export const HistoryProvider: ProviderType = ({ children }) => {
   const [records, setRecords] = useState<RecordResponse[]>([]);
-  const [size, setSize] = useState(0);
-  const [pointer, setPointer] = useState(0);
   const [query, setquery] = useState("");
   const [type, setType] = useState<"name" | "user">("name");
   const [status, setStatus] = useState<"all" | RecordStatus>("all");
@@ -44,22 +36,9 @@ export const HistoryProvider: ProviderType = ({ children }) => {
     getTaskList();
   }, []);
 
-  // Navigation
-  const moveRight = () => {
-    if (pointer + size < records.length) {
-      setPointer(pointer + size);
-    }
-  };
-
-  const moveLeft = () => {
-    if (pointer - size >= 0) {
-      setPointer(pointer - size);
-    }
-  };
-
   // Getters
   const getRecords = () => {
-    return apply(records).slice(pointer, pointer + size);
+    return apply(records);
   };
 
   const getLogs = () => {
@@ -120,9 +99,6 @@ export const HistoryProvider: ProviderType = ({ children }) => {
       value={{
         getRecords,
         getLogs,
-        setSize,
-        moveRight,
-        moveLeft,
         search,
         filter,
       }}

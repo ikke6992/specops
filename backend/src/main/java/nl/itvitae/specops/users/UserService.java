@@ -17,7 +17,7 @@ public class UserService {
   private final UserRepository userRepository;
 
   public User save(String username, String password, String employeeName) {
-    return userRepository.save(new User(username, passwordEncoder.encode(password)));
+    return userRepository.save(new User(username, passwordEncoder.encode(password), employeeName));
   }
 
   public User saveUser(User user) {
