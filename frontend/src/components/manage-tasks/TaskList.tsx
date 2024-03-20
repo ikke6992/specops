@@ -23,7 +23,7 @@ const TaskList = () => {
             timeframe={task.timeframe}
             interval={task.interval}
             canComplete={task.status !== "planned"}
-            completeTask={() => completeTask(task.id)}
+            completeTask={(notes: string) => completeTask(task.id, notes)}
             dept={task.department}
             start={task.startDate}
             end={task.deadline}

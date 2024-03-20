@@ -42,7 +42,7 @@ public class Seeder implements CommandLineRunner {
     }
     if (taskRepository.count() == 0) {
       seedTasks();
-      taskService.execute(taskRepository.findAll().get(0), userRepository.findAll().get(0));
+      taskService.execute(taskRepository.findAll().get(0), userRepository.findAll().get(0), "Test");
     }
   }
 
@@ -108,7 +108,11 @@ public class Seeder implements CommandLineRunner {
           departmentService.getByName("maintenance"),
           LocalDate.now().plusWeeks(1));
       taskService.save(
-          "Prepare lunch", 1, 2, departmentService.getByName("general"), LocalDate.now().minusDays(3));
+          "Prepare lunch",
+          1,
+          2,
+          departmentService.getByName("general"),
+          LocalDate.now().minusDays(3));
       taskService.save(
           "Build machine",
           30,
@@ -119,13 +123,8 @@ public class Seeder implements CommandLineRunner {
           "Progress Bar",
           10,
           365,
-           departmentService.getByName("maintenance"),
-           LocalDate.now().plusDays(4));
-      for (int x = 0; x < 30; x++) {
-        taskService.save(
-                "Test for scroll", 1, 2, departmentService.getByName("general"), LocalDate.now().minusDays(3));
-        System.out.println("Added test task");
-      }
+          departmentService.getByName("maintenance"),
+          LocalDate.now().plusDays(4));
     }
   }
 
