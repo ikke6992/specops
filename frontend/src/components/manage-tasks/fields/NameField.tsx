@@ -9,6 +9,7 @@ const NameField = () => {
       <label>Name: </label>
       <input
         type="text"
+        autoComplete="off"
         className="border rounded-md p-1 outline-none border-gray-400"
         placeholder="Task Name..."
         value={taskName}

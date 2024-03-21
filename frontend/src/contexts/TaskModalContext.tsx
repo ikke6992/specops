@@ -1,4 +1,4 @@
-import { FC, ReactNode, createContext, useState } from "react";
+import { FC, ReactNode, createContext, useEffect, useState } from "react";
 
 type ContextType = {
   taskName: string;
@@ -11,6 +11,7 @@ type ContextType = {
   setInterval: (interval: number) => void;
   setDeadline: (deadline: string) => void;
   setDept: (dept: string) => void;
+  valid: boolean;
 };
 type ProviderType = FC<{ children: ReactNode }>;
 
@@ -35,6 +36,7 @@ export const TaskModalContext = createContext<ContextType>({
   setDeadline: (deadline) => {
     return deadline;
   },
+  valid: false,
 });
 
 export const TaskModalProvider: ProviderType = ({ children }) => {
@@ -43,6 +45,32 @@ export const TaskModalProvider: ProviderType = ({ children }) => {
   const [timeframe, setTimeframe] = useState<number>(0);
   const [interval, setInterval] = useState<number>(0);
   const [deadline, setDeadline] = useState<string>("");
+  const [validName, setValidName] = useState(false);
+  const [validTimeFrame, setValidTimeFrame] = useState(false);
+  const [validInterval, setValidInterval] = useState(false);
+  const [validDeadline, setValidDeadline] = useState(false);
+  const [valid, setValid] = useState(false);
+
+  useEffect(() => {
+    const TASK_REGEX = /^{5,23}$/;
+    setValidName(TASK_REGEX.test(taskName));
+  }, [taskName]);
+
+  useEffect(() => {
+    setValidTimeFrame(timeframe > 1);
+  }, [timeframe]);
+
+  useEffect(() => {
+    setValidInterval(interval > 0);
+  }, [interval]);
+
+  useEffect(() => {
+    setValidDeadline(Date.parse(deadline) >= Date.now());
+  }, [deadline]);
+
+  useEffect(() => {
+    setValid(validName && validTimeFrame && validInterval && validDeadline);
+  }, [taskName, timeframe, interval, deadline]);
 
   return (
     <TaskModalContext.Provider
@@ -57,6 +85,7 @@ export const TaskModalProvider: ProviderType = ({ children }) => {
         setTimeframe,
         setInterval,
         setDeadline,
+        valid
       }}
     >
       {children}
