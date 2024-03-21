@@ -7,7 +7,6 @@ import TaskBody from "../../models/task/TaskBody";
 import Modal from "../common/modal/Modal";
 import FieldCombination from "./fields/FieldCombination";
 import {
-  DepartmentContext,
   DepartmentProvider,
 } from "../../contexts/DepartmentContext";
 import getAll from "../../services/getAll";
