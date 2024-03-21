@@ -16,6 +16,7 @@ const HistoryData = (props: { log: HistoryLog }) => {
       <td className="px-4 py-2">{props.log.executionDate}</td>
       <td className="px-4 py-2">{props.log.deadline}</td>
       <td className="px-4 py-2">{props.log.assignee}</td>
+      <td className="px-4 py-2">{props.log.notes}</td>
     </tr>
   );
 };

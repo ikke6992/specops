@@ -7,4 +7,5 @@ export default interface RecordResponse {
   executionDate: string;
   deadline: string;
   assignee: string;
+  notes: string;
 }
