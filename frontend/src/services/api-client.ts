@@ -52,6 +52,7 @@ export const connect = async (
   },
   requestId?: string
 ) => {
+  console.log(`${api}/users/${type}${requestId ? `/${requestId}` : ""}`);
   const response = await axios.post(
     `${api}/users/${type}${requestId ? `/${requestId}` : ""}`,
     { ...body }

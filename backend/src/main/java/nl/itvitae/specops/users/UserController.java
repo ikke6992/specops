@@ -22,6 +22,11 @@ public class UserController {
     return userRepository.findAll();
   }
 
+  @GetMapping("/requests")
+  public Iterable<UserRequest> getAllRequests() {
+    return userRequestRepository.findAll();
+  }
+
   private record UserRequestData(String roles, String employeeName, String department) {}
 
   @PostMapping("/create")
@@ -32,6 +37,23 @@ public class UserController {
 
     final Department department = departmentRepository.findByName(req.department()).get();
     return ResponseEntity.ok(userService.save(req.roles(), req.employeeName(), department));
+  }
+
+  @PutMapping("/edit/{id}")
+  public ResponseEntity<User> edit(@PathVariable UUID id, @RequestBody UserRequestData req) {
+    if (userRepository.findById(id).isEmpty()) return ResponseEntity.notFound().build();
+    final User user = userRepository.findById(id).get();
+
+    if (departmentRepository.findByName(req.department()).isEmpty()) {
+      return ResponseEntity.badRequest().build();
+    }
+
+    final Department department = departmentRepository.findByName(req.department()).get();
+    user.setDepartment(department);
+    user.setRoles(req.roles());
+    user.setEmployeeName(req.employeeName());
+
+    return ResponseEntity.ok(userRepository.save(user));
   }
 
   @PostMapping("/signup/{requestId}")
