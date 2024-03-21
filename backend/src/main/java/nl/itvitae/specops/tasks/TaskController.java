@@ -35,7 +35,7 @@ public class TaskController {
 
     final List<Task> tasks =
         taskService.getAllTasks().stream()
-            .filter(task -> !executedTasks.contains(task)) // Filter executed tasks
+            .filter(Task::isActive) // Filter executed tasks
             .sorted(Comparator.comparing(Task::getDeadline)) // Sort based on deadline
             .toList();
 
@@ -140,10 +140,8 @@ public class TaskController {
     if (possiblePlanning.isEmpty()) return ResponseEntity.notFound().build();
     final TaskPlanning planning = possiblePlanning.get();
     for (Task task : planning.getTasks()) {
-      if (task.getTaskExecution() == null) {
-        System.out.println("Before " + taskService.findTaskById(task.getId()).isEmpty());
+      if (task.isActive()) {
         TaskPlanning updatedPlanning = taskService.deactivateTask(task);
-        System.out.println("After " + taskService.findTaskById(task.getId()).isEmpty());
         final TaskPlanningResponse response = TaskPlanningResponse.of(updatedPlanning);
         return ResponseEntity.ok(response);
       }

@@ -11,6 +11,7 @@ import TaskStatus from "../models/task/TaskStatus";
 import SearchFilter from "../models/filter/SearchFilter";
 import deactivateItem from "../services/deactivateItem";
 import getAll from "../services/getAll";
+import activateItem from "../services/activateItem";
 
 type ContextType = {
   getTasks: () => TaskResponse[];
@@ -18,6 +19,7 @@ type ContextType = {
   addTask: (task: TaskBody) => void;
   editTask: (id: string, task: TaskBody) => void;
   deactivateTask: (id: string) => void;
+  reactivateTask: (id: string) => void;
   completeTask: (id: string, notes: string) => void;
   search: (type: SearchFilter, querry: string) => void;
   filter: (status: StatusFilter) => void;
@@ -31,6 +33,7 @@ export const TaskContext = createContext<ContextType>({
   addTask: () => {},
   editTask: () => {},
   deactivateTask: () => {},
+  reactivateTask: () => {},
   completeTask: () => {},
   search: () => {},
   filter: () => {},
@@ -95,9 +98,15 @@ export const TaskProvider: ProviderType = ({ children }) => {
   };
 
   const deactivateTask = async (id: string) => {
-    await deactivateItem("tasks", id);
-    const updatedTasks = tasks.filter((task) => task.id !== id);
-    setTasks(updatedTasks);
+    const data: TaskLog = await deactivateItem("tasks", id);
+    const updatedLogs = logs.map((log) => log.id === id ? data : log);
+    setLogs(updatedLogs);
+  };
+
+  const reactivateTask = async (id: string) => {
+    const data: TaskLog = await activateItem("tasks", id);
+    const updatedLogs = logs.map((log) => (log.id === id ? data : log));
+    setLogs(updatedLogs);
   };
 
   const completeTask = async (id: string, notes: string) => {
@@ -153,6 +162,7 @@ export const TaskProvider: ProviderType = ({ children }) => {
         addTask,
         editTask,
         deactivateTask,
+        reactivateTask,
         completeTask,
         search,
         filter,

@@ -19,6 +19,8 @@ public class Task {
 
   @ManyToOne private TaskPlanning taskPlanning;
 
+  private boolean isActive = true;
+
   private LocalDate deadline;
 
   @OneToOne(mappedBy = "task", cascade = CascadeType.ALL, orphanRemoval = true)

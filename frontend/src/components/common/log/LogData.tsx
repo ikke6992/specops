@@ -1,9 +1,8 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import HistoryLog from "../../../models/log/HistoryLog";
 import TaskLog from "../../../models/log/TaskLog";
 import LogLabel from "./LogLabel";
-import deactivateItem from "../../../services/deactivateItem";
-import activateItem from "../../../services/activateItem";
+import { TaskContext } from "../../../contexts/TaskContext";
 
 type PropsType = {
   log: HistoryLog | TaskLog;
@@ -25,6 +24,7 @@ const HistoryData = (props: { log: HistoryLog }) => {
 };
 
 const TaskData = (props: { log: TaskLog }) => {
+  const {reactivateTask, deactivateTask} = useContext(TaskContext);
   const [active, setActive] = useState<boolean>(
     props.log.status !== "inactive"
   );
@@ -33,7 +33,7 @@ const TaskData = (props: { log: TaskLog }) => {
   useEffect(() => {
     if (!isInitialMount.current) {
       const handleChange = (id: string) => {
-        active ? activateItem("tasks", id) : deactivateItem("tasks", id);
+        active ? reactivateTask(id) : deactivateTask(id);
       };
 
       handleChange(props.log.id);
