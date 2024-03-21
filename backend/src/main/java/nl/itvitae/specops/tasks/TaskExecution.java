@@ -18,7 +18,10 @@ public class TaskExecution {
   @GeneratedValue(strategy = GenerationType.UUID)
   private UUID id;
 
-  @ManyToOne private Task task;
+  @OneToOne
+  @JoinColumn(name = "task_id")
+  private Task task;
+
   @ManyToOne private User user;
 
   private LocalDate executionDate;

@@ -1,3 +1,3 @@
-type TaskStatus = "planned" | "pending" | "overdue";
+type TaskStatus = "planned" | "pending" | "overdue" | "inactive";
 
 export default TaskStatus;

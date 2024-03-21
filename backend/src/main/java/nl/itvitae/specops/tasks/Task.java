@@ -21,6 +21,9 @@ public class Task {
 
   private LocalDate deadline;
 
+  @OneToOne(mappedBy = "task", cascade = CascadeType.ALL, orphanRemoval = true)
+  private TaskExecution taskExecution;
+
   public Task(TaskPlanning taskPlanning, LocalDate deadline) {
     this.taskPlanning = taskPlanning;
     this.deadline = deadline;

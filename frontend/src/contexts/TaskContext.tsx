@@ -10,6 +10,7 @@ import StatusFilter from "../models/filter/StatusFilter";
 import TaskStatus from "../models/task/TaskStatus";
 import SearchFilter from "../models/filter/SearchFilter";
 import deactivateItem from "../services/deactivateItem";
+import getAll from "../services/getAll";
 
 type ContextType = {
   getTasks: () => TaskResponse[];
@@ -39,12 +40,13 @@ export const TaskContext = createContext<ContextType>({
 
 export const TaskProvider: ProviderType = ({ children }) => {
   const [tasks, setTasks] = useState<TaskResponse[]>([]);
+  const [logs, setLogs] = useState<TaskLog[]>([]);
   const [size, setSize] = useState(0);
   const [pointer, setPointer] = useState(0);
   const [querry, setQuerry] = useState("");
   const [type, setType] = useState<"dept" | "name">("name");
   const [status, setStatus] = useState<
-    "all" | "pending" | "planned" | "overdue"
+    "all" | "pending" | "planned" | "overdue" | "inactive"
   >("all");
 
   useEffect(() => {
@@ -61,16 +63,13 @@ export const TaskProvider: ProviderType = ({ children }) => {
   };
 
   const getLogs = () => {
-    const logs: TaskLog[] = getTasks().map((task) => {
-      return {
-        id: task.id,
-        status: task.status,
-        name: task.name,
-        startdate: task.startDate,
-        deadline: task.deadline,
-        department: task.department,
+    useEffect(() => {
+      const getTaskLogs = async () => {
+        const data = await getAll("tasks/list");
+        setLogs(data);
       };
-    });
+      getTaskLogs();
+    }, []);
 
     return logs;
   };
