@@ -41,7 +41,7 @@ const Layout = ({
         {isLoggedIn() && (
           <FontAwesomeIcon
             icon={faSignOut}
-            className="ml-4 w-10 h-10 hover:w-14 hover:h-14 hover:cursor-pointer"
+            className="absolute left-0 ml-4 w-10 h-10 hover:w-14 hover:h-14 hover:cursor-pointer"
             onClick={() => {
               sessionStorage.clear();
               navigate("/");
@@ -60,7 +60,7 @@ const Layout = ({
           </article>
         )}
         {!isLogin && (
-          <article className="w-96 flex flex-row justify-center items-center">
+          <article className="flex flex-row justify-center items-center">
             {isDashboard ? (
               <FilterTabs
                 filter={filter!}
