@@ -1,5 +1,6 @@
 package nl.itvitae.specops.users;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -17,9 +18,29 @@ public class UserController {
   private final UserService userService;
   private final DepartmentRepository departmentRepository;
 
+  private record UserData(UUID id, String role, String name, String department) {
+    static String getRoleString(String role) {
+      if (role.contains("ROLE_ADMIN")) {
+        return "manager";
+      } else if (role.contains("ROLE_MANAGER")) {
+        return "team manager";
+      } else {
+        return "analyst";
+      }
+    }
+
+    static UserData of(User user) {
+      final UUID id = user.getId();
+      final String roles = getRoleString(user.getRoles());
+      final String name = user.getEmployeeName();
+      final String department = user.getDepartment().getName();
+      return new UserData(id, roles, name, department);
+    }
+  }
+
   @GetMapping
-  public Iterable<User> getAll() {
-    return userRepository.findAll();
+  public List<UserData> getAll() {
+    return userRepository.findAll().stream().map(UserData::of).toList();
   }
 
   private record UserRequestData(String roles, String employeeName, String department) {}

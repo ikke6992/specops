@@ -10,7 +10,7 @@ import UserTest from "./components/test/UserTest.tsx";
 import TaskTest from "./components/test/TaskTest.tsx";
 import ProtectedRoute from "./utils/ProtectedRoute.tsx";
 import { isAdmin, isUser } from "./services/api-client.ts";
-import UserManager from "./components/manage-users/UserManager.tsx";
+import OrganizationManager from "./components/manage-organization/OrganizationManager.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <BrowserRouter>
@@ -27,7 +27,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <Route path="/user-test" element={<UserTest />} />
         <Route path="/department-test" element={<DepartmentTest />} />
         <Route path="/list/:type" element={<HistoryManager />} />
-        <Route path="/management" element={<UserManager />} />
+        <Route path="/manage/:type" element={<OrganizationManager />} />
       </Route>
       <Route element={<ProtectedRoute authenticate={isUser} />}>
         <Route path="/tasks" element={<TaskManager />} />

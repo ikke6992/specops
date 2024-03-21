@@ -1,9 +1,11 @@
+import DepartmentLog from "../../../models/log/DepartmentLog";
 import HistoryLog from "../../../models/log/HistoryLog";
 import TaskLog from "../../../models/log/TaskLog";
+import UserLog from "../../../models/log/UserLog";
 import LogLabel from "./LogLabel";
 
 type PropsType = {
-  log: HistoryLog | TaskLog;
+  log: HistoryLog | TaskLog | UserLog | DepartmentLog;
 };
 
 const HistoryData = (props: { log: HistoryLog }) => {
@@ -35,11 +37,33 @@ const TaskData = (props: { log: TaskLog }) => {
   );
 };
 
+const UserData = (props: { log: UserLog }) => {
+  return (
+    <tr className="h-20 max-h-20 border-t">
+      <td className="px-4 py-2">{props.log.name}</td>
+      <td className="px-4 py-2">{props.log.role}</td>
+      <td className="px-4 py-2">{props.log.department}</td>
+    </tr>
+  );
+};
+
+const DepartmentData = (props: { log: DepartmentLog }) => {
+  return (
+    <tr className="h-20 max-h-20 border-t">
+      <td className="px-4 py-2">{props.log.name}</td>
+    </tr>
+  );
+};
+
 const LogData = ({ log }: PropsType) => {
   if (Object.keys(log).includes("assignee")) {
     return <HistoryData log={log as HistoryLog} />;
-  } else {
+  } else if (Object.keys(log).includes("interval")) {
     return <TaskData log={log as TaskLog} />;
+  } else if (Object.keys(log).includes("role")) {
+    return <UserData log={log as UserLog} />;
+  } else {
+    return <DepartmentData log={log as DepartmentLog} />;
   }
 };
 

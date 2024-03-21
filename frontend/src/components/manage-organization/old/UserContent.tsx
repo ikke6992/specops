@@ -1,7 +1,7 @@
-import DepartmentLog from "../../models/log/DepartmentLog";
-import SearchFilter from "../../models/filter/SearchFilter";
-import UserLog from "../../models/log/UserLog";
-import Layout from "../common/layout/Layout";
+import DepartmentLog from "../../../models/log/DepartmentLog";
+import SearchFilter from "../../../models/filter/SearchFilter";
+import UserLog from "../../../models/log/UserLog";
+import Layout from "../../common/layout/Layout";
 import { useEffect, useState } from "react";
 import ManagementDashboard from "./ManagementDashboard";
 
@@ -14,7 +14,7 @@ type Props = {
 const UserContent = ({ getUsers, getDepartments, search }: Props) => {
   const [users, setUsers] = useState<UserLog[]>([]);
   const [departments, setDepartments] = useState<DepartmentLog[]>([]);
-  
+
   useEffect(() => {
     const fetchManagementData = async () => {
       const fetchedUsers = getUsers();

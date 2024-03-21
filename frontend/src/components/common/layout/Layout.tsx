@@ -72,9 +72,11 @@ const Layout = ({
             )}
           </article>
         )}
-        <article className="flex flex-row justify-center items-center ml-4">
-          <TaskManagerButtons />
-        </article>
+        {!isLogin && (
+          <article className="flex flex-row justify-center items-center ml-4">
+            <TaskManagerButtons />
+          </article>
+        )}
       </section>
       {/* Content */}
       <section className="shrink-0 p-8 bg-gray-200 flex-1 overflow-x-hidden overflow-y-scroll ">

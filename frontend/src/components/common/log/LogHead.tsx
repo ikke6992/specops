@@ -1,5 +1,7 @@
+import DepartmentLog from "../../../models/log/DepartmentLog";
 import HistoryLog from "../../../models/log/HistoryLog";
 import TaskLog from "../../../models/log/TaskLog";
+import UserLog from "../../../models/log/UserLog";
 
 const HistoryHead = () => {
   return (
@@ -26,12 +28,34 @@ const TaskHead = () => {
   );
 };
 
-type PropsType = { firstLog: HistoryLog | TaskLog };
+const DepartmentHead = () => {
+  return (
+    <tr className="border-b-2 border-gray-500/30">
+      <th className="px-4 py-2 text-left text-gray-600">Name</th>
+    </tr>
+  );
+};
+
+const UserHead = () => {
+  return (
+    <tr className="border-b-2 border-gray-500/30">
+      <th className="px-4 py-2 text-left text-gray-600">Name</th>
+      <th className="px-4 py-2 text-left text-gray-600">Role</th>
+      <th className="px-4 py-2 text-left text-gray-600">Department</th>
+    </tr>
+  );
+};
+
+type PropsType = { firstLog: HistoryLog | TaskLog | DepartmentLog | UserLog };
 const LogHead = ({ firstLog }: PropsType) => {
   if (Object.keys(firstLog).includes("assignee")) {
     return <HistoryHead />;
-  } else {
+  } else if (Object.keys(firstLog).includes("interval")) {
     return <TaskHead />;
+  } else if (Object.keys(firstLog).includes("role")) {
+    return <UserHead />;
+  } else {
+    return <DepartmentHead />;
   }
 };
 

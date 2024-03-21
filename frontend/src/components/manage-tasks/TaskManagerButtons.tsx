@@ -15,8 +15,8 @@ const TaskManagerButtons = () => {
 
   return (
     <>
-      {isAdmin() ? (
-        path.includes("/list") ? (
+      {isAdmin() && path.includes("/list") ? (
+        <>
           <NavigateButton
             name="Overview"
             color="cyan"
@@ -24,7 +24,16 @@ const TaskManagerButtons = () => {
               navigate("/tasks");
             }}
           />
-        ) : (
+          <NavigateButton
+            name="Manage"
+            color="cyan"
+            navigate={() => {
+              navigate("/manage/users");
+            }}
+          />
+        </>
+      ) : path === "/tasks" ? (
+        <>
           <NavigateButton
             name="List"
             color="cyan"
@@ -32,9 +41,31 @@ const TaskManagerButtons = () => {
               navigate("/list/old");
             }}
           />
-        )
+          <NavigateButton
+            name="Manage"
+            color="cyan"
+            navigate={() => {
+              navigate("/manage/users");
+            }}
+          />
+        </>
       ) : (
-        <></>
+        <>
+          <NavigateButton
+            name="Overview"
+            color="cyan"
+            navigate={() => {
+              navigate("/tasks");
+            }}
+          />
+          <NavigateButton
+            name="List"
+            color="cyan"
+            navigate={() => {
+              navigate("/list/old");
+            }}
+          />
+        </>
       )}
 
       {isManager() ? (
@@ -56,6 +87,19 @@ const TaskManagerButtons = () => {
               navigate("/list/current");
             } else {
               navigate("/list/old");
+            }
+          }}
+        />
+      )}
+
+      {path.includes("/manage") && (
+        <FunctionButton
+          name={path.includes("/users") ? "Departments" : "Users"}
+          method={() => {
+            if (path === "/manage/users") {
+              navigate("/manage/departments");
+            } else {
+              navigate("/manage/users");
             }
           }}
         />

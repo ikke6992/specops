@@ -1,10 +1,4 @@
-import {
-  createContext,
-  FC,
-  ReactNode,
-  useEffect,
-  useState,
-} from "react";
+import { createContext, FC, ReactNode, useEffect, useState } from "react";
 import DepartmentLog from "../models/log/DepartmentLog";
 import UserLog from "../models/log/UserLog";
 import SearchFilter from "../models/filter/SearchFilter";
@@ -19,13 +13,13 @@ type ContextType = {
 
 type ProviderType = FC<{ children: ReactNode }>;
 
-export const UserContext = createContext<ContextType>({
+export const OrganizationContext = createContext<ContextType>({
   getUsers: () => [],
   getDepartments: () => [],
   search: () => {},
 });
 
-export const UserProvider: ProviderType = ({ children }) => {
+export const OrganizationProvider: ProviderType = ({ children }) => {
   const [users, setUsers] = useState<UserLog[]>([]);
   const [departments, setDepartments] = useState<DepartmentLog[]>([]);
   const [query, setQuery] = useState("");
@@ -41,6 +35,7 @@ export const UserProvider: ProviderType = ({ children }) => {
   }, []);
 
   const getUsers = () => {
+    console.log(users);
     return applySearch(users);
   };
 
@@ -62,7 +57,7 @@ export const UserProvider: ProviderType = ({ children }) => {
   };
 
   return (
-    <UserContext.Provider
+    <OrganizationContext.Provider
       value={{
         getUsers,
         getDepartments,
@@ -70,6 +65,6 @@ export const UserProvider: ProviderType = ({ children }) => {
       }}
     >
       {children}
-    </UserContext.Provider>
+    </OrganizationContext.Provider>
   );
 };
