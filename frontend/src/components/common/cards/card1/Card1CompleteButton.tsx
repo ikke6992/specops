@@ -25,7 +25,7 @@ const Card1CompleteButton = ({ completeTask, completeStatus }: Props) => {
         />
         {!completeStatus && (
           <FontAwesomeIcon
-            className="absolute right-2 w-3.5 h-3.5 text-green-500 pointer-events-none"
+            className="absolute right-2 w-4 h-4 text-green-500 pointer-events-none"
             icon={faCheck}
           />
         )}

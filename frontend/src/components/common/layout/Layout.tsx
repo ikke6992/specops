@@ -42,7 +42,7 @@ const Layout = ({
           </article>
         )}
         {!isLogin && (
-          <article className="flex flex-row justify-center items-center">
+          <article className="w-96 flex flex-row justify-center items-center">
             <FilterTabs filter={filter!} isHistory={isHistory!} />
           </article>
         )}
