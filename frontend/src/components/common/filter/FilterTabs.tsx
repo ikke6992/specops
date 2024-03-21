@@ -13,7 +13,7 @@ const FilterTabs = ({ filter, isHistory }: PropsType) => {
 
   return (
     <div className="">
-      <div className="w-96 grid grid-flow-col auto-cols-auto grid-rows-1 justify-center">
+      <div className="grid grid-flow-col auto-cols-auto grid-rows-1 justify-center">
         {isHistory ? (
           <HistoryTabs
             filter={filter}
