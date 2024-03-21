@@ -15,7 +15,6 @@ import getAll from "../services/getAll";
 type ContextType = {
   getTasks: () => TaskResponse[];
   getLogs: () => TaskLog[];
-  setSize: (size: number) => void;
   addTask: (task: TaskBody) => void;
   editTask: (id: string, task: TaskBody) => void;
   deactivateTask: (id: string) => void;
@@ -29,7 +28,6 @@ type ProviderType = FC<{ children: ReactNode }>;
 export const TaskContext = createContext<ContextType>({
   getTasks: () => [],
   getLogs: () => [],
-  setSize: () => {},
   addTask: () => {},
   editTask: () => {},
   deactivateTask: () => {},
@@ -41,8 +39,6 @@ export const TaskContext = createContext<ContextType>({
 export const TaskProvider: ProviderType = ({ children }) => {
   const [tasks, setTasks] = useState<TaskResponse[]>([]);
   const [logs, setLogs] = useState<TaskLog[]>([]);
-  const [size, setSize] = useState(0);
-  const [pointer, setPointer] = useState(0);
   const [query, setQuery] = useState("");
   const [type, setType] = useState<"dept" | "name">("name");
   const [status, setStatus] = useState<
@@ -67,12 +63,12 @@ export const TaskProvider: ProviderType = ({ children }) => {
 
   // Getters
   const getTasks = () => {
-    return apply(tasks);
+    return apply(tasks) as TaskResponse[];
   };
 
   const getLogs = () => {
     return apply(logs);
-  }
+  };
 
   // Setters
   const addTask = async (task: TaskBody) => {
@@ -154,7 +150,6 @@ export const TaskProvider: ProviderType = ({ children }) => {
       value={{
         getTasks,
         getLogs,
-        setSize,
         addTask,
         editTask,
         deactivateTask,
