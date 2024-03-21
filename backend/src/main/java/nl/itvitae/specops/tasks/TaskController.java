@@ -13,6 +13,7 @@ import nl.itvitae.specops.departments.DepartmentService;
 import nl.itvitae.specops.users.User;
 import nl.itvitae.specops.users.UserRepository;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -122,7 +123,9 @@ public class TaskController {
 
   @PatchMapping("/setComplete/{id}")
   public ResponseEntity<TaskResponse> setComplete(@PathVariable UUID id, @RequestBody Notes notes) {
-    final User user = userRepository.findAll().get(0);
+    final String principal =
+        (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    final User user = userRepository.findByUsername(principal).get();
     var possibleTask = taskService.findTaskById(id);
     if (possibleTask.isEmpty()) return ResponseEntity.notFound().build();
     final Task task = possibleTask.get();
