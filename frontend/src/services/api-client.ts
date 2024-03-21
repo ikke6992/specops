@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const api = "https://specops-latest.onrender.com";
+const api = "http://localhost:8080";
 
 export const post = (resource: string, body: object) => {
   const headers = {
