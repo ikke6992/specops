@@ -6,10 +6,13 @@ import TaskCreator from "./TaskCreator";
 import TaskBody from "../../models/task/TaskBody";
 import { TaskContext } from "../../contexts/TaskContext";
 import { isAdmin, isManager } from "../../services/api-client";
+import UserCreator from "../manage-organization/UserCreator";
 
 const TaskManagerButtons = () => {
   const { addTask } = useContext(TaskContext);
-  const [showCreator, setShowCreator] = useState(false);
+  const [showTaskCreator, setShowTaskCreator] = useState(false);
+  const [showUserCreator, setShowUserCreator] = useState(false);
+  const [showDepartmentCreator, setShowDepartmentCreator] = useState(false);
   const navigate = useNavigate();
   const path = window.location.pathname;
 
@@ -72,7 +75,29 @@ const TaskManagerButtons = () => {
         path === "/tasks" && (
           <FunctionButton
             name="Create Task"
-            method={() => setShowCreator(true)}
+            method={() => setShowTaskCreator(true)}
+          />
+        )
+      ) : (
+        <></>
+      )}
+
+      {isAdmin() ? (
+        path === "/manage/users" && (
+          <FunctionButton
+            name="Create User"
+            method={() => setShowUserCreator(true)}
+          />
+        )
+      ) : (
+        <></>
+      )}
+
+      {isAdmin() ? (
+        path === "/manage/departments" && (
+          <FunctionButton
+            name="Create Department"
+            method={() => setShowDepartmentCreator(true)}
           />
         )
       ) : (
@@ -105,11 +130,22 @@ const TaskManagerButtons = () => {
         />
       )}
 
-      {showCreator && (
+      {showTaskCreator && (
         <TaskCreator
           submit={(task: TaskBody) => addTask(task)}
-          close={() => setShowCreator(false)}
+          close={() => setShowTaskCreator(false)}
         />
+      )}
+
+      {showDepartmentCreator && (
+        <TaskCreator
+          submit={(task: TaskBody) => addTask(task)}
+          close={() => setShowDepartmentCreator(false)}
+        />
+      )}
+
+      {showUserCreator && (
+        <UserCreator close={() => setShowUserCreator(false)} />
       )}
     </>
   );
