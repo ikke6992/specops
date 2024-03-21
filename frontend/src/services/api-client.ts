@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const api = "http://localhost:8080";
+const api = "https://specops-latest.onrender.com";
 
 export const post = (resource: string, body: object) => {
   const headers = {
@@ -49,9 +49,13 @@ export const connect = async (
   body: {
     username: string;
     password: string;
-  }
+  },
+  requestId?: string
 ) => {
-  const response = await axios.post(`${api}/users/${type}`, { ...body });
+  const response = await axios.post(
+    `${api}/users/${type}${requestId ? `/${requestId}` : ""}`,
+    { ...body }
+  );
   const data: {
     username: string;
     token: string;
