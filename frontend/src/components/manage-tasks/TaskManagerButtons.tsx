@@ -6,7 +6,8 @@ import TaskCreator from "./TaskCreator";
 import TaskBody from "../../models/task/TaskBody";
 import { TaskContext } from "../../contexts/TaskContext";
 import { isAdmin, isManager } from "../../services/api-client";
-import UserCreator from "../manage-organization/UserCreator";
+import UserCreator from "../manage-organization/users/UserCreator";
+import DepartmentCreator from "../manage-organization/deparments/DeparmentCreator";
 
 const TaskManagerButtons = () => {
   const { addTask } = useContext(TaskContext);
@@ -138,10 +139,7 @@ const TaskManagerButtons = () => {
       )}
 
       {showDepartmentCreator && (
-        <TaskCreator
-          submit={(task: TaskBody) => addTask(task)}
-          close={() => setShowDepartmentCreator(false)}
-        />
+        <DepartmentCreator close={() => setShowDepartmentCreator(false)} />
       )}
 
       {showUserCreator && (

@@ -5,8 +5,8 @@ import {
 } from "../../contexts/OrganizationContext";
 import Layout from "../common/layout/Layout";
 import { useParams } from "react-router-dom";
-import UserManager from "./UserManager";
-import DepartmentManager from "./DepartmentManager";
+import UserManager from "./users/UserManager";
+import DepartmentManager from "./deparments/DepartmentManager";
 
 const OrganizationContent = () => {
   const { type } = useParams();

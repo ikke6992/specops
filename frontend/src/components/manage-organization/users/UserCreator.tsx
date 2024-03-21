@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import Modal from "../common/modal/Modal";
-import getAll from "../../services/getAll";
-import UserFieldCombination from "./fields/user/UserFieldCombination";
+import Modal from "../../common/modal/Modal";
+import getAll from "../../../services/getAll";
+import UserFieldCombination from "./fields/UserFieldCombination";
 
 const UserCreator = (props: { close: () => void }) => {
   const [department, setDepartment] = useState("");
