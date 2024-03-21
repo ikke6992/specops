@@ -44,6 +44,16 @@ public class TaskController {
     return ResponseEntity.ok(data);
   }
 
+  @GetMapping("/list")
+  public ResponseEntity<List<TaskPlanningResponse>> getTaskList() {
+
+    final List<TaskPlanning> taskPlannings = taskService.getAllTaskPlannings();
+    final List<TaskPlanningResponse> data =
+        taskPlannings.stream().map(TaskPlanningResponse::of).toList();
+
+    return ResponseEntity.ok(data);
+  }
+
   @GetMapping("/history")
   public ResponseEntity<List<TaskRecordResponse>> getAllHistory() {
     final List<TaskExecution> taskExecutions = taskExecutionRepository.findAll();

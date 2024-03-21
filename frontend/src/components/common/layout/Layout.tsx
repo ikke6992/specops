@@ -10,6 +10,7 @@ import SearchBar from "../search/SearchBar";
 type PropsType = {
   header: string;
   content: React.ReactNode;
+  isDashboard?: boolean;
   isLogin?: boolean;
   search?: (type: SearchFilter, query: string) => void;
   filter?: (status: "all" | TaskStatus | RecordStatus) => void;
@@ -22,6 +23,7 @@ const Layout = ({
   filter,
   isHistory,
   isLogin,
+  isDashboard,
 }: PropsType) => {
   return (
     <main className="h-screen flex flex-col">
@@ -43,7 +45,15 @@ const Layout = ({
         )}
         {!isLogin && (
           <article className="w-96 flex flex-row justify-center items-center">
-            <FilterTabs filter={filter!} isHistory={isHistory!} />
+            {isDashboard ? (
+              <FilterTabs
+                filter={filter!}
+                isHistory={isHistory!}
+                isDashboard={isDashboard}
+              />
+            ) : (
+              <FilterTabs filter={filter!} isHistory={isHistory!} />
+            )}
           </article>
         )}
         <article className="flex flex-row justify-center items-center ml-4">

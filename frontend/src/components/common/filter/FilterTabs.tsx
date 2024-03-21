@@ -7,8 +7,9 @@ import TaskTabs from "./TaskTabs";
 type PropsType = {
   filter: (status: "all" | TaskStatus | RecordStatus) => void;
   isHistory: boolean;
+  isDashboard?: boolean;
 };
-const FilterTabs = ({ filter, isHistory }: PropsType) => {
+const FilterTabs = ({ filter, isHistory, isDashboard }: PropsType) => {
   const [selected, setSelected] = useState(0);
 
   return (
@@ -19,6 +20,13 @@ const FilterTabs = ({ filter, isHistory }: PropsType) => {
             filter={filter}
             selected={selected}
             setSelected={setSelected}
+          />
+        ) : isDashboard ? (
+          <TaskTabs
+            filter={filter}
+            selected={selected}
+            setSelected={setSelected}
+            isDashboard={isDashboard}
           />
         ) : (
           <TaskTabs

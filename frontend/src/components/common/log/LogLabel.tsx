@@ -10,6 +10,9 @@ const LogLabel = ({ status }: PropsType) => {
     const determineColor = () => {
       let color: string;
       switch (status) {
+        case "inactive":
+          color = "bg-gray-500"
+          break;
         case "planned":
         case "on time":
           color = "bg-green-500";

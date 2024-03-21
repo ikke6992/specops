@@ -1,3 +1,4 @@
+import { isAdmin } from "../../../services/api-client";
 import ModalClose from "./ModalClose";
 import ModalDeactivate from "./ModalDeactivate";
 import ModalHeader from "./ModalHeader";
@@ -33,7 +34,9 @@ export default function Modal(props: {
             {/*footer*/}
             <div className={`flex justify-start py-4 border-t`}>
               <ModalSubmit name={props.name} handleSubmit={handleSubmit} />
-              {props.edit && <ModalDeactivate deactivate={props.deactivate} />}
+              {props.edit && isAdmin() && (
+                <ModalDeactivate deactivate={props.deactivate} />
+              )}
             </div>
           </div>
         </div>
