@@ -1,3 +1,4 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import SearchFilter from "../../../models/filter/SearchFilter";
 import RecordStatus from "../../../models/record/RecordStatus";
 import TaskStatus from "../../../models/task/TaskStatus";
@@ -5,6 +6,9 @@ import TaskStatus from "../../../models/task/TaskStatus";
 import TaskManagerButtons from "../../manage-tasks/TaskManagerButtons";
 import FilterTabs from "../filter/FilterTabs";
 import SearchBar from "../search/SearchBar";
+import { faSignOut } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
+import { isLoggedIn } from "../../../services/api-client";
 
 // could add header to this.
 type PropsType = {
@@ -23,6 +27,8 @@ const Layout = ({
   isHistory,
   isLogin,
 }: PropsType) => {
+  const navigate = useNavigate();
+
   return (
     <main className="h-screen flex flex-col">
       {/* Header */}
@@ -30,7 +36,17 @@ const Layout = ({
         className="shrink-0 bg-orange-500/60 flex flex-row justify-center items-center min-w-[90px]"
         style={{ height: "10%" }}
       >
-        <h1 className="text-3xl text-slate-950 font-black uppercase">
+        {isLoggedIn() && (
+          <FontAwesomeIcon
+            icon={faSignOut}
+            className="ml-4 w-10 h-10 hover:w-14 hover:h-14 hover:cursor-pointer touch:w-14 touch:h-14"
+            onClick={() => {
+              sessionStorage.clear();
+              navigate("/");
+            }}
+          />
+        )}
+        <h1 className="text-3xl text-slate-950 font-black uppercase text-center m-auto">
           {header}
         </h1>
       </section>
