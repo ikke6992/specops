@@ -15,6 +15,7 @@ type PropsType = {
   header: string;
   content: React.ReactNode;
   isDashboard?: boolean;
+  isManager?: boolean;
   isLogin?: boolean;
   search?: (type: SearchFilter, query: string) => void;
   filter?: (status: "all" | TaskStatus | RecordStatus) => void;
@@ -28,6 +29,7 @@ const Layout = ({
   isHistory,
   isLogin,
   isDashboard,
+  isManager,
 }: PropsType) => {
   const navigate = useNavigate();
 
@@ -54,12 +56,12 @@ const Layout = ({
       </section>
       {/* Search & Filter */}
       <section className="shrink-0 bg-black/70 flex flex-row justify-center flex-wrap content-end h-auto gap-2 pt-2">
-        {!isLogin && (
+        {!isLogin && !isManager && (
           <article className="flex flex-row justify-center items-center mr-4">
             <SearchBar search={search!} isHistory={isHistory!} />
           </article>
         )}
-        {!isLogin && (
+        {!isLogin && !isManager && (
           <article className="w-96 flex flex-row justify-center items-center">
             {isDashboard ? (
               <FilterTabs
@@ -72,9 +74,11 @@ const Layout = ({
             )}
           </article>
         )}
-        <article className="flex flex-row justify-center items-center ml-4">
-          <TaskManagerButtons />
-        </article>
+        {!isLogin && (
+          <article className="flex flex-row justify-center items-center ml-4">
+            <TaskManagerButtons />
+          </article>
+        )}
       </section>
       {/* Content */}
       <section className="shrink-0 p-8 bg-gray-200 flex-1 overflow-x-hidden overflow-y-scroll ">

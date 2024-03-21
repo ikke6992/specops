@@ -86,9 +86,9 @@ export const HistoryProvider: ProviderType = ({ children }) => {
     }
   };
 
-  const search = (newType: SearchFilter, newquery: string) => {
+  const search = (newType: SearchFilter, newQuery: string) => {
     setType(newType as "name" | "user");
-    setquery(newquery);
+    setquery(newQuery);
   };
 
   const filter = (newStatus: StatusFilter) => {
