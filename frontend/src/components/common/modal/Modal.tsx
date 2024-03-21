@@ -1,8 +1,10 @@
+import { useContext } from "react";
 import { isAdmin } from "../../../services/api-client";
 import ModalClose from "./ModalClose";
 import ModalDeactivate from "./ModalDeactivate";
 import ModalHeader from "./ModalHeader";
 import ModalSubmit from "./ModalSubmit";
+import { TaskModalContext } from "../../../contexts/TaskModalContext";
 
 export default function Modal(props: {
   name: string;

@@ -14,7 +14,7 @@ const Content = (props: {
 
   return (
     <Modal
-      name="confirm"
+      name="Confirm"
       edit={false}
       close={props.close}
       deactivate={props.close}

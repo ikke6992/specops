@@ -21,7 +21,7 @@ const Card1CompleteButton = ({ completeTask, completeStatus }: Props) => {
           className={`appearance-none shrink-0 w-6 h-6 border-2 rounded-sm bg-white checked:bg-green-100 border-black/50 hover:border-green-500 checked:border-green-500 no-click ${
             !completeStatus && "pointer-events-none"
           }`}
-          onClick={() => setAskConfirm(true)}
+          onChange={() => setAskConfirm(true)}
         />
         {!completeStatus && (
           <FontAwesomeIcon
