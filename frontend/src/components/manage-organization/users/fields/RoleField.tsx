@@ -13,13 +13,13 @@ const RoleField = (props: {
         }}
       >
         <option key="admin" value="admin">
-          Manager
+          manager
         </option>
         <option key="manager" value="manager">
-          Team Manager
+          team Manager
         </option>
         <option key="user" value="user">
-          Analyst
+          analyst
         </option>
       </select>
     </>

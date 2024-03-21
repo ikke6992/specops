@@ -1,13 +1,15 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Modal from "../../common/modal/Modal";
 import getAll from "../../../services/getAll";
 import UserFieldCombination from "./fields/UserFieldCombination";
+import { OrganizationContext } from "../../../contexts/OrganizationContext";
 
-const UserCreator = (props: { close: () => void }) => {
+const UserModal = (props: { close: () => void; type: "create" | "edit" }) => {
   const [department, setDepartment] = useState("");
   const [departments, setDepartments] = useState([]);
   const [name, setName] = useState("");
   const [role, setRole] = useState("");
+  const { submitUser } = useContext(OrganizationContext);
 
   useEffect(() => {
     const getDepartment = async () => {
@@ -20,11 +22,11 @@ const UserCreator = (props: { close: () => void }) => {
 
   return (
     <Modal
-      name="Create User"
+      name={`${props.type === "create" ? "Create User" : "Edit User"}`}
       edit={false}
       close={props.close}
       deactivate={props.close}
-      submit={() => {}}
+      submit={() => submitUser(props.type, name, role, department)}
       form={
         <>
           <UserFieldCombination
@@ -42,4 +44,4 @@ const UserCreator = (props: { close: () => void }) => {
   );
 };
 
-export default UserCreator;
+export default UserModal;

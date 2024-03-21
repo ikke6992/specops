@@ -9,6 +9,13 @@ type ContextType = {
   getUsers: () => UserLog[];
   getDepartments: () => DepartmentLog[];
   search: (type: SearchFilter, query: string) => void;
+  submitDepartment: (type: "create" | "edit", name: string) => void;
+  submitUser: (
+    type: "create" | "edit",
+    name: string,
+    role: string,
+    department: string
+  ) => void;
 };
 
 type ProviderType = FC<{ children: ReactNode }>;
@@ -17,6 +24,8 @@ export const OrganizationContext = createContext<ContextType>({
   getUsers: () => [],
   getDepartments: () => [],
   search: () => {},
+  submitDepartment: () => {},
+  submitUser: () => {},
 });
 
 export const OrganizationProvider: ProviderType = ({ children }) => {
@@ -35,7 +44,6 @@ export const OrganizationProvider: ProviderType = ({ children }) => {
   }, []);
 
   const getUsers = () => {
-    console.log(users);
     return applySearch(users);
   };
 
@@ -56,12 +64,31 @@ export const OrganizationProvider: ProviderType = ({ children }) => {
     setQuery(newQuery);
   };
 
+  const submitDepartment = (type: "create" | "edit", name: string) => {
+    if (type === "create") {
+    } else {
+    }
+  };
+
+  const submitUser = (
+    type: "create" | "edit",
+    name: string,
+    role: string,
+    department: string
+  ) => {
+    if (type === "create") {
+    } else {
+    }
+  };
+
   return (
     <OrganizationContext.Provider
       value={{
         getUsers,
         getDepartments,
         search,
+        submitDepartment,
+        submitUser,
       }}
     >
       {children}
