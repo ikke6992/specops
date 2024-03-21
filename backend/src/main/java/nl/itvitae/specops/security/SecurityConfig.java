@@ -43,6 +43,8 @@ public class SecurityConfig {
                     .hasRole("USER")
                     .requestMatchers(HttpMethod.GET, "/departments")
                     .hasRole("USER")
+                    .requestMatchers(HttpMethod.POST, "/departments")
+                    .hasRole("ADMIN")
                     .requestMatchers(HttpMethod.GET, "/tasks/history")
                     .hasRole("ADMIN")
                     .requestMatchers(HttpMethod.POST, "/tasks")
