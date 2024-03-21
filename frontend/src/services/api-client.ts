@@ -50,9 +50,14 @@ export const connect = async (
   body: {
     username: string;
     password: string;
-  }
+  },
+  requestId?: string
 ) => {
-  const response = await axios.post(`${api}/users/${type}`, { ...body });
+  console.log(`${api}/users/${type}${requestId ? `/${requestId}` : ""}`);
+  const response = await axios.post(
+    `${api}/users/${type}${requestId ? `/${requestId}` : ""}`,
+    { ...body }
+  );
   const data: {
     username: string;
     token: string;

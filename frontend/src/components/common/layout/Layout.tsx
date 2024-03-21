@@ -14,6 +14,7 @@ import { isLoggedIn } from "../../../services/api-client";
 type PropsType = {
   header: string;
   content: React.ReactNode;
+  isDashboard?: boolean;
   isLogin?: boolean;
   search?: (type: SearchFilter, query: string) => void;
   filter?: (status: "all" | TaskStatus | RecordStatus) => void;
@@ -26,6 +27,7 @@ const Layout = ({
   filter,
   isHistory,
   isLogin,
+  isDashboard,
 }: PropsType) => {
   const navigate = useNavigate();
 
@@ -59,7 +61,15 @@ const Layout = ({
         )}
         {!isLogin && (
           <article className="w-96 flex flex-row justify-center items-center">
-            <FilterTabs filter={filter!} isHistory={isHistory!} />
+            {isDashboard ? (
+              <FilterTabs
+                filter={filter!}
+                isHistory={isHistory!}
+                isDashboard={isDashboard}
+              />
+            ) : (
+              <FilterTabs filter={filter!} isHistory={isHistory!} />
+            )}
           </article>
         )}
         <article className="flex flex-row justify-center items-center ml-4">

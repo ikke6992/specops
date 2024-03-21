@@ -1,6 +1,7 @@
 package nl.itvitae.specops.users;
 
 import lombok.RequiredArgsConstructor;
+import nl.itvitae.specops.departments.Department;
 import nl.itvitae.specops.exceptions.UserAlreadyExistsException;
 import nl.itvitae.specops.security.JwtTokenProvider;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -29,6 +30,17 @@ public class UserService {
         new User(username, passwordEncoder.encode(password), roles, employeeName));
   }
 
+  public User save(
+      String username, String password, String roles, String employeeName, Department department) {
+    final User user = save(username, password, roles, employeeName);
+    user.setDepartment(department);
+    return userRepository.save(user);
+  }
+
+  public User save(String roles, String employeeName, Department department) {
+    return userRepository.save(new User(roles, employeeName, department));
+  }
+
   public List<User> getAll() {
     return userRepository.findAll();
   }
@@ -54,10 +66,10 @@ public class UserService {
         request.username(), jwtTokenProvider.generateToken(userDetails), user.getRoles());
   }
 
-  public LoginResponse register(LoginRequest request) {
+  public LoginResponse register(LoginRequest request, User user) {
     if (userRepository.findByUsername(request.username()).isEmpty()) {
-      User user =
-          new User(request.username(), passwordEncoder.encode(request.password()), "ROLE_USER", "");
+      user.setPassword(passwordEncoder.encode(request.password()));
+      user.setUsername(request.username());
       userRepository.save(user);
       return login(request);
     }

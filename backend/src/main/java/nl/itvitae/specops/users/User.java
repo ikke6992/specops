@@ -15,13 +15,27 @@ public class User {
   @GeneratedValue(strategy = GenerationType.UUID)
   private UUID id;
 
-  @NonNull private String username;
+  private String username;
 
-  @NonNull private String password;
+  private String password;
 
   @NonNull private String roles;
 
   @NonNull private String employeeName;
 
   @ManyToOne private Department department;
+
+  public User(
+      String username, String password, @NonNull String roles, @NonNull String employeeName) {
+    this.username = username;
+    this.password = password;
+    this.roles = roles;
+    this.employeeName = employeeName;
+  }
+
+  public User(@NonNull String roles, @NonNull String employeeName, Department department) {
+    this.roles = roles;
+    this.employeeName = employeeName;
+    this.department = department;
+  }
 }

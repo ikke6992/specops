@@ -19,7 +19,8 @@ type ContextType = {
 
   handleAddUser: (
     e: React.FormEvent<HTMLFormElement>,
-    type: "signup" | "login"
+    type: "signup" | "login",
+    requestId?: string
   ) => void;
 };
 
@@ -57,14 +58,27 @@ export const SecurityProvider: ProviderType = ({ children }) => {
 
   const handleAddUser = async (
     e: React.FormEvent<HTMLFormElement>,
-    type: "signup" | "login"
+    type: "signup" | "login",
+    requestId?: string
   ) => {
     e.preventDefault();
 
-    const data = await connect(type, {
-      username: user,
-      password: pwd,
-    });
+    let data;
+    if (type === "login") {
+      data = await connect(type, {
+        username: user,
+        password: pwd,
+      });
+    } else {
+      data = await connect(
+        type,
+        {
+          username: user,
+          password: pwd,
+        },
+        requestId
+      );
+    }
 
     if (data.token !== "") {
       setSuccess(true);
