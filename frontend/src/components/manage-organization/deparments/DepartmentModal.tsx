@@ -6,6 +6,7 @@ import { OrganizationContext } from "../../../contexts/OrganizationContext";
 const DepartmentModal = (props: {
   close: () => void;
   type: "create" | "edit";
+  id?: string;
 }) => {
   const [name, setName] = useState("");
   const { submitDepartment } = useContext(OrganizationContext);
@@ -18,7 +19,10 @@ const DepartmentModal = (props: {
       edit={false}
       close={props.close}
       deactivate={props.close}
-      submit={() => submitDepartment(props.type, name)}
+      submit={() => {
+        if (props.id) submitDepartment(props.type, name, props.id);
+        else submitDepartment(props.type, name);
+      }}
       form={
         <>
           <DepartmentNameField name={name} setName={setName} />

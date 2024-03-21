@@ -60,7 +60,11 @@ const UserData = (props: { log: UserLog }) => {
         <td className="px-4 py-2">{props.log.department}</td>
         <td>
           {showEdit && (
-            <UserModal close={() => setShowEdit(false)} type="edit" />
+            <UserModal
+              close={() => setShowEdit(false)}
+              type="edit"
+              id={props.log.id}
+            />
           )}
         </td>
       </tr>
@@ -84,7 +88,11 @@ const DepartmentData = (props: { log: DepartmentLog }) => {
         </td>
         <td>
           {showEdit && (
-            <DepartmentModal close={() => setShowEdit(false)} type="edit" />
+            <DepartmentModal
+              close={() => setShowEdit(false)}
+              type="edit"
+              id={props.log.id}
+            />
           )}
         </td>
       </tr>

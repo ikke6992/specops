@@ -4,17 +4,24 @@ import UserLog from "../models/log/UserLog";
 import SearchFilter from "../models/filter/SearchFilter";
 import getAllUsers from "../services/getAllUsers";
 import getAllDepartments from "../services/getAllDepartments";
+import postItem from "../services/postItem";
+import putItem from "../services/putItem";
 
 type ContextType = {
   getUsers: () => UserLog[];
   getDepartments: () => DepartmentLog[];
   search: (type: SearchFilter, query: string) => void;
-  submitDepartment: (type: "create" | "edit", name: string) => void;
+  submitDepartment: (
+    type: "create" | "edit",
+    name: string,
+    id?: string
+  ) => void;
   submitUser: (
     type: "create" | "edit",
     name: string,
     role: string,
-    department: string
+    department: string,
+    id?: string
   ) => void;
 };
 
@@ -64,20 +71,49 @@ export const OrganizationProvider: ProviderType = ({ children }) => {
     setQuery(newQuery);
   };
 
-  const submitDepartment = (type: "create" | "edit", name: string) => {
+  const submitDepartment = async (
+    type: "create" | "edit",
+    name: string,
+    id?: string
+  ) => {
     if (type === "create") {
+      const data: DepartmentLog = await postItem("departments/create", {
+        name,
+      });
+      setDepartments([...departments, data]);
     } else {
+      const data: DepartmentLog = await putItem(`departments/edit/${id}`, {
+        name,
+      });
+      const updatedDepartments = departments.map((department) =>
+        department.id === id ? data : department
+      );
+      setDepartments(updatedDepartments);
     }
   };
 
-  const submitUser = (
+  const submitUser = async (
     type: "create" | "edit",
     name: string,
     role: string,
-    department: string
+    department: string,
+    id?: string
   ) => {
     if (type === "create") {
+      const data: UserLog = await postItem("users/create", {
+        name,
+        role,
+        department,
+      });
+      setUsers([...users, data]);
     } else {
+      const data: UserLog = await putItem(`users/edit/${id}`, {
+        name,
+        role,
+        department,
+      });
+      const updatedUsers = users.map((user) => (user.id === id ? data : user));
+      setUsers(updatedUsers);
     }
   };
 

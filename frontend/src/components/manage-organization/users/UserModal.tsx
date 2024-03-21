@@ -4,7 +4,11 @@ import getAll from "../../../services/getAll";
 import UserFieldCombination from "./fields/UserFieldCombination";
 import { OrganizationContext } from "../../../contexts/OrganizationContext";
 
-const UserModal = (props: { close: () => void; type: "create" | "edit" }) => {
+const UserModal = (props: {
+  close: () => void;
+  type: "create" | "edit";
+  id?: string;
+}) => {
   const [department, setDepartment] = useState("");
   const [departments, setDepartments] = useState([]);
   const [name, setName] = useState("");
@@ -26,7 +30,10 @@ const UserModal = (props: { close: () => void; type: "create" | "edit" }) => {
       edit={false}
       close={props.close}
       deactivate={props.close}
-      submit={() => submitUser(props.type, name, role, department)}
+      submit={() => {
+        if (props.id) submitUser(props.type, name, role, department, props.id);
+        else submitUser(props.type, name, role, department);
+      }}
       form={
         <>
           <UserFieldCombination
