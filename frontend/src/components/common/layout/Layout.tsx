@@ -41,7 +41,7 @@ const Layout = ({
         {isLoggedIn() && (
           <FontAwesomeIcon
             icon={faSignOut}
-            className="ml-4 w-10 h-10 hover:w-14 hover:h-14 hover:cursor-pointer touch:w-14 touch:h-14"
+            className="ml-4 w-10 h-10 hover:w-14 hover:h-14 hover:cursor-pointer"
             onClick={() => {
               sessionStorage.clear();
               navigate("/");
