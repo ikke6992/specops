@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { TaskModalContext } from "../../../contexts/TaskModalContext";
 
 const NameField = () => {
-  const { taskName, setTaskName, validName } = useContext(TaskModalContext);
+  const { taskName, setTaskName } = useContext(TaskModalContext);
 
   return (
     <>
