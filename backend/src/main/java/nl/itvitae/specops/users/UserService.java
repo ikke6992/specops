@@ -24,7 +24,6 @@ public class UserService {
   private final JwtTokenProvider jwtTokenProvider;
   private final PasswordEncoder passwordEncoder;
   private final UserRepository userRepository;
-  private final UserRequestRepository userRequestRepository;
 
   public User save(String username, String password, String roles, String employeeName) {
     return userRepository.save(
@@ -38,8 +37,8 @@ public class UserService {
     return userRepository.save(user);
   }
 
-  public UserRequest save(String roles, String employeeName, Department department) {
-    return userRequestRepository.save(new UserRequest(roles, employeeName, department));
+  public User save(String roles, String employeeName, Department department) {
+    return userRepository.save(new User(roles, employeeName, department));
   }
 
   public List<User> getAll() {
@@ -67,15 +66,11 @@ public class UserService {
         request.username(), jwtTokenProvider.generateToken(userDetails), user.getRoles());
   }
 
-  public LoginResponse register(LoginRequest request, UserRequest userRequest) {
+  public LoginResponse register(LoginRequest request, User user) {
     if (userRepository.findByUsername(request.username()).isEmpty()) {
-      userRequestRepository.delete(userRequest);
-      save(
-          request.username(),
-          request.password(),
-          userRequest.getRoles(),
-          userRequest.getEmployeeName(),
-          userRequest.getDepartment());
+      user.setPassword(passwordEncoder.encode(request.password()));
+      user.setUsername(request.username());
+      userRepository.save(user);
       return login(request);
     }
     return new LoginResponse("User already exists", "", "");

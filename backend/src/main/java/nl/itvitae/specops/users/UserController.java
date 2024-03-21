@@ -1,5 +1,6 @@
 package nl.itvitae.specops.users;
 
+import java.util.Optional;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import nl.itvitae.specops.departments.Department;
@@ -15,22 +16,16 @@ public class UserController {
   private final UserRepository userRepository;
   private final UserService userService;
   private final DepartmentRepository departmentRepository;
-  private final UserRequestRepository userRequestRepository;
 
   @GetMapping
   public Iterable<User> getAll() {
     return userRepository.findAll();
   }
 
-  @GetMapping("/requests")
-  public Iterable<UserRequest> getAllRequests() {
-    return userRequestRepository.findAll();
-  }
-
   private record UserRequestData(String roles, String employeeName, String department) {}
 
   @PostMapping("/create")
-  public ResponseEntity<UserRequest> create(@RequestBody UserRequestData req) {
+  public ResponseEntity<User> create(@RequestBody UserRequestData req) {
     if (departmentRepository.findByName(req.department()).isEmpty()) {
       return ResponseEntity.badRequest().build();
     }
@@ -59,12 +54,16 @@ public class UserController {
   @PostMapping("/signup/{requestId}")
   public ResponseEntity<LoginResponse> register(
       @RequestBody LoginRequest req, @PathVariable String requestId) {
-    if (userRequestRepository.findById(UUID.fromString(requestId)).isEmpty()) {
+    final Optional<User> userOptional = userRepository.findById(UUID.fromString(requestId));
+    if (userOptional.isEmpty()) {
       return ResponseEntity.badRequest().build();
     }
-    return ResponseEntity.ok(
-        userService.register(
-            req, userRequestRepository.findById(UUID.fromString(requestId)).get()));
+    final User user = userOptional.get();
+    if (user.getPassword() != null || user.getUsername() != null) {
+      return ResponseEntity.badRequest().build();
+    }
+
+    return ResponseEntity.ok(userService.register(req, user));
   }
 
   @PostMapping("/login")
