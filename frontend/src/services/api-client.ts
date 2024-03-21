@@ -43,6 +43,7 @@ export const isManager = () =>
   sessionStorage.getItem("roles")?.includes("ROLE_MANAGER") || false;
 export const isAdmin = () =>
   sessionStorage.getItem("roles")?.includes("ROLE_ADMIN") || false;
+export const isLoggedIn = () => sessionStorage.getItem("loggedIn") !== null;
 
 export const connect = async (
   type: "login" | "signup",
@@ -65,6 +66,7 @@ export const connect = async (
 
   sessionStorage.setItem("token", data.token);
   sessionStorage.setItem("roles", data.roles);
+  sessionStorage.setItem("loggedIn", "");
 
   return data;
 };
