@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { TaskContext } from "../../contexts/TaskContext";
 import Card1 from "../common/cards/card1/Card1";
 

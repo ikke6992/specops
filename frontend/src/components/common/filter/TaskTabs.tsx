@@ -5,8 +5,14 @@ type PropsType = {
   filter: (status: TaskStatus | "all") => void;
   selected: number;
   setSelected: (selected: number) => void;
+  isDashboard?: boolean;
 };
-const TaskTabs = ({ filter, selected, setSelected }: PropsType) => {
+const TaskTabs = ({
+  filter,
+  selected,
+  setSelected,
+  isDashboard,
+}: PropsType) => {
   return (
     <>
       <Tab
@@ -45,15 +51,17 @@ const TaskTabs = ({ filter, selected, setSelected }: PropsType) => {
           setSelected(3);
         }}
       />
-      <Tab
-        name="Inactive"
-        color="gray"
-        selected={selected === 4}
-        onClick={() => {
-          filter("inactive");
-          setSelected(4);
-        }}
-      />
+      {!isDashboard && (
+        <Tab
+          name="Inactive"
+          color="gray"
+          selected={selected === 4}
+          onClick={() => {
+            filter("inactive");
+            setSelected(4);
+          }}
+        />
+      )}
     </>
   );
 };
