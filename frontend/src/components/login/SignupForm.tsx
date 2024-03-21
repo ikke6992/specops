@@ -3,12 +3,17 @@ import {
   faCheck,
   faTimes,
   faInfoCircle,
+  faEye,
+  faEyeSlash,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { SecurityContext } from "../../contexts/SecurityContext";
 import { useNavigate } from "react-router-dom";
 
-const SignupForm = (props: { type: "signup" | "login" }) => {
+const SignupForm = (props: {
+  type: "signup" | "login";
+  requestId?: string;
+}) => {
   const {
     user,
     setUser,
@@ -35,6 +40,9 @@ const SignupForm = (props: { type: "signup" | "login" }) => {
 
   const [validMatch, setValidMatch] = useState(false);
   const [matchFocus, setMatchFocus] = useState(false);
+
+  const [type, setType] = useState("password");
+  const [type2, setType2] = useState("password");
 
   const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{5,23}$/;
   const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{6,24}/;
@@ -70,7 +78,15 @@ const SignupForm = (props: { type: "signup" | "login" }) => {
   return (
     <>
       <div className="bg-slate-200 rounded-md w-80 size-fit">
-        <form onSubmit={(e) => handleAddUser(e, props.type)}>
+        <form
+          onSubmit={(e) => {
+            if (props.requestId) {
+              handleAddUser(e, props.type, props.requestId);
+            } else {
+              handleAddUser(e, props.type);
+            }
+          }}
+        >
           {/* Content Wrapper */}
           <div className="p-3 border-b border-gray-900/10 pb-12">
             <div className="">
@@ -136,17 +152,36 @@ const SignupForm = (props: { type: "signup" | "login" }) => {
                   <FontAwesomeIcon icon={faTimes} />
                 </span>
               </label>
-              <input
-                type="password"
-                id="password"
-                onChange={(e) => setPwd(e.target.value)}
-                required
-                aria-invalid={validPwd ? false : true}
-                aria-describedby="pwdnote"
-                onFocus={() => setPwdFocus(true)}
-                onBlur={() => setPwdFocus(false)}
-                className="rounded border border-gray-400 p-1 h-9"
-              />
+              <span className="flex justify-center items-center">
+                <span
+                  onClick={() => {
+                    setType(type === "text" ? "password" : "text");
+                  }}
+                >
+                  {type === "text" ? (
+                    <FontAwesomeIcon
+                      icon={faEyeSlash}
+                      className="bg-gray-400 w-6 h-6 mt-1 p-1"
+                    />
+                  ) : (
+                    <FontAwesomeIcon
+                      icon={faEye}
+                      className="bg-gray-400 w-6 h-6 mt-1 p-1"
+                    />
+                  )}
+                </span>
+                <input
+                  type={type}
+                  id="password"
+                  onChange={(e) => setPwd(e.target.value)}
+                  required
+                  aria-invalid={validPwd ? false : true}
+                  aria-describedby="pwdnote"
+                  onFocus={() => setPwdFocus(true)}
+                  onBlur={() => setPwdFocus(false)}
+                  className="rounded border border-gray-400 p-1 h-9 w-full"
+                />
+              </span>
               <p
                 id="pwd"
                 className={
@@ -182,17 +217,36 @@ const SignupForm = (props: { type: "signup" | "login" }) => {
                       <FontAwesomeIcon icon={faTimes} />
                     </span>
                   </label>
-                  <input
-                    type="password"
-                    id="confirm_pwd"
-                    onChange={(e) => setMatchPwd(e.target.value)}
-                    required
-                    aria-invalid={validMatch ? false : true}
-                    aria-describedby="confirmnote"
-                    onFocus={() => setMatchFocus(true)}
-                    onBlur={() => setMatchFocus(false)}
-                    className="rounded border border-gray-400 p-1 h-9"
-                  />
+                  <span className="flex justify-center items-center">
+                    <span
+                      onClick={() => {
+                        setType2(type2 === "text" ? "password" : "text");
+                      }}
+                    >
+                      {type2 === "text" ? (
+                        <FontAwesomeIcon
+                          icon={faEyeSlash}
+                          className="bg-gray-400 w-6 h-6 mt-1 p-1"
+                        />
+                      ) : (
+                        <FontAwesomeIcon
+                          icon={faEye}
+                          className="bg-gray-400 w-6 h-6 mt-1 p-1"
+                        />
+                      )}
+                    </span>
+                    <input
+                      type={type2}
+                      id="confirm_pwd"
+                      onChange={(e) => setMatchPwd(e.target.value)}
+                      required
+                      aria-invalid={validMatch ? false : true}
+                      aria-describedby="confirmnote"
+                      onFocus={() => setMatchFocus(true)}
+                      onBlur={() => setMatchFocus(false)}
+                      className="rounded border border-gray-400 p-1 h-9 w-full"
+                    />
+                  </span>
                   <p
                     id="confirmnote"
                     className={
@@ -220,17 +274,6 @@ const SignupForm = (props: { type: "signup" | "login" }) => {
               >
                 {props.type === "signup" ? "Signup" : "Login"}
               </button>
-              <p className="text-center mt-4">
-                {props.type === "login"
-                  ? "No account yet? "
-                  : "Already an account? "}
-                <a
-                  href={props.type === "login" ? "/signup" : "/login"}
-                  className="font-bold underline hover:underline-offset-4"
-                >
-                  {props.type === "login" ? "Signup" : "Login"}
-                </a>
-              </p>
             </div>
           </div>
         </form>

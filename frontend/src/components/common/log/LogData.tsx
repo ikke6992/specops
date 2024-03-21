@@ -16,6 +16,7 @@ const HistoryData = (props: { log: HistoryLog }) => {
       <td className="px-4 py-2">{props.log.executionDate}</td>
       <td className="px-4 py-2">{props.log.deadline}</td>
       <td className="px-4 py-2">{props.log.assignee}</td>
+      <td className="px-4 py-2">{props.log.notes}</td>
     </tr>
   );
 };
@@ -27,8 +28,8 @@ const TaskData = (props: { log: TaskLog }) => {
         <LogLabel status={props.log.status} />
       </td>
       <td className="px-4 py-2">{props.log.name}</td>
-      <td className="px-4 py-2">{props.log.startdate}</td>
-      <td className="px-4 py-2">{props.log.deadline}</td>
+      <td className="px-4 py-2">{props.log.timeframe}</td>
+      <td className="px-4 py-2">{props.log.interval}</td>
       <td className="px-4 py-2">{props.log.department}</td>
     </tr>
   );

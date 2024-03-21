@@ -4,7 +4,7 @@ export default interface TaskLog {
   id: string;
   status: TaskStatus;
   name: string;
-  startdate: string;
-  deadline: string;
+  timeframe: string;
+  interval: string;
   department: string;
 }

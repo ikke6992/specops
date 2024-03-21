@@ -50,6 +50,7 @@ export const HistoryProvider: ProviderType = ({ children }) => {
         executionDate: record.executionDate,
         deadline: record.deadline,
         assignee: record.assignee,
+        notes: record.notes,
       };
     });
 

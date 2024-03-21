@@ -14,6 +14,7 @@ const Content = () => {
         content={<TaskList />}
         filter={filter}
         isHistory={false}
+        isDashboard={true}
       />
     </>
   );
