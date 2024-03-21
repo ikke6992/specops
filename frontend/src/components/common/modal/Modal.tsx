@@ -32,12 +32,12 @@ export default function Modal(props: {
             {/*body*/}
             <div className="p-6 w-fit">{props.form}</div>
             {/*footer*/}
-            <div className={`flex justify-start py-4 border-t`}>
+            {props.name !== "Share link" && <div className={`flex justify-start py-4 border-t`}>
               <ModalSubmit name={props.name} handleSubmit={handleSubmit} />
               {props.edit && isAdmin() && (
                 <ModalDeactivate deactivate={props.deactivate} />
               )}
-            </div>
+            </div>}
           </div>
         </div>
       </div>
