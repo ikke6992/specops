@@ -4,22 +4,30 @@ import getAll from "../../../services/getAll";
 import UserFieldCombination from "./fields/UserFieldCombination";
 import { OrganizationContext } from "../../../contexts/OrganizationContext";
 
+type roleType = "analyst" | "team manager" | "manager";
 const UserModal = (props: {
   close: () => void;
   type: "create" | "edit";
   id?: string;
+  initialDepartment?: string;
+  initialName?: string;
+  initialRole?: roleType;
 }) => {
-  const [department, setDepartment] = useState("");
+  const [department, setDepartment] = useState(
+    props.initialDepartment ? props.initialDepartment : ""
+  );
   const [departments, setDepartments] = useState([]);
-  const [name, setName] = useState("");
-  const [role, setRole] = useState("");
+  const [name, setName] = useState(props.initialName ? props.initialName : "");
+  const [role, setRole] = useState<roleType>(
+    props.initialRole ? props.initialRole : "analyst"
+  );
   const { submitUser } = useContext(OrganizationContext);
 
   useEffect(() => {
     const getDepartment = async () => {
       const data = await getAll("departments");
       setDepartments(data);
-      setDepartment(data[0].name);
+      if (!department) setDepartment(data[0].name);
     };
     getDepartment();
   }, []);

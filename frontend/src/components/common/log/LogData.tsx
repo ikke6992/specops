@@ -64,6 +64,9 @@ const UserData = (props: { log: UserLog }) => {
               close={() => setShowEdit(false)}
               type="edit"
               id={props.log.id}
+              initialDepartment={props.log.department}
+              initialName={props.log.name}
+              initialRole={props.log.role}
             />
           )}
         </td>

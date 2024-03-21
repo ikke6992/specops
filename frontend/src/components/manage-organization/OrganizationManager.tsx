@@ -18,6 +18,7 @@ const OrganizationContent = () => {
       content={type === "users" ? <UserManager /> : <DepartmentManager />}
       isHistory={false}
       isDashboard={true}
+      isManager={true}
     />
   );
 };

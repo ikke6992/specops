@@ -10,7 +10,7 @@ type Props = {
   name: string;
   setName: (name: string) => void;
   role: string;
-  setRole: (role: string) => void;
+  setRole: (role: "analyst" | "team manager" | "manager") => void;
 };
 
 const UserFieldCombination = ({

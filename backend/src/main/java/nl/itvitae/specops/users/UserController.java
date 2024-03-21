@@ -46,17 +46,18 @@ public class UserController {
   private record UserRequestData(String roles, String employeeName, String department) {}
 
   @PostMapping("/create")
-  public ResponseEntity<User> create(@RequestBody UserRequestData req) {
+  public ResponseEntity<UserData> create(@RequestBody UserRequestData req) {
     if (departmentRepository.findByName(req.department()).isEmpty()) {
       return ResponseEntity.badRequest().build();
     }
 
     final Department department = departmentRepository.findByName(req.department()).get();
-    return ResponseEntity.ok(userService.save(req.roles(), req.employeeName(), department));
+    return ResponseEntity.ok(
+        UserData.of(userService.save(req.roles(), req.employeeName(), department)));
   }
 
   @PutMapping("/edit/{id}")
-  public ResponseEntity<User> edit(@PathVariable UUID id, @RequestBody UserRequestData req) {
+  public ResponseEntity<UserData> edit(@PathVariable UUID id, @RequestBody UserRequestData req) {
     if (userRepository.findById(id).isEmpty()) return ResponseEntity.notFound().build();
     final User user = userRepository.findById(id).get();
 
@@ -69,7 +70,7 @@ public class UserController {
     user.setRoles(req.roles());
     user.setEmployeeName(req.employeeName());
 
-    return ResponseEntity.ok(userRepository.save(user));
+    return ResponseEntity.ok(UserData.of(userRepository.save(user)));
   }
 
   @PostMapping("/signup/{requestId}")

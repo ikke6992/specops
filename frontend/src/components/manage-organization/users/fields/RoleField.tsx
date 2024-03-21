@@ -1,5 +1,5 @@
 const RoleField = (props: {
-  setRole: (role: string) => void;
+  setRole: (role: "analyst" | "team manager" | "manager") => void;
   role: string;
 }) => {
   return (
@@ -7,20 +7,16 @@ const RoleField = (props: {
       <label>Role: </label>
       <select
         className="border rounded-md p-1 outline-none border-gray-400"
-        value={props.role}
+        defaultValue={props.role}
         onChange={(e) => {
-          props.setRole(e.target.value);
+          props.setRole(
+            e.target.value as "analyst" | "team manager" | "manager"
+          );
         }}
       >
-        <option key="admin" value="admin">
-          manager
-        </option>
-        <option key="manager" value="manager">
-          team Manager
-        </option>
-        <option key="user" value="user">
-          analyst
-        </option>
+        <option key="admin">manager</option>
+        <option key="manager">team manager</option>
+        <option key="user">analyst</option>
       </select>
     </>
   );

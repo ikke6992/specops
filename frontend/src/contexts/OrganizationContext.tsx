@@ -19,7 +19,7 @@ type ContextType = {
   submitUser: (
     type: "create" | "edit",
     name: string,
-    role: string,
+    role: "analyst" | "team manager" | "manager",
     department: string,
     id?: string
   ) => void;
@@ -71,6 +71,17 @@ export const OrganizationProvider: ProviderType = ({ children }) => {
     setQuery(newQuery);
   };
 
+  const getRoles = (role: "analyst" | "team manager" | "manager") => {
+    switch (role) {
+      case "analyst":
+        return "ROLE_USER";
+      case "team manager":
+        return "ROLE_USER, ROLE_MANAGER";
+      case "manager":
+        return "ROLE_USER, ROLE_MANAGER, ROLE_ADMIN";
+    }
+  };
+
   const submitDepartment = async (
     type: "create" | "edit",
     name: string,
@@ -95,21 +106,22 @@ export const OrganizationProvider: ProviderType = ({ children }) => {
   const submitUser = async (
     type: "create" | "edit",
     name: string,
-    role: string,
+    role: "analyst" | "team manager" | "manager",
     department: string,
     id?: string
   ) => {
     if (type === "create") {
       const data: UserLog = await postItem("users/create", {
-        name,
-        role,
+        employeeName: name,
+        roles: getRoles(role),
         department,
       });
-      setUsers([...users, data]);
+      const updatedUsers = [...users, data];
+      setUsers(updatedUsers);
     } else {
       const data: UserLog = await putItem(`users/edit/${id}`, {
-        name,
-        role,
+        employeeName: name,
+        roles: getRoles(role),
         department,
       });
       const updatedUsers = users.map((user) => (user.id === id ? data : user));

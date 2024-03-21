@@ -4,14 +4,6 @@ const DepartmentField = (props: {
   setDept: (dept: string) => void;
   dept: string;
 }) => {
-  const departmentOptions = props.departments.map((department: Department) => {
-    return (
-      <option key={department.name} value={department.name}>
-        {department.name}
-      </option>
-    );
-  });
-
   return (
     <>
       <label>Department: </label>
@@ -22,7 +14,9 @@ const DepartmentField = (props: {
           props.setDept(e.target.value);
         }}
       >
-        {departmentOptions}
+        {props.departments.map((department: Department) => {
+          return <option key={department.name}>{department.name}</option>;
+        })}
       </select>
     </>
   );
