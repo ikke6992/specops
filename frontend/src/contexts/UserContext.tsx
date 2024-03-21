@@ -57,7 +57,7 @@ export const UserProvider: ProviderType = ({ children }) => {
     );
   };
 
-  const search = (newType: SearchFilter, newQuery: string) => {
+  const search = (newQuery: string) => {
     setQuery(newQuery);
   };
 

@@ -24,7 +24,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <Route path="/user-test" element={<UserTest />} />
         <Route path="/department-test" element={<DepartmentTest />} />
         <Route path="/list/:type" element={<HistoryManager />} />
-        <Route path="/users" element={<UserManager />} />
+        <Route path="/management" element={<UserManager />} />
       </Route>
       <Route element={<ProtectedRoute authenticate={isUser} />}>
         <Route path="/tasks" element={<TaskManager />} />
