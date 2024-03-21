@@ -47,7 +47,7 @@ const TaskTabs = ({ filter, selected, setSelected }: PropsType) => {
       />
       <Tab
         name="Inactive"
-        color="grey"
+        color="gray"
         selected={selected === 4}
         onClick={() => {
           filter("inactive");

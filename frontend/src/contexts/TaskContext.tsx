@@ -43,7 +43,7 @@ export const TaskProvider: ProviderType = ({ children }) => {
   const [logs, setLogs] = useState<TaskLog[]>([]);
   const [size, setSize] = useState(0);
   const [pointer, setPointer] = useState(0);
-  const [querry, setQuerry] = useState("");
+  const [query, setQuery] = useState("");
   const [type, setType] = useState<"dept" | "name">("name");
   const [status, setStatus] = useState<
     "all" | "pending" | "planned" | "overdue" | "inactive"
@@ -57,22 +57,22 @@ export const TaskProvider: ProviderType = ({ children }) => {
     getTaskList();
   }, []);
 
+  useEffect(() => {
+    const getTaskLogs = async () => {
+      const data = await getAll("tasks/list");
+      setLogs(data);
+    };
+    getTaskLogs();
+  }, []);
+
   // Getters
   const getTasks = () => {
     return apply(tasks);
   };
 
   const getLogs = () => {
-    useEffect(() => {
-      const getTaskLogs = async () => {
-        const data = await getAll("tasks/list");
-        setLogs(data);
-      };
-      getTaskLogs();
-    }, []);
-
-    return logs;
-  };
+    return apply(logs);
+  }
 
   // Setters
   const addTask = async (task: TaskBody) => {
@@ -112,27 +112,27 @@ export const TaskProvider: ProviderType = ({ children }) => {
   };
 
   // Search & Filter
-  const apply = (list: TaskResponse[]) => {
+  const apply = (list: TaskResponse[] | TaskLog[]) => {
     return applyFilter(applySearch(list));
   };
 
-  const applySearch = (list: TaskResponse[]) => {
-    if (querry === "") {
+  const applySearch = (list: TaskResponse[] | TaskLog[]) => {
+    if (query === "") {
       return list;
     }
 
     if (type === "dept") {
       return list.filter((task) =>
-        task.department.toLowerCase().includes(querry.toLowerCase())
+        task.department.toLowerCase().includes(query.toLowerCase())
       );
     } else {
       return list.filter((task) =>
-        task.name.toLowerCase().includes(querry.toLowerCase())
+        task.name.toLowerCase().includes(query.toLowerCase())
       );
     }
   };
 
-  const applyFilter = (list: TaskResponse[]) => {
+  const applyFilter = (list: TaskResponse[] | TaskLog[]) => {
     if (status === "all") {
       return list;
     } else {
@@ -140,9 +140,9 @@ export const TaskProvider: ProviderType = ({ children }) => {
     }
   };
 
-  const search = (newType: SearchFilter, newQuerry: string) => {
+  const search = (newType: SearchFilter, newQuery: string) => {
     setType(newType as "dept" | "name");
-    setQuerry(newQuerry);
+    setQuery(newQuery);
   };
 
   const filter = (newStatus: StatusFilter) => {
