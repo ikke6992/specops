@@ -8,7 +8,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { SecurityContext } from "../../contexts/SecurityContext";
 import { useNavigate } from "react-router-dom";
 
-const SignupForm = (props: { type: "signup" | "login" }) => {
+const SignupForm = (props: {
+  type: "signup" | "login";
+  requestId?: string;
+}) => {
   const {
     user,
     setUser,
@@ -70,7 +73,15 @@ const SignupForm = (props: { type: "signup" | "login" }) => {
   return (
     <>
       <div className="bg-slate-200 rounded-md w-80 size-fit">
-        <form onSubmit={(e) => handleAddUser(e, props.type)}>
+        <form
+          onSubmit={(e) => {
+            if (props.requestId) {
+              handleAddUser(e, props.type, props.requestId);
+            } else {
+              handleAddUser(e, props.type);
+            }
+          }}
+        >
           {/* Content Wrapper */}
           <div className="p-3 border-b border-gray-900/10 pb-12">
             <div className="">
