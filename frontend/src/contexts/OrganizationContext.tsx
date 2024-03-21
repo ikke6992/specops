@@ -22,7 +22,7 @@ type ContextType = {
     role: "analyst" | "team manager" | "manager",
     department: string,
     id?: string
-  ) => void;
+  ) => Promise<string>;
 };
 
 type ProviderType = FC<{ children: ReactNode }>;
@@ -32,7 +32,7 @@ export const OrganizationContext = createContext<ContextType>({
   getDepartments: () => [],
   search: () => {},
   submitDepartment: () => {},
-  submitUser: () => {},
+  submitUser: async () => "",
 });
 
 export const OrganizationProvider: ProviderType = ({ children }) => {
@@ -118,6 +118,7 @@ export const OrganizationProvider: ProviderType = ({ children }) => {
       });
       const updatedUsers = [...users, data];
       setUsers(updatedUsers);
+      return data.id;
     } else {
       const data: UserLog = await putItem(`users/edit/${id}`, {
         employeeName: name,
@@ -126,6 +127,7 @@ export const OrganizationProvider: ProviderType = ({ children }) => {
       });
       const updatedUsers = users.map((user) => (user.id === id ? data : user));
       setUsers(updatedUsers);
+      return data.id;
     }
   };
 
