@@ -40,7 +40,6 @@ const Content = (props: {
       name="Create Task"
       edit={false}
       close={props.close}
-      deactivate={props.close}
       submit={() => {
         props.submit({
           name: taskName,

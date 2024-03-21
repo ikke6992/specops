@@ -17,7 +17,6 @@ const Content = (props: {
       name="confirm"
       edit={false}
       close={props.close}
-      deactivate={props.close}
       submit={() => props.completeTask(notes)}
       form={<Notes />}
     />

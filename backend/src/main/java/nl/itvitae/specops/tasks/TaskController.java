@@ -135,22 +135,29 @@ public class TaskController {
   }
 
   @DeleteMapping("/delete/{id}")
-  public ResponseEntity<TaskResponse> deactivateTask(@PathVariable UUID id) {
-    var possibleTask = taskService.findTaskById(id);
-    if (possibleTask.isEmpty()) return ResponseEntity.notFound().build();
-    final Task task = possibleTask.get();
-    taskService.deactivateTask(task);
-    final TaskResponse response = TaskResponse.of(task);
-    return ResponseEntity.ok(response);
+  public ResponseEntity<TaskPlanningResponse> deactivateTask(@PathVariable UUID id) {
+    var possiblePlanning = taskService.findTaskPlanningById(id);
+    if (possiblePlanning.isEmpty()) return ResponseEntity.notFound().build();
+    final TaskPlanning planning = possiblePlanning.get();
+    for (Task task : planning.getTasks()) {
+      if (task.getTaskExecution() == null) {
+        System.out.println("Before " + taskService.findTaskById(task.getId()).isEmpty());
+        TaskPlanning updatedPlanning = taskService.deactivateTask(task);
+        System.out.println("After " + taskService.findTaskById(task.getId()).isEmpty());
+        final TaskPlanningResponse response = TaskPlanningResponse.of(updatedPlanning);
+        return ResponseEntity.ok(response);
+      }
+    }
+    return ResponseEntity.notFound().build();
   }
 
   @PatchMapping("/activate/{id}")
-  public ResponseEntity<TaskResponse> reactivateTask(@PathVariable UUID id) {
+  public ResponseEntity<TaskPlanningResponse> reactivateTask(@PathVariable UUID id) {
     var possiblePlanning = taskService.findTaskPlanningById(id);
     if (possiblePlanning.isEmpty()) return ResponseEntity.notFound().build();
     final TaskPlanning planning = possiblePlanning.get();
     final Task task = taskService.reactivateTask(planning);
-    final TaskResponse response = TaskResponse.of(task);
+    final TaskPlanningResponse response = TaskPlanningResponse.of(task.getTaskPlanning());
     return ResponseEntity.ok(response);
   }
 }

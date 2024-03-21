@@ -60,8 +60,8 @@ public class TaskService {
   }
 
   public TaskPlanning deactivateTask(Task task) {
-    final TaskPlanning taskPlanning = task.getTaskPlanning();
     taskRepository.delete(task);
+    final TaskPlanning taskPlanning = task.getTaskPlanning();
     return taskPlanning;
   }
 
