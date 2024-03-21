@@ -95,6 +95,7 @@ const DepartmentData = (props: { log: DepartmentLog }) => {
               close={() => setShowEdit(false)}
               type="edit"
               id={props.log.id}
+              initialDepartment={props.log.name}
             />
           )}
         </td>

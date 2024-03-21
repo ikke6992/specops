@@ -7,8 +7,11 @@ const DepartmentModal = (props: {
   close: () => void;
   type: "create" | "edit";
   id?: string;
+  initialDepartment?: string;
 }) => {
-  const [name, setName] = useState("");
+  const [name, setName] = useState(
+    props.initialDepartment ? props.initialDepartment : ""
+  );
   const { submitDepartment } = useContext(OrganizationContext);
 
   return (
