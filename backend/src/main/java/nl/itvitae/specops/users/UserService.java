@@ -1,6 +1,7 @@
 package nl.itvitae.specops.users;
 
 import lombok.RequiredArgsConstructor;
+import nl.itvitae.specops.departments.Department;
 import nl.itvitae.specops.exceptions.UserAlreadyExistsException;
 import nl.itvitae.specops.security.JwtTokenProvider;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,10 +24,22 @@ public class UserService {
   private final JwtTokenProvider jwtTokenProvider;
   private final PasswordEncoder passwordEncoder;
   private final UserRepository userRepository;
+  private final UserRequestRepository userRequestRepository;
 
   public User save(String username, String password, String roles, String employeeName) {
     return userRepository.save(
         new User(username, passwordEncoder.encode(password), roles, employeeName));
+  }
+
+  public User save(
+      String username, String password, String roles, String employeeName, Department department) {
+    final User user = save(username, password, roles, employeeName);
+    user.setDepartment(department);
+    return userRepository.save(user);
+  }
+
+  public UserRequest save(String roles, String employeeName, Department department) {
+    return userRequestRepository.save(new UserRequest(roles, employeeName, department));
   }
 
   public List<User> getAll() {
@@ -54,11 +67,15 @@ public class UserService {
         request.username(), jwtTokenProvider.generateToken(userDetails), user.getRoles());
   }
 
-  public LoginResponse register(LoginRequest request) {
+  public LoginResponse register(LoginRequest request, UserRequest userRequest) {
     if (userRepository.findByUsername(request.username()).isEmpty()) {
-      User user =
-          new User(request.username(), passwordEncoder.encode(request.password()), "ROLE_USER", "");
-      userRepository.save(user);
+      userRequestRepository.delete(userRequest);
+      save(
+          request.username(),
+          request.password(),
+          userRequest.getRoles(),
+          userRequest.getEmployeeName(),
+          userRequest.getDepartment());
       return login(request);
     }
     return new LoginResponse("User already exists", "", "");

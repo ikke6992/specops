@@ -55,6 +55,8 @@ public class SecurityConfig {
                     .hasRole("ADMIN")
                     .requestMatchers(HttpMethod.PATCH, "/tasks/activate/{id}")
                     .hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.POST, "/users/create")
+                    .hasRole("ADMIN")
                     .requestMatchers("/**")
                     .permitAll())
         .sessionManagement(
