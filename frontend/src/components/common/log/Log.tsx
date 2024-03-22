@@ -3,9 +3,11 @@ import LogData from "./LogData";
 import LogHead from "./LogHead";
 import HistoryLog from "../../../models/log/HistoryLog";
 import TaskLog from "../../../models/log/TaskLog";
+import DepartmentLog from "../../../models/log/DepartmentLog";
+import UserLog from "../../../models/log/UserLog";
 
 type PropsType = {
-  logs: HistoryLog[] | TaskLog[];
+  logs: HistoryLog[] | TaskLog[] | DepartmentLog[] | UserLog[];
 };
 const Log = ({ logs }: PropsType) => {
   return (
