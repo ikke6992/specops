@@ -62,7 +62,7 @@ const Layout = ({
           </article>
         )}
         {!isLogin && !isManager && (
-          <article className="w-96 flex flex-row justify-center items-center">
+          <article className="flex flex-row justify-center items-center">
             {isDashboard ? (
               <FilterTabs
                 filter={filter!}
