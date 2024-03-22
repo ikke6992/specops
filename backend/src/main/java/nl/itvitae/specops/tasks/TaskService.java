@@ -52,6 +52,8 @@ public class TaskService {
     LocalDate executionDate = LocalDate.now();
     TaskExecution executedTask = new TaskExecution(task, user, executionDate, notes);
     taskExecutionRepository.save(executedTask);
+    task.setActive(false);
+    taskRepository.save(task);
     Task newTask =
         new Task(
             task.getTaskPlanning(), executionDate.plusDays(task.getTaskPlanning().getInterval()));
@@ -60,13 +62,14 @@ public class TaskService {
   }
 
   public TaskPlanning deactivateTask(Task task) {
-    final TaskPlanning taskPlanning = task.getTaskPlanning();
-    taskRepository.delete(task);
-    return taskPlanning;
+    TaskPlanning planning = task.getTaskPlanning();
+    task.setActive(false);
+    taskRepository.save(task);
+    return planning;
   }
 
   public Task reactivateTask(TaskPlanning taskPlanning) {
-    Task task = new Task(taskPlanning, LocalDate.now().plusDays(taskPlanning.getInterval()));
+    Task task = new Task(taskPlanning, LocalDate.now().plusDays(taskPlanning.getTimeframe()));
     taskRepository.save(task);
     return task;
   }

@@ -24,6 +24,7 @@ const TaskHead = () => {
       <th className="px-4 py-2 text-left text-gray-600">Timeframe</th>
       <th className="px-4 py-2 text-left text-gray-600">Interval</th>
       <th className="px-4 py-2 text-left text-gray-600">Department</th>
+      <th className="px-4 py-2 text-left text-gray-600">Activate</th>
     </tr>
   );
 };

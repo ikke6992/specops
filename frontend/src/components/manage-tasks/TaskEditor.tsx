@@ -15,7 +15,6 @@ const Content = (props: {
   interval: string;
   deadline: string;
   close: () => void;
-  deactivate: () => void;
   submit: (task: TaskBody) => void;
 }) => {
   const {
@@ -44,7 +43,6 @@ const Content = (props: {
       name="Edit Task"
       edit={true}
       close={props.close}
-      deactivate={props.deactivate}
       submit={() => {
         props.submit({
           name: taskName,
@@ -79,7 +77,6 @@ const TaskEditor = (props: {
           interval={props.interval}
           deadline={props.deadline}
           close={props.close}
-          deactivate={props.deactivate}
           submit={props.submit}
         />
       </DepartmentProvider>

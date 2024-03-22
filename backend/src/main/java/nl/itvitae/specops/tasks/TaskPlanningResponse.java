@@ -7,7 +7,7 @@ public record TaskPlanningResponse(
 
   static String getStatus(TaskPlanning taskPlanning) {
     for (Task task : taskPlanning.getTasks()) {
-      if (task.getTaskExecution() == null) {
+      if (task.isActive()) {
         return TaskResponse.getStatus(
             task.getDeadline(), task.getDeadline().minusDays(taskPlanning.getTimeframe()));
       }
