@@ -19,57 +19,61 @@ const TaskManagerButtons = () => {
 
   return (
     <>
-      {isAdmin() && path.includes("/list") ? (
-        <>
-          <NavigateButton
-            name="Overview"
-            color="cyan"
-            navigate={() => {
-              navigate("/tasks");
-            }}
-          />
-          <NavigateButton
-            name="Manage"
-            color="cyan"
-            navigate={() => {
-              navigate("/manage/users");
-            }}
-          />
-        </>
-      ) : path === "/tasks" ? (
-        <>
-          <NavigateButton
-            name="List"
-            color="cyan"
-            navigate={() => {
-              navigate("/list/old");
-            }}
-          />
-          <NavigateButton
-            name="Manage"
-            color="cyan"
-            navigate={() => {
-              navigate("/manage/users");
-            }}
-          />
-        </>
+      {isAdmin() ? (
+        path.includes("/list") ? (
+          <>
+            <NavigateButton
+              name="Overview"
+              color="cyan"
+              navigate={() => {
+                navigate("/tasks");
+              }}
+            />
+            <NavigateButton
+              name="Manage"
+              color="cyan"
+              navigate={() => {
+                navigate("/manage/users");
+              }}
+            />
+          </>
+        ) : path === "/tasks" ? (
+          <>
+            <NavigateButton
+              name="List"
+              color="cyan"
+              navigate={() => {
+                navigate("/list/old");
+              }}
+            />
+            <NavigateButton
+              name="Manage"
+              color="cyan"
+              navigate={() => {
+                navigate("/manage/users");
+              }}
+            />
+          </>
+        ) : (
+          <>
+            <NavigateButton
+              name="Overview"
+              color="cyan"
+              navigate={() => {
+                navigate("/tasks");
+              }}
+            />
+            <NavigateButton
+              name="List"
+              color="cyan"
+              navigate={() => {
+                navigate("/list/old");
+              }}
+            />
+          </>
+        )
       ) : (
-        <>
-          <NavigateButton
-            name="Overview"
-            color="cyan"
-            navigate={() => {
-              navigate("/tasks");
-            }}
-          />
-          <NavigateButton
-            name="List"
-            color="cyan"
-            navigate={() => {
-              navigate("/list/old");
-            }}
-          />
-        </>
+        <></>
       )}
 
       {isManager() ? (
@@ -105,7 +109,7 @@ const TaskManagerButtons = () => {
         <></>
       )}
 
-      {path.includes("/list") && (
+      {isAdmin() && path.includes("/list") && (
         <FunctionButton
           name={path.includes("/old") ? "Tasks" : "History"}
           method={() => {
@@ -118,7 +122,7 @@ const TaskManagerButtons = () => {
         />
       )}
 
-      {path.includes("/manage") && (
+      {isAdmin() && path.includes("/manage") && (
         <FunctionButton
           name={path.includes("/users") ? "Departments" : "Users"}
           method={() => {
