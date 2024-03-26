@@ -17,6 +17,7 @@ public class Department {
   @GeneratedValue(strategy = GenerationType.UUID)
   private UUID id;
 
+  @Column(name = "valueName")
   private String name;
 
   public Department(String name) {

@@ -16,9 +16,13 @@ public class TaskPlanning {
   @GeneratedValue(strategy = GenerationType.UUID)
   private UUID id;
 
-  @NonNull private String name;
+  @Column(name = "valueName")
+  @NonNull
+  private String name;
 
   private int timeframe; // In days
+
+  @Column(name = "valueInterval")
   private int interval; // In days
 
   @ManyToOne private Department department;
