@@ -161,23 +161,24 @@ class SpecopsApplicationTests {
   @Test
   public void should_be_able_to_create_task_as_admin() throws Exception {
     // DATA
-    final String json = """
+    final String json =
+        """
             {
               "name": "task test",
               "timeframe": 3,
               "interval": 7,
-              "department": "general",
-              "deadline": "28/03/2024"
+              "dept": "general",
+              "deadline": "2024-03-28"
             }
             """;
 
     // PERFORM
     MockHttpServletResponse response =
         mvc.perform(
-            MockMvcRequestBuilders.post("/tasks")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(json)
-                .header("Authorization", "Bearer " + token))
+                MockMvcRequestBuilders.post("/tasks")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(json)
+                    .header("Authorization", "Bearer " + token))
             .andReturn()
             .getResponse();
 
@@ -193,16 +194,14 @@ class SpecopsApplicationTests {
     final String department = (String) object.get("department");
     final String deadline = (String) object.get("deadline");
 
-
     // ASSERT
-    Assertions.assertEquals(200, status);
+    Assertions.assertEquals(201, status);
     Assertions.assertFalse(id.isEmpty());
     Assertions.assertEquals("task test", name);
     Assertions.assertEquals(3, timeframe);
     Assertions.assertEquals(7, interval);
     Assertions.assertEquals("general", department);
-    Assertions.assertEquals("28/03/2024", deadline);
-
+    Assertions.assertEquals("2024-03-28", deadline);
   }
 
   @Test
