@@ -2,9 +2,7 @@ package nl.itvitae.specops;
 
 import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
-import java.util.HashMap;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +15,8 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
+import java.util.HashMap;
 
 @SpringBootTest(webEnvironment = WebEnvironment.MOCK, classes = SpecopsApplication.class)
 @TestPropertySource(locations = "classpath:application-test.properties")
@@ -156,5 +156,52 @@ class SpecopsApplicationTests {
     Assertions.assertEquals(200, status);
     Assertions.assertFalse(id.isEmpty());
     Assertions.assertEquals("Custom Department", name);
+  }
+
+  @Test
+  public void should_be_able_to_create_task_as_admin() throws Exception {
+    // DATA
+    final String json = """
+            {
+              "name": "task test",
+              "timeframe": 3,
+              "interval": 7,
+              "department": "general",
+              "deadline": "28/03/2024"
+            }
+            """;
+
+    // PERFORM
+    MockHttpServletResponse response =
+        mvc.perform(
+            MockMvcRequestBuilders.post("/tasks")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json)
+                .header("Authorization", "Bearer " + token))
+            .andReturn()
+            .getResponse();
+
+    // TO TEST
+    int status = response.getStatus();
+    String content = response.getContentAsString();
+    DocumentContext data = JsonPath.parse(content);
+    HashMap<String, Object> object = data.read("$");
+    final String id = (String) object.get("id");
+    final String name = (String) object.get("name");
+    final int timeframe = (int) object.get("timeframe");
+    final int interval = (int) object.get("interval");
+    final String department = (String) object.get("department");
+    final String deadline = (String) object.get("deadline");
+
+
+    // ASSERT
+    Assertions.assertEquals(200, status);
+    Assertions.assertFalse(id.isEmpty());
+    Assertions.assertEquals("task test", name);
+    Assertions.assertEquals(3, timeframe);
+    Assertions.assertEquals(7, interval);
+    Assertions.assertEquals("general", department);
+    Assertions.assertEquals("28/03/2024", deadline);
+
   }
 }
