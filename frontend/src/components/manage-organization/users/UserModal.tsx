@@ -52,7 +52,6 @@ const UserModal = (props: {
             props.close();
           }
         }}
-        deactivate={() => {}}
         submit={async () => {
           if (props.id) {
             submitUser(props.type, name, role, department, props.id);

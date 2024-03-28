@@ -60,17 +60,16 @@ public class Seeder implements CommandLineRunner {
   }
 
   private void seedDepartments() {
-    try {
-      List<String> departments = Files.readAllLines(Paths.get("data/departments.txt"));
-      for (String department : departments) {
-        departmentService.save(department);
-      }
-    } catch (IOException e) {
-      departmentService.save("general");
-      departmentService.save("maintenance");
-      departmentService.save("chemistry");
-      departmentService.save("biology");
-    }
+    /**
+     * try { List<String> departments = Files.readAllLines(Paths.get("data/departments.txt")); for
+     * (String department : departments) { departmentService.save(department); } } catch
+     * (IOException e) {
+     */
+    departmentService.save("general");
+    departmentService.save("maintenance");
+    departmentService.save("chemistry");
+    departmentService.save("biology");
+    // }
   }
 
   private void assignDepartments() {
@@ -89,45 +88,40 @@ public class Seeder implements CommandLineRunner {
   // interval > timeframe, otherwise you can infinitely repeat tasks.
   private void seedTasks() {
 
-    try {
-      List<String> chores = Files.readAllLines(Paths.get("data/tasks.txt"));
-
-      for (String chore : chores) {
-        String[] choreArray = chore.split(",");
-        taskService.save(
-            choreArray[1],
-            Integer.parseInt(choreArray[4]),
-            Integer.parseInt(choreArray[5]),
-            departmentService.getByName(choreArray[0]),
-            LocalDate.parse(choreArray[3]));
-      }
-    } catch (IOException e) {
-      taskService.save(
-          "Clean toilets",
-          2,
-          7,
-          departmentService.getByName("maintenance"),
-          LocalDate.now().plusWeeks(1));
-      taskService.save(
-          "Prepare lunch",
-          1,
-          2,
-          departmentService.getByName("general"),
-          LocalDate.now().minusDays(3));
-      taskService.save(
-          "Build machine",
-          30,
-          365,
-          departmentService.getByName("maintenance"),
-          LocalDate.now().plusMonths(6));
-      taskService.save(
-          "Progress Bar",
-          10,
-          365,
-          departmentService.getByName("maintenance"),
-          LocalDate.now().plusDays(4));
-    }
+    /**
+     * try { List<String> chores = Files.readAllLines(Paths.get("data/tasks.txt"));
+     *
+     * <p>for (String chore : chores) { String[] choreArray = chore.split(","); taskService.save(
+     * choreArray[1], Integer.parseInt(choreArray[4]), Integer.parseInt(choreArray[5]),
+     * departmentService.getByName(choreArray[0]), LocalDate.parse(choreArray[3])); } } catch
+     * (IOException e) {
+     */
+    taskService.save(
+        "Clean toilets",
+        2,
+        7,
+        departmentService.getByName("maintenance"),
+        LocalDate.now().plusWeeks(1));
+    taskService.save(
+        "Prepare lunch",
+        1,
+        2,
+        departmentService.getByName("general"),
+        LocalDate.now().minusDays(3));
+    taskService.save(
+        "Build machine",
+        30,
+        365,
+        departmentService.getByName("maintenance"),
+        LocalDate.now().plusMonths(6));
+    taskService.save(
+        "Progress Bar",
+        10,
+        365,
+        departmentService.getByName("maintenance"),
+        LocalDate.now().plusDays(4));
+    // }
   }
 
-  private void seedFromFile() throws IOException {}
+  // private void seedFromFile() throws IOException {}
 }

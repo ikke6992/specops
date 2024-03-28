@@ -73,7 +73,7 @@ public class TaskController {
       @RequestBody TaskRequest data, UriComponentsBuilder ucb) {
     final Department department = departmentService.getByName(data.dept());
     List<TaskPlanning> plannings = taskService.getAllTaskPlannings();
-    if (data.name() == null || data.deadline() == null) {
+    if (data.name().equals("") || data.deadline().equals("")) {
       return ResponseEntity.badRequest().build();
     }
     for (TaskPlanning planning : plannings) {
